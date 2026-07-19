@@ -42,6 +42,7 @@ At the start of any work in this project:
 ## Next Steps
 - [x] Draft `plan.md`, `readme.md`, `feature.md`
 - [x] Install Godot 4 and scaffold the project
-- [x] Build a first pass of the vertical-slice MVP level (run/jump, one obstacle, one ingredient collectible) — using placeholder vector-shape art, not final illustrated sprites (no image-generation tool available in this environment; see `feature.md` F4)
+- [x] Build a first pass of the vertical-slice MVP level (run/jump, one obstacle, one ingredient collectible)
+- [x] Real illustrated art for Cornchip (idle/run/jump/hit), generated via Gemini/AI Studio and wired into the Player scene; the obstacle and ingredient still use placeholder shapes
 - [ ] Playtest the vertical slice and iterate
-- [ ] Source or generate real illustrated sprites for Cornchip and the salsa obstacle
+- [ ] Generate art for the salsa obstacle and lettuce ingredient, and wire them in the same way

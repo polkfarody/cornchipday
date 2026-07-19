@@ -14,7 +14,7 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [x] Player controller: run + jump, keyboard input
 - [x] One obstacle (thrown "mild" salsa) with a visual-comedy reaction and a no-fail respawn
 - [x] Level end: ingredient collectible with clear, wordless completion feedback
-- [ ] First-pass AI-generated art for Cornchip and the one obstacle type — currently placeholder vector shapes only; no image-generation tool available in this environment (see `feature.md` F4)
+- [x] First-pass AI-generated art for Cornchip (idle/run/jump/hit), wired into the Player scene as an AnimatedSprite2D. Generated via Gemini/AI Studio using a magenta chroma-key pipeline (see `feature.md` F4); art for all four confirmed bosses is also generated and ready for Phase 2. Still needed: art for the salsa obstacle and lettuce ingredient.
 - [ ] Playtest with the target audience (or an age-appropriate proxy)
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)
