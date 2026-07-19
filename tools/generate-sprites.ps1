@@ -80,7 +80,7 @@ foreach ($refPath in $referenceImagePaths) {
     }
 }
 
-$styleSuffix = "Flat vector illustration style, thick clean outlines, bright saturated colors, flat shading, no gradients. Background must be solid flat magenta (#FF00FF) throughout the entire image, completely uniform, no pattern, no checkerboard, no watermark, no logo, no text. Absolutely no drop shadows or shadow of any kind beneath or around any character or object."
+$styleSuffix = "Flat vector illustration style, thick clean outlines, bright saturated colors, flat shading, no gradients. Background must be solid flat magenta (#FF00FF) throughout the entire image, completely uniform, no pattern, no checkerboard, no watermark, no logo. Absolutely no drop shadows or shadow of any kind beneath or around any character or object. Absolutely no text, words, letters, or readable labels anywhere in the image -- any product labels, signage, or packaging must be plain solid color with zero wording (this is for a game aimed at children too young to read)."
 
 # For tileable ground/hazard textures -- NOT icon-on-magenta assets. The whole
 # canvas IS the texture, so no chroma-key background and no cropping applies
@@ -158,18 +158,18 @@ $sprites = @(
     @{ Name = "l1_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: a small pyramid of three stacked red salsa jars with cartoon labels, glossy glass. $styleSuffix" },
     @{ Name = "l1_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: a tall pyramid of five stacked red salsa jars with cartoon labels, glossy glass, slightly leaning for a comedic wobble. $styleSuffix" },
     @{ Name = "l1_hazard_fill"; Prompt = "A texture of bubbling hot molten salsa, glossy red-orange surface with bubble highlights and a subtle simmering texture. $textureSuffix" },
-    @{ Name = "l1_ground_tile"; Prompt = "A texture of warm terracotta patio floor tiles, small grout lines between square tiles, warm reddish-brown tones. $textureSuffix" },
+    @{ Name = "l1_ground_tile"; Prompt = "A texture of warm terracotta patio floor tiles, small grout lines between square tiles, warm reddish-brown tones. No characters, faces, or creatures of any kind anywhere in the tile pattern. $textureSuffix"; NoRefs = $true },
     @{ Name = "l1_cactus"; Prompt = "A simple cartoon saguaro cactus silhouette for a platformer background, two side arms, bright green with lighter highlight lines. $styleSuffix" },
-    @{ Name = "l1_string_lights"; Prompt = "A short strand of 3 festive string lights (small round bulbs in red, yellow, and green) connected by a thin wire, for a platformer background decoration. $styleSuffix" },
-    @{ Name = "l1_window_view"; Prompt = "A wooden cantina-style window frame set into a warm adobe wall, with a hazy, softer-detailed distant desert scene visible through the glass: silhouettes of far-off cacti and low hills under a warm sunset sky, suggesting depth beyond the window. $styleSuffix" },
+    @{ Name = "l1_string_lights"; Prompt = "Three separate small round light bulbs of different colors (one red, one yellow, one green) connected in a row by a single thin curved wire, resembling a strand of festive party string lights, for a platformer background decoration. $styleSuffix" },
+    @{ Name = "l1_window_view"; Prompt = "A wooden cantina-style window frame set into a warm adobe wall, with a hazy, softer-detailed distant desert scene visible through the glass: silhouettes of far-off cacti and low hills under a warm sunset sky, suggesting depth beyond the window. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true },
     @{ Name = "l2_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single nacho serving tray standing on its edge, red plastic basket-style tray with a few tortilla chips visible. $styleSuffix" },
     @{ Name = "l2_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: two stacked nacho serving trays, red plastic basket-style trays with tortilla chips visible. $styleSuffix" },
     @{ Name = "l2_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: three stacked nacho serving trays topped with a block of yellow cheese, red plastic basket-style trays with tortilla chips visible. $styleSuffix" },
     @{ Name = "l2_hazard_fill"; Prompt = "A texture of bubbling molten nacho cheese, glossy orange-yellow surface with bubble highlights and a subtle melty texture. $textureSuffix" },
-    @{ Name = "l2_ground_tile"; Prompt = "A texture of a checkered nacho-bar floor, alternating warm yellow and tan square tiles. $textureSuffix" },
+    @{ Name = "l2_ground_tile"; Prompt = "A texture of a checkered nacho-bar floor, alternating warm yellow and tan square tiles. Plain tiles only -- no characters, faces, creatures, or icons of any kind in the pattern. $textureSuffix"; NoRefs = $true },
     @{ Name = "l2_chip"; Prompt = "A single cartoon tortilla chip, triangular, golden-tan with small brown speckles, for a platformer background decoration. $styleSuffix" },
     @{ Name = "l2_cheese_drip"; Prompt = "A single cartoon cheese drip/dollop hanging shape, glossy orange-yellow, for a platformer background decoration. $styleSuffix" },
-    @{ Name = "l2_window_view"; Prompt = "A window frame set into a tiled cheese-yellow kitchen wall, with a hazy, softer-detailed distant scene visible through the glass: a softly-lit dining area or second kitchen counter, suggesting depth beyond the window. $styleSuffix" }
+    @{ Name = "l2_window_view"; Prompt = "A window frame set into a tiled cheese-yellow kitchen wall, with a hazy, softer-detailed distant scene visible through the glass: a softly-lit dining area or second kitchen counter, suggesting depth beyond the window. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true }
 )
 
 if ($Only) {
@@ -184,7 +184,8 @@ $maxRetries = 4
 
 foreach ($sprite in $sprites) {
     Write-Host "Generating $($sprite.Name)..."
-    $inputItems = @(@{ type = "text"; text = $sprite.Prompt }) + $referenceImageInputs
+    $refsForThis = if ($sprite.NoRefs) { @() } else { $referenceImageInputs }
+    $inputItems = @(@{ type = "text"; text = $sprite.Prompt }) + $refsForThis
     $body = @{
         model = "gemini-3.1-flash-image"
         input = $inputItems
