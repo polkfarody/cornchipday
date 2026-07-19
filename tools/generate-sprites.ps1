@@ -154,19 +154,19 @@ $sprites = @(
     # and window/parallax views are icon-on-magenta like everything above;
     # hazard-fill and ground-tile textures use $textureSuffix instead (no
     # magenta, no cropping -- see crop-sprites.ps1's skip list).
-    @{ Name = "l1_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single stack of two red salsa jars with cartoon labels, glossy glass, a small comedic wobble to the stack. $styleSuffix" },
-    @{ Name = "l1_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: a small pyramid of three stacked red salsa jars with cartoon labels, glossy glass. $styleSuffix" },
-    @{ Name = "l1_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: a tall pyramid of five stacked red salsa jars with cartoon labels, glossy glass, slightly leaning for a comedic wobble. $styleSuffix" },
+    @{ Name = "l1_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single stack of two red salsa jars with cartoon labels, glossy glass, a small comedic wobble to the stack. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l1_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: a small pyramid of three stacked red salsa jars with cartoon labels, glossy glass. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l1_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: a tall pyramid of five stacked red salsa jars with cartoon labels, glossy glass, slightly leaning for a comedic wobble. $styleSuffix"; Model = "gemini-3-pro-image" },
     @{ Name = "l1_hazard_fill"; Prompt = "A texture of bubbling hot molten salsa, glossy red-orange surface with bubble highlights and a subtle simmering texture. $textureSuffix" },
-    @{ Name = "l1_ground_tile"; Prompt = "A texture of warm terracotta patio floor tiles, small grout lines between square tiles, warm reddish-brown tones. No characters, faces, or creatures of any kind anywhere in the tile pattern. $textureSuffix"; NoRefs = $true },
+    @{ Name = "l1_ground_tile"; Prompt = "A texture of warm terracotta patio floor tiles, small grout lines between square tiles, warm reddish-brown tones. No characters, faces, or creatures of any kind anywhere in the tile pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
     @{ Name = "l1_cactus"; Prompt = "A simple cartoon saguaro cactus silhouette for a platformer background, two side arms, bright green with lighter highlight lines. $styleSuffix" },
-    @{ Name = "l1_string_lights"; Prompt = "Three separate small round light bulbs of different colors (one red, one yellow, one green) connected in a row by a single thin curved wire, resembling a strand of festive party string lights, for a platformer background decoration. $styleSuffix" },
-    @{ Name = "l1_window_view"; Prompt = "A wooden cantina-style window frame set into a warm adobe wall, with a hazy, softer-detailed distant desert scene visible through the glass: silhouettes of far-off cacti and low hills under a warm sunset sky, suggesting depth beyond the window. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true },
+    @{ Name = "l1_string_lights"; Prompt = "Three separate small round light bulbs of different colors (one red, one yellow, one green) connected in a row by a single thin curved wire, resembling a strand of festive party string lights, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l1_window_view"; Prompt = "A wooden cantina-style window frame set into a warm adobe wall, with a hazy, softer-detailed distant desert scene visible through the glass: silhouettes of far-off cacti and low hills under a warm sunset sky, suggesting depth beyond the window. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
     @{ Name = "l2_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single nacho serving tray standing on its edge, red plastic basket-style tray with a few tortilla chips visible. $styleSuffix" },
     @{ Name = "l2_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: two stacked nacho serving trays, red plastic basket-style trays with tortilla chips visible. $styleSuffix" },
     @{ Name = "l2_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: three stacked nacho serving trays topped with a block of yellow cheese, red plastic basket-style trays with tortilla chips visible. $styleSuffix" },
     @{ Name = "l2_hazard_fill"; Prompt = "A texture of bubbling molten nacho cheese, glossy orange-yellow surface with bubble highlights and a subtle melty texture. $textureSuffix" },
-    @{ Name = "l2_ground_tile"; Prompt = "A texture of a checkered nacho-bar floor, alternating warm yellow and tan square tiles. Plain tiles only -- no characters, faces, creatures, or icons of any kind in the pattern. $textureSuffix"; NoRefs = $true },
+    @{ Name = "l2_ground_tile"; Prompt = "A texture of a checkered nacho-bar floor, alternating warm yellow and tan square tiles. Plain tiles only -- no characters, faces, creatures, or icons of any kind in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
     @{ Name = "l2_chip"; Prompt = "A single cartoon tortilla chip, triangular, golden-tan with small brown speckles, for a platformer background decoration. $styleSuffix" },
     @{ Name = "l2_cheese_drip"; Prompt = "A single cartoon cheese drip/dollop hanging shape, glossy orange-yellow, for a platformer background decoration. $styleSuffix" },
     @{ Name = "l2_window_view"; Prompt = "A window frame set into a tiled cheese-yellow kitchen wall, with a hazy, softer-detailed distant scene visible through the glass: a softly-lit dining area or second kitchen counter, suggesting depth beyond the window. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true }
@@ -186,8 +186,9 @@ foreach ($sprite in $sprites) {
     Write-Host "Generating $($sprite.Name)..."
     $refsForThis = if ($sprite.NoRefs) { @() } else { $referenceImageInputs }
     $inputItems = @(@{ type = "text"; text = $sprite.Prompt }) + $refsForThis
+    $modelForThis = if ($sprite.Model) { $sprite.Model } else { "gemini-3.1-flash-image" }
     $body = @{
-        model = "gemini-3.1-flash-image"
+        model = $modelForThis
         input = $inputItems
     } | ConvertTo-Json -Depth 10
 
