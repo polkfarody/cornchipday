@@ -15,12 +15,13 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [x] One obstacle (thrown "mild" salsa) with a visual-comedy reaction and a no-fail respawn
 - [x] Level end: ingredient collectible with clear, wordless completion feedback
 - [x] First-pass AI-generated art for Cornchip (idle/run/jump/hit), wired into the Player scene as an AnimatedSprite2D. Generated via Gemini/AI Studio using a magenta chroma-key pipeline (see `feature.md` F4); art for all four confirmed bosses is also generated and ready for Phase 2. Still needed: art for the salsa obstacle and lettuce ingredient.
+- [x] Stomp-to-defeat enemy mechanic (Cornchip's baseline combat ability, see `feature.md` F5) — pulled forward from Phase 2 since it's needed for the boss fight below
+- [x] First full boss battle (Hot Sauce): patrols, fires a projectile, takes 3 stomps to defeat, spawns the ingredient on death — also pulled forward from Phase 2 as a second vertical-slice milestone, replacing the old "ingredient just sitting in the open" ending
 - [ ] Playtest with the target audience (or an age-appropriate proxy)
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)
 - [ ] Ability-gated upgrade system unlocked between levels
-- [ ] Stomp-to-defeat enemy mechanic (Cornchip's baseline combat ability, see `feature.md` FB8)
-- [ ] Remaining 6 levels, each with its own ingredient, obstacle puns, and boss battle (see `feature.md` FB9)
+- [ ] Remaining 6 levels, each with its own ingredient, obstacle puns, and boss battle (see `feature.md` F5) — Avocado, Cheese, and Salsa Bowl bosses still need their own instances (`boss.gd` is written to be reused, art is ready)
 - [ ] Design remaining boss roster beyond Hot Sauce, Avocado, and Salsa Bowl (Cheese's and Salsa Bowl's role as boss vs. hazard enemy still undecided)
 - [ ] Wrap final-boss battle and end-game reconciliation scene
 
