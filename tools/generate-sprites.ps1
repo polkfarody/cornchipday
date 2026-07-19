@@ -3,6 +3,14 @@
 # file in the project root with GEMINI_API_KEY=<your key> (copy .env.example).
 # Output lands in Assets/generated/ as transparent-background PNGs, meant to
 # replace the placeholder Polygon2D shapes currently in the Godot scenes.
+#
+# Usage:
+#   .\generate-sprites.ps1            # generate all sprites
+#   .\generate-sprites.ps1 -Only cornchip   # generate just one, by Name
+
+param(
+    [string]$Only = $null
+)
 
 $ErrorActionPreference = "Stop"
 
@@ -39,6 +47,16 @@ $sprites = @(
     @{ Name = "cheese_enemy"; Prompt = "A cartoon video-game enemy character: a friendly-looking wedge of yellow cheese with small comedic cartoon legs and a sleepy, mischievous expression, small visible cheese holes. 2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated yellow, flat shading, transparent background, neutral standing pose. No text, no watermark." }
 )
 
+if ($Only) {
+    $sprites = $sprites | Where-Object { $_.Name -eq $Only }
+    if (-not $sprites) {
+        Write-Error "No sprite named '$Only' in the list."
+        exit 1
+    }
+}
+
+$maxRetries = 4
+
 foreach ($sprite in $sprites) {
     Write-Host "Generating $($sprite.Name)..."
     $body = @{
@@ -46,34 +64,54 @@ foreach ($sprite in $sprites) {
         input = @(@{ type = "text"; text = $sprite.Prompt })
     } | ConvertTo-Json -Depth 10
 
-    try {
-        $response = Invoke-RestMethod -Uri "https://generativelanguage.googleapis.com/v1beta/interactions" `
-            -Method Post `
-            -Headers @{ "x-goog-api-key" = $apiKey } `
-            -ContentType "application/json" `
-            -Body $body
+    $attempt = 0
+    $succeeded = $false
+    while (-not $succeeded -and $attempt -le $maxRetries) {
+        $attempt++
+        try {
+            $response = Invoke-RestMethod -Uri "https://generativelanguage.googleapis.com/v1beta/interactions" `
+                -Method Post `
+                -Headers @{ "x-goog-api-key" = $apiKey } `
+                -ContentType "application/json" `
+                -Body $body
 
-        $imageData = $null
-        foreach ($step in $response.steps) {
-            foreach ($item in $step.content) {
-                if ($item.type -eq "image") {
-                    $imageData = $item.data
-                    break
+            $imageData = $null
+            foreach ($step in $response.steps) {
+                foreach ($item in $step.content) {
+                    if ($item.type -eq "image") {
+                        $imageData = $item.data
+                        break
+                    }
                 }
+                if ($imageData) { break }
             }
-            if ($imageData) { break }
-        }
 
-        if (-not $imageData) {
-            Write-Warning "No image returned for $($sprite.Name). Response: $($response | ConvertTo-Json -Depth 10)"
-            continue
-        }
+            if (-not $imageData) {
+                Write-Warning "No image returned for $($sprite.Name). Response: $($response | ConvertTo-Json -Depth 10)"
+                break
+            }
 
-        $bytes = [Convert]::FromBase64String($imageData)
-        $outPath = Join-Path $outDir "$($sprite.Name).png"
-        [IO.File]::WriteAllBytes($outPath, $bytes)
-        Write-Host "Saved $outPath"
-    } catch {
-        Write-Warning "Failed to generate $($sprite.Name): $_"
+            $bytes = [Convert]::FromBase64String($imageData)
+            $outPath = Join-Path $outDir "$($sprite.Name).png"
+            [IO.File]::WriteAllBytes($outPath, $bytes)
+            Write-Host "Saved $outPath"
+            $succeeded = $true
+        } catch {
+            $statusCode = $null
+            if ($_.Exception.Response) {
+                $statusCode = [int]$_.Exception.Response.StatusCode
+            }
+            if ($statusCode -eq 429 -and $attempt -le $maxRetries) {
+                $waitSeconds = 15 * $attempt
+                Write-Warning "$($sprite.Name): rate limited (429), retry $attempt/$maxRetries in ${waitSeconds}s..."
+                Start-Sleep -Seconds $waitSeconds
+            } else {
+                Write-Warning "Failed to generate $($sprite.Name): $_"
+                break
+            }
+        }
     }
+
+    # Small gap between sprites regardless of outcome, to stay under per-minute limits.
+    Start-Sleep -Seconds 5
 }

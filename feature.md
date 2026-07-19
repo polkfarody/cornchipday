@@ -29,9 +29,12 @@
 - **FB4** — Full art pass across all characters/levels for visual consistency
 - **FB5** — Audio/music/SFX pass
 - **FB6** — 2-player local co-op with Cheeto
-- **FB7** — "Spin dash" upgrade: Cornchip spins rapidly, letting him plow through enemies unharmed while they comically fly off-screen (front- or back-flipping). Candidate for the ability-gated upgrade system (FB1).
+- **FB7** — "Spin dash" upgrade: Cornchip spins rapidly, letting him plow through enemies unharmed while they comically fly off-screen (front- or back-flipping). Unlocked via the Air Fryer collectible (see below). Candidate for the ability-gated upgrade system (FB1).
 - **FB8** — Stomp-to-defeat: Cornchip's baseline way to deal with enemies is jumping on them to defeat them (Mario-style stomp); further upgrades unlock additional ways to interact with enemies over time.
-- **FB9** — Per-level boss battles: each level ends with a fight against a themed guardian (Hot Sauce, Avocado, Cheese, and others still to be designed) who holds that level's ingredient. Wrap is the final boss, fought after all other ingredients are collected.
+- **FB9** — Per-level boss battles: each level ends with a fight against a themed guardian (Hot Sauce, Avocado, Cheese, Salsa Bowl, and others still to be designed) who holds that level's ingredient. Wrap is the final boss, fought after all other ingredients are collected.
+- **FB10** — Air Fryer collectible: grants Cornchip the spin-dash ability (FB7) once picked up.
+- **FB11** — Tomato collectible: temporary power-up letting Cornchip fire seeds at enemies from range for a short duration.
+- **FB12** — Lettuce as the main collectible token: scattered throughout each level (not just a single end-of-level pickup), functioning as the game's primary currency/collectible, alongside the per-level boss-guarded ingredient. **Open question:** does this replace the "one ingredient per level" model from the original brief, or sit alongside it as a separate collectible layer (see game-brief.txt Open Questions)?
 
 ## Explicitly Out of Scope (MVP)
 - Touch/mobile input

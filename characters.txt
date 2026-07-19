@@ -34,9 +34,15 @@ Each level culminates in a boss battle guarding that level's ingredient; Wrap is
 - **Personality (draft — pending confirmation):** Not yet specified.
 - **Open question:** Is Cheese a full level boss (guarding an ingredient) or a regular enemy encountered within a level?
 
+### Salsa Bowl
+- **Silhouette:** A rolling bowl of salsa, mounted on small corn-shaped wheels.
+- **Role:** Fires tomato chunks at Cornchip while rolling around.
+- **Personality (draft — pending confirmation):** Not yet specified.
+- **Open question:** Is Salsa Bowl a full level boss (like Hot Sauce/Avocado) or a regular enemy encountered within a level?
+
 ## Open Items
 - Confirm the two "draft — pending confirmation" personality notes for Cornchip and Wrap, or replace with your intended characterization.
-- Confirm the full boss roster and level order across all 7 levels — Hot Sauce and Avocado are confirmed candidates; more are likely needed, and Cheese's boss-vs-enemy status is still open.
+- Confirm the full boss roster and level order across all 7 levels — Hot Sauce and Avocado are confirmed candidates; more are likely needed, and Cheese's and Salsa Bowl's boss-vs-enemy status are still open.
 - Confirm Cheese's visual silhouette and personality.
 - Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` FB8) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening?
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.

@@ -1,0 +1,10 @@
+- Powerup: Cornchip spins real fast which allows him to run into enemies without being injured. The enemy flies off the screen front or back flipping.
+- Character: Hot sauce: Happy hot sauce squeeze bottle who's lid is his sombrero. He has legs and a face. He fires sauce out his hat. (looks like lava, because it's hot)
+- Character: Avacado: A dancing avacado that dances and jumps and as he does quacomole drops on the ground that cornchip can't touch.
+- Gameplay: Cornchip can jump on enemies to kill them initially. Throughout the game, different upgrades and features are granted.
+- Story: At the end of each level cornchip battles a new boss to gain ingredients (until final boss (wrap))
+- Character: Cheese: When he touches cornchip, cornchip falls aslpeep for 10 seconds.
+- Character: Salsa Bowl: A rolling salsa bowl that fires tomato chunks at cornchip. On corny wheels
+- Collectable: tomato gives ability to fire seeds at foes for a short period. 
+- Collectable: lettuce, collected throughout the level and is the main token for the game.
+- Collectable: Air Fryer: Gives cornchip the spin feature that spins him and knocks enemies off the screen

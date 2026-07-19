@@ -46,7 +46,8 @@ A single, fully polished vertical-slice level demonstrating: core run/jump movem
 - **2-player local co-op:** Cornchip's best friend Cheeto joins the quest as a second playable character. Explicitly out of scope for MVP; the codebase should avoid decisions that would make adding a second player unusually difficult later (see `instructions-ai.txt` extensibility principle).
 
 ## Open Questions
-- Full boss roster and per-level order across all 7 levels — Hot Sauce and Avocado are confirmed candidates; Cheese's status as boss vs. regular enemy is still undecided.
+- Lettuce is noted as a token collected throughout each level (like coins/rings) *and* as "the main token for the game" — does this replace the original "one ingredient collected at level's end" model, or are these two separate collectible layers (in-level lettuce tokens + a per-level boss-guarded ingredient)?
+- Full boss roster and per-level order across all 7 levels — Hot Sauce, Avocado, and Salsa Bowl are confirmed candidates; Cheese's and Salsa Bowl's status as boss vs. regular enemy is still undecided.
 - How do boss battles and the jump-to-defeat mechanic square with the no-fail-state pillar? Working assumption: losing to a boss just means an immediate retry with no penalty, same as any other obstacle — worth confirming explicitly.
 - Is the Wrap confrontation framed the same as other boss battles (combat-first), or does it shift tone toward a gentler final reconciliation moment, given the sibling-reunion story?
 - Should each level map to a specific real-world crunch wrap ingredient (lettuce, cheese, salsa, etc.), and if so, is there a preferred list/order?
