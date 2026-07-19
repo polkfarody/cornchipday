@@ -8,13 +8,13 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 ### Phase 0 — Documentation & Setup
 - [x] Game brief, character bible, AI charter drafted
 - [x] plan.md / readme.md / feature.md drafted (this phase)
-- [ ] Godot 4 installed, project scaffolded
+- [x] Godot 4 installed, project scaffolded
 
 ### Phase 1 — Vertical Slice MVP
-- [ ] Player controller: run + jump, keyboard input
-- [ ] One obstacle (thrown "mild" salsa) with a visual-comedy reaction and a no-fail respawn
-- [ ] Level end: ingredient collectible with clear, wordless completion feedback
-- [ ] First-pass AI-generated art for Cornchip and the one obstacle type
+- [x] Player controller: run + jump, keyboard input
+- [x] One obstacle (thrown "mild" salsa) with a visual-comedy reaction and a no-fail respawn
+- [x] Level end: ingredient collectible with clear, wordless completion feedback
+- [ ] First-pass AI-generated art for Cornchip and the one obstacle type — currently placeholder vector shapes only; no image-generation tool available in this environment (see `feature.md` F4)
 - [ ] Playtest with the target audience (or an age-appropriate proxy)
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)

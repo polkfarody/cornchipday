@@ -32,6 +32,8 @@ Acting as the project's game development lead: an experienced 2D platformer deve
 - **MVP scope:** Single vertical-slice level, not the full 7-level progression
 
 ## Next Steps
-- [ ] Draft `plan.md`, `readme.md`, `feature.md`
-- [ ] Install Godot 4 and scaffold the project
-- [ ] Build the vertical-slice MVP level
+- [x] Draft `plan.md`, `readme.md`, `feature.md`
+- [x] Install Godot 4 and scaffold the project
+- [x] Build a first pass of the vertical-slice MVP level (run/jump, one obstacle, one ingredient collectible) — using placeholder vector-shape art, not final illustrated sprites (no image-generation tool available in this environment; see `feature.md` F4)
+- [ ] Playtest the vertical slice and iterate
+- [ ] Source or generate real illustrated sprites for Cornchip and the salsa obstacle
