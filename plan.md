@@ -25,6 +25,7 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [x] Real art generated for the salsa obstacle and lettuce ingredient, plus a new cheese ingredient icon — all wired into their scenes
 - [x] Sprite pipeline improvements: generation requests now include reference images (existing character art) for style consistency; the grid-slicer detects the actual number of rows in a layout instead of assuming 2 (the model doesn't always honor the requested 4x2 layout); transparent pixels are fully zeroed (RGB and alpha) instead of leaving color baked in under alpha=0; the crop script can no longer reprocess and corrupt its own previously-finalized output (this happened once and was caught via checksum + git restore before committing)
 - [ ] **Blocked on user confirmation:** art was already generated (real cost incurred) for Queso Grande and Jalapeño — both AI-invented Level 2 characters — before checking whether the user wants these specific characters at all. Nothing further should be built with them until confirmed. See Open Questions.
+- [x] Level 1 reworked to feel "grander/more epic" per direct user request: 4 real jump gaps (`FALL_RESPAWN_Y` in `player.gd`, same life-cost consequence as any hit), roughly doubled length, a layered sunset-patio background (procedural vector art, no new paid generation), and a distinct arena zone for the Hot Sauce fight — see `feature.md` F9
 - [ ] Playtest with the target audience (or an age-appropriate proxy)
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)

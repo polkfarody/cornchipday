@@ -34,11 +34,18 @@
 - Multiple bean pickups placed throughout the level (`BeanToken.tscn`, reusing `ingredient.gd`'s generic pickup logic with new placeholder art, tagged with the `bean_token` group instead of ending the level)
 - Corrected from an earlier "lettuce token" naming mixup (additions.txt) -- beans are the scattered collectible currency; lettuce stays an ingredient-only concept
 - Separate from the boss-dropped level ingredient, which is unchanged
-- Counted in `level1.gd` (`bean_tokens_collected`); no on-screen counter yet -- flagged as a follow-up, not built this pass
+- Counted in `level_base.gd` (`bean_tokens_collected`); no on-screen counter yet -- flagged as a follow-up, not built this pass
 
 ### F8 — Air Fryer Power-Up (Spin Dash)
 - A pickup (placeholder art) that grants Cornchip a spin-dash: pressing Up (`ui_up`, already bound by default -- avoided hand-editing the InputMap) triggers ~1 second where touching any enemy defeats it instead of hurting him, same code path as a stomp
 - Visual feedback is a color tint on the sprite for now, not a real spin animation -- flagged as future art/polish, not a functional gap
+
+### F9 — Level 1 Rework: Jump Gaps, Length, Visual Spectacle, Arena
+Direct user request ("make Level 1 grander/more epic"), covering four things at once:
+- **Jump gaps:** the single continuous ground slab is now 5 separate segments (`GroundA`-`GroundD` plus `GroundArena`) with 4 real gaps between them. Falling through one is handled by `player.gd`'s new `FALL_RESPAWN_Y` check in `_physics_process` -- crossing that Y threshold calls the existing `hit_by_obstacle()`, so a missed jump costs a life exactly like any other hit rather than needing a separate mechanic. Gaps are sized (~90-100px) to stay comfortably within the player's max jump distance (~154px at full run speed) for a 5-8 year old audience.
+- **Longer level:** roughly doubled in length (now ~3900 units, was ~2000), with enemies and bean-token clusters spread across the extra space rather than just padding empty ground.
+- **Visual spectacle:** a layered sunset-patio background (three-band gradient sky, repeating string-light clusters, cactus silhouettes) replacing the flat sky-blue `ColorRect`, all procedural vector art -- no new paid generation for this pass.
+- **Arena:** a distinct zone for the Hot Sauce fight (its own ground color, festive bunting at the entrance) so reaching him reads as arriving somewhere, not just more of the same ground.
 
 ### F4 — First-Pass Art
 - AI-generated Cornchip sprite: idle, run, jump, and "hit" reaction states
