@@ -1,9 +1,60 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame1.png" id="tex_idle1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame2.png" id="tex_idle2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame3.png" id="tex_run1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame4.png" id="tex_run2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame5.png" id="tex_jump1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame6.png" id="tex_jump2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame7.png" id="tex_hit"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(40, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cornchip"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_idle2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_run2")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_jump1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_jump2")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_hit")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_player")
@@ -12,32 +63,12 @@ script = ExtResource("1_player")
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_body")
 
-[node name="Body" type="Polygon2D" parent="."]
-color = Color(0.93, 0.73, 0.16, 1)
-polygon = PackedVector2Array(-26, -20, 26, -20, 0, 30)
-
-[node name="EyeLeft" type="Polygon2D" parent="Body"]
-position = Vector2(-9, -8)
-color = Color(0.1, 0.1, 0.1, 1)
-polygon = PackedVector2Array(5, 0, 3.5, 3.5, 0, 5, -3.5, 3.5, -5, 0, -3.5, -3.5, 0, -5, 3.5, -3.5)
-
-[node name="EyeRight" type="Polygon2D" parent="Body"]
-position = Vector2(9, -8)
-color = Color(0.1, 0.1, 0.1, 1)
-polygon = PackedVector2Array(5, 0, 3.5, 3.5, 0, 5, -3.5, 3.5, -5, 0, -3.5, -3.5, 0, -5, 3.5, -3.5)
-
-[node name="Mouth" type="Polygon2D" parent="Body"]
-position = Vector2(0, 3)
-color = Color(0.35, 0.12, 0.08, 1)
-polygon = PackedVector2Array(6, 0, 4, 3, -4, 3, -6, 0, -4, -3, 4, -3)
-
-[node name="LegLeft" type="Polygon2D" parent="Body"]
-color = Color(0.7, 0.55, 0.1, 1)
-polygon = PackedVector2Array(-6, 28, -2, 28, -10, 46, -14, 46)
-
-[node name="LegRight" type="Polygon2D" parent="Body"]
-color = Color(0.7, 0.55, 0.1, 1)
-polygon = PackedVector2Array(2, 28, 6, 28, 14, 46, 10, 46)
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("SpriteFrames_cornchip")
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
