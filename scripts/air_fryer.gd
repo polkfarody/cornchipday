@@ -1,19 +1,16 @@
 extends Area2D
 
-# The level's collectible ingredient. Also reused for the scattered lettuce
-# tokens (game-brief.txt "main token"); Level1 tells the two apart by group
-# membership, not by script. Pickup is a purely visual celebration -- no
-# text, per the no-reading-required design pillar.
-signal collected
-
+# Air Fryer collectible (feature.md FB10): grants Cornchip the spin-dash
+# ability for the rest of the level once picked up.
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
+	if body.has_method("grant_spin_dash"):
+		body.grant_spin_dash()
 	set_deferred("monitoring", false)
-	collected.emit()
 	var tween := create_tween()
 	tween.tween_property(self, "scale", Vector2(1.6, 1.6), 0.2)
 	tween.parallel().tween_property(self, "modulate:a", 0.0, 0.2)

@@ -72,6 +72,11 @@ func _fire_projectile() -> void:
 func _on_hurt_area_body_entered(body: Node) -> void:
 	if is_defeated or not body.is_in_group("player"):
 		return
+	# Air Fryer spin dash (feature.md FB7/FB10): any contact while spinning
+	# defeats the enemy instead of hurting the player, same as a stomp.
+	if body.get("is_spinning") == true:
+		_take_stomp_hit(body)
+		return
 	var is_stomp: bool = body.velocity.y > 0.0 and body.global_position.y < global_position.y - 10.0
 	if is_stomp:
 		_take_stomp_hit(body)
