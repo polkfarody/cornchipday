@@ -174,6 +174,15 @@ function Get-ComponentBoxes([int[]]$label, [int]$w, [int]$h, [System.Collections
 }
 
 Get-ChildItem "$dir\*.png" | ForEach-Object {
+    # Never reprocess this script's own prior output -- re-running the
+    # single-prop "keep largest blob, crop tight" path on an already-sliced
+    # frame silently destroys the uniform per-character canvas size that
+    # normalization depends on (each frame gets cropped to its own unique
+    # bounds instead of staying aligned with its siblings).
+    if ($_.Name -match '_frame\d+\.png$' -or $_.Name -match '_puddle\.png$') {
+        return
+    }
+
     $path = $_.FullName
     $isGrid = $_.Name -like "*_grid.png"
 
@@ -237,17 +246,31 @@ Get-ChildItem "$dir\*.png" | ForEach-Object {
         return
     }
 
-    # Grid image: sort surviving blobs into reading order (two rows, by center Y then center X).
-    $midY = $h / 2
-    $row1 = @(); $row2 = @()
-    foreach ($lbl in $boxes.Keys) {
-        $box = $boxes[$lbl]
-        $cy = ($box.MinY + $box.MaxY) / 2
-        if ($cy -lt $midY) { $row1 += $lbl } else { $row2 += $lbl }
+    # Grid image: sort surviving blobs into reading order. Rows are detected
+    # by gaps in center-Y rather than assuming exactly 2 rows -- the model
+    # doesn't always honor the requested 4-column x 2-row layout (sometimes
+    # it draws 2x4 instead), so this clusters however many rows actually
+    # exist, then sorts each row left-to-right by center X.
+    $rowGapThreshold = $h * 0.1
+    $sortedByY = $boxes.Keys | Sort-Object { ($boxes[$_].MinY + $boxes[$_].MaxY) / 2 }
+    $rows = @()
+    $currentRow = @()
+    $lastY = $null
+    foreach ($lbl in $sortedByY) {
+        $cy = ($boxes[$lbl].MinY + $boxes[$lbl].MaxY) / 2
+        if ($null -ne $lastY -and ($cy - $lastY) -gt $rowGapThreshold) {
+            $rows += , $currentRow
+            $currentRow = @()
+        }
+        $currentRow += $lbl
+        $lastY = $cy
     }
-    $row1 = $row1 | Sort-Object { ($boxes[$_].MinX + $boxes[$_].MaxX) / 2 }
-    $row2 = $row2 | Sort-Object { ($boxes[$_].MinX + $boxes[$_].MaxX) / 2 }
-    $ordered = @($row1) + @($row2)
+    if ($currentRow.Count -gt 0) { $rows += , $currentRow }
+
+    $ordered = @()
+    foreach ($row in $rows) {
+        $ordered += ($row | Sort-Object { ($boxes[$_].MinX + $boxes[$_].MaxX) / 2 })
+    }
 
     if ($ordered.Count -ne 8) {
         Write-Warning "$($_.Name): expected 8 poses, found $($ordered.Count) -- check this grid image manually"
