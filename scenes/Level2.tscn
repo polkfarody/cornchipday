@@ -1,0 +1,197 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/CheeseIngredient.tscn" id="2_ingredient"]
+[ext_resource type="PackedScene" path="res://scenes/QuesoGrandeBoss.tscn" id="3_boss"]
+[ext_resource type="PackedScene" path="res://scenes/SlowProjectile.tscn" id="4_slow_projectile"]
+[ext_resource type="PackedScene" path="res://scenes/CheeseEnemy.tscn" id="5_cheese"]
+[ext_resource type="PackedScene" path="res://scenes/JalapenoEnemy.tscn" id="6_jalapeno"]
+[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame1.png" id="7_life_icon"]
+[ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="8_bean"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
+size = Vector2(600, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundB"]
+size = Vector2(710, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundC"]
+size = Vector2(810, 80)
+
+[node name="Level2" type="Node2D"]
+script = ExtResource("0_level_base")
+next_level_path = "res://scenes/Level3.tscn"
+
+[node name="SkyTop" type="ColorRect" parent="."]
+offset_left = -200.0
+offset_top = -600.0
+offset_right = 2300.0
+offset_bottom = -250.0
+color = Color(0.45, 0.3, 0.1, 1)
+
+[node name="SkyMid" type="ColorRect" parent="."]
+offset_left = -200.0
+offset_top = -250.0
+offset_right = 2300.0
+offset_bottom = 50.0
+color = Color(0.85, 0.65, 0.2, 1)
+
+[node name="SkyHorizon" type="ColorRect" parent="."]
+offset_left = -200.0
+offset_top = 50.0
+offset_right = 2300.0
+offset_bottom = 400.0
+color = Color(0.95, 0.88, 0.55, 1)
+
+[node name="Chip1" type="Polygon2D" parent="."]
+position = Vector2(350, 300)
+color = Color(0.82, 0.62, 0.25, 1)
+polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+
+[node name="Chip2" type="Polygon2D" parent="."]
+position = Vector2(1000, 300)
+color = Color(0.82, 0.62, 0.25, 1)
+polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+
+[node name="Chip3" type="Polygon2D" parent="."]
+position = Vector2(1600, 300)
+color = Color(0.82, 0.62, 0.25, 1)
+polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+
+[node name="Chip4" type="Polygon2D" parent="."]
+position = Vector2(2000, 300)
+color = Color(0.82, 0.62, 0.25, 1)
+polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+
+[node name="CheeseDrip1" type="Polygon2D" parent="."]
+position = Vector2(250, -40)
+color = Color(0.95, 0.78, 0.2, 1)
+polygon = PackedVector2Array(0, -10, 6, 0, 4, 10, 0, 14, -4, 10, -6, 0)
+
+[node name="CheeseDrip2" type="Polygon2D" parent="."]
+position = Vector2(1200, -40)
+color = Color(0.95, 0.78, 0.2, 1)
+polygon = PackedVector2Array(0, -10, 6, 0, 4, 10, 0, 14, -4, 10, -6, 0)
+
+[node name="CheeseDrip3" type="Polygon2D" parent="."]
+position = Vector2(1900, -40)
+color = Color(0.95, 0.78, 0.2, 1)
+polygon = PackedVector2Array(0, -10, 6, 0, 4, 10, 0, 14, -4, 10, -6, 0)
+
+[node name="GroundA" type="StaticBody2D" parent="."]
+position = Vector2(200, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+shape = SubResource("RectangleShape2D_groundA")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+offset_left = -300.0
+offset_top = -40.0
+offset_right = 300.0
+offset_bottom = 40.0
+color = Color(0.78, 0.58, 0.16, 1)
+
+[node name="GroundB" type="StaticBody2D" parent="."]
+position = Vector2(945, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
+shape = SubResource("RectangleShape2D_groundB")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+offset_left = -355.0
+offset_top = -40.0
+offset_right = 355.0
+offset_bottom = 40.0
+color = Color(0.78, 0.58, 0.16, 1)
+
+[node name="GroundC" type="StaticBody2D" parent="."]
+position = Vector2(1795, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
+shape = SubResource("RectangleShape2D_groundC")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+offset_left = -405.0
+offset_top = -40.0
+offset_right = 405.0
+offset_bottom = 40.0
+color = Color(0.6, 0.4, 0.08, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(100, 300)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Life1" type="TextureRect" parent="HUD"]
+position = Vector2(20, 20)
+size = Vector2(36, 36)
+texture = ExtResource("7_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life2" type="TextureRect" parent="HUD"]
+position = Vector2(64, 20)
+size = Vector2(36, 36)
+texture = ExtResource("7_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life3" type="TextureRect" parent="HUD"]
+position = Vector2(108, 20)
+size = Vector2(36, 36)
+texture = ExtResource("7_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BeanToken1" parent="." instance=ExtResource("8_bean")]
+position = Vector2(200, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken2" parent="." instance=ExtResource("8_bean")]
+position = Vector2(240, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken3" parent="." instance=ExtResource("8_bean")]
+position = Vector2(280, 330)
+groups = ["bean_token"]
+
+[node name="JalapenoEnemy1" parent="." instance=ExtResource("6_jalapeno")]
+position = Vector2(400, 330)
+
+[node name="BeanToken4" parent="." instance=ExtResource("8_bean")]
+position = Vector2(650, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken5" parent="." instance=ExtResource("8_bean")]
+position = Vector2(690, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken6" parent="." instance=ExtResource("8_bean")]
+position = Vector2(730, 330)
+groups = ["bean_token"]
+
+[node name="CheeseEnemy1" parent="." instance=ExtResource("5_cheese")]
+position = Vector2(900, 330)
+
+[node name="BeanToken7" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1100, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken8" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1140, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken9" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1450, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken10" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1490, 330)
+groups = ["bean_token"]
+
+[node name="QuesoGrandeBoss" parent="." instance=ExtResource("3_boss")]
+position = Vector2(1795, 330)
+projectile_scene = ExtResource("4_slow_projectile")
+ingredient_scene = ExtResource("2_ingredient")
+ingredient_spawn_position = Vector2(1795, 330)

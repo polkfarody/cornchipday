@@ -60,7 +60,7 @@ script = ExtResource("1_boss")
 max_health = 1
 move_speed = 50.0
 patrol_half_width = 40.0
-sleep_duration = 10.0
+sleep_duration = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
