@@ -18,6 +18,13 @@ Acting as the project's game development lead: an experienced 2D platformer deve
 | `readme.md` | Project overview and setup instructions for anyone opening the repo |
 | `feature.md` | Feature backlog/spec, tracked as scope evolves |
 
+## Additions Log Workflow
+`additions.txt` is a standing scratch inbox for quick ideas (e.g. new abilities, obstacle gags, level concepts) dropped in at any time, without needing to ask first. At the start of any work in this project:
+1. Read `additions.txt`.
+2. If it has content, fold each item into the correct document — `feature.md` for mechanics/abilities, `game-brief.txt` for premise/tone changes, `characters.txt` for character details, `plan.md` if it changes roadmap/scope.
+3. Clear `additions.txt` back to empty once its contents are merged, so it stays a running inbox rather than a growing log.
+4. Note the merge briefly to the user; don't ask permission to do this triage — that's the point of the file.
+
 ## Current Objective
 1. Flesh out the documentation set above so it fully covers professional, speedy development practice (in progress).
 2. Deliver a vertical-slice MVP: one fully polished level demonstrating core run/jump movement, one obstacle type, and the ingredient-collection loop.
