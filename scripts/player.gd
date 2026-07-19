@@ -11,6 +11,7 @@ const RUN_TILT_DEGREES := 6.0
 const SPIN_DURATION := 1.0
 const SPIN_TINT := Color(1.3, 1.3, 0.6)
 const SLEEP_TINT := Color(0.55, 0.55, 0.9)
+const FALL_RESPAWN_Y := 650.0  # missed a jump gap -- same consequence as any other hit
 
 # Emitted on every hit (obstacle or enemy), whatever the source -- Level1
 # listens to this to track lives, so any new hazard type gets lives-tracking
@@ -36,6 +37,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
+
+	if global_position.y > FALL_RESPAWN_Y:
+		hit_by_obstacle()
 
 	if is_stunned or is_asleep:
 		velocity.x = 0.0
