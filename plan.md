@@ -28,6 +28,7 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [x] Fixed a real gap: `Obstacle.tscn`/`Ingredient.tscn` had been documented as using real generated art but were still on the old placeholder shapes -- now actually wired in, plus a new `CheeseIngredient.tscn` for Level 2
 - [x] Level 2 (Nacho Kitchen) built in full: Queso Grande boss (new cheese-glob slow attack via `slow_projectile.gd`/`apply_slow()`), Jalapeño enemy, Cheese reused, bean tokens, 2 jump gaps, nacho-yellow background -- see `feature.md` F10
 - [x] Lime and Onion art generated for Level 3 (not yet built into scenes). Two quality notes from this batch: Lime came back with an extra squirt-attack frame (9 poses instead of 8, all legitimate -- just pick 2 of the 3 when building the scene, no cleanup needed). Onion lost its "releasing fumes" decoration on 2 of 8 frames -- the fume-line shapes were visible in the raw generated image but didn't survive `crop-sprites.ps1`'s small-blob filtering, likely because they're thin/low-pixel-area compared to the character body. Flagged in Open Questions rather than silently reprocessed or paid to regenerate.
+- [ ] **Next up:** Level 1/2 environment art pass -- jump-over obstacles (2-3 size variants per level), themed pit-hazard fills (e.g. Level 1's gaps full of bubbling salsa instead of a void), tiled ground textures, background scenery upgrades, and a window/parallax depth layer. Full 16-asset prompt list finalized and documented, see `feature.md` F11. Generation not yet run.
 - [ ] Playtest with the target audience (or an age-appropriate proxy)
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)
@@ -39,7 +40,7 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [ ] Tomato power-up (see `feature.md` FB11)
 
 ### Phase 3 — Polish & Post-MVP Stretch
-- [ ] **Textures and style consistency pass** (user-requested addition): backgrounds are currently flat `ColorRect` bands per level (Level 1's sunset patio, Level 2's nacho-yellow) rather than real generated textures -- a proper tiled ground/background texture pass, plus a documented style guide (palette, line weight, proportions) to keep new batches consistent as more levels/characters get generated, would replace ad hoc per-level color choices with something more deliberate. Related to FB4 below but broader than just "more character art."
+- ~~Textures and style consistency pass~~ — scoped and detailed for Levels 1-2, see the Phase 1 item above and `feature.md` F11 (obstacles, hazard fills, ground tiles, scenery, parallax window depth). Levels 3-7 will need their own equivalent pass once built.
 - [ ] Full AI-art pass across all levels/characters for visual consistency (FB4)
 - [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)
 - [ ] 2-player local co-op investigation (Cheeto)

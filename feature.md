@@ -62,6 +62,42 @@ Direct user request ("make Level 1 grander/more epic"), covering four things at 
 - Nacho-yellow layered background (gradient sky, tortilla-chip and cheese-drip decorations), same procedural-art approach as Level 1.
 - `next_level_path` points to `Level3.tscn`, which doesn't exist yet -- matches the same forward-declared pattern Level 1 used for Level 2 before it existed.
 
+### F11 — Level 1/2 Environment Art Pass (Obstacles, Hazard Fills, Ground Tiles, Parallax Depth)
+User-requested: levels should have jump-over obstacles (not just gaps to jump across) themed per level, gap-hazards should look like something thematic instead of a plain void (e.g. Level 1's gaps full of hot salsa), and a fuller environment art pass beyond just character sprites. Scoped to Levels 1-2 only for this pass (already built); Levels 3-7 get their own art when they're actually built. Status: **prompts finalized below, not yet generated.**
+
+**Mechanics (need no new code):**
+- Jump-over obstacles are a plain solid wall -- same collision pattern as the ground segments, just a raised block placed mid-ground. The player's existing movement/collision handles walking into or jumping over it with zero new script logic.
+- Pit-hazard fill is purely visual -- a themed texture (e.g. bubbling salsa) drawn over/in the existing gaps. The fall consequence (`FALL_RESPAWN_Y` -> `hit_by_obstacle()`, see F9) is completely unchanged.
+- The window/parallax background element is the one piece needing new code: implemented as a Godot `ParallaxLayer` (inside a `ParallaxBackground`) so it scrolls slower than the foreground gameplay layer, producing real depth rather than just an illustrated trick.
+
+**Obstacle variants:** 2-3 height/size variants per level (user request), reusing the same themed design at different stack heights so a level doesn't just repeat one exact silhouette everywhere.
+
+**Asset list (16 total), Level 1 -- Salsa Cantina:**
+| File | Prompt |
+|---|---|
+| `l1_obstacle_small.png` | A cartoon obstacle for a platformer: a single stack of two red salsa jars with cartoon labels, glossy glass, a small comedic wobble to the stack. |
+| `l1_obstacle_medium.png` | Same, but a small pyramid of three stacked salsa jars. |
+| `l1_obstacle_large.png` | Same, but a tall pyramid of five stacked salsa jars, slightly leaning for a comedic wobble. |
+| `l1_hazard_fill.png` | Seamless tileable texture: bubbling hot molten salsa, glossy red-orange, bubble highlights, subtle simmering texture, no visible seam. |
+| `l1_ground_tile.png` | Seamless tileable texture: warm terracotta patio floor tiles with grout lines, warm reddish-brown tones, no visible seam. |
+| `l1_cactus.png` | A simple cartoon saguaro cactus silhouette, two side arms, bright green with highlight lines. |
+| `l1_string_lights.png` | A short strand of 3 festive string lights (red, yellow, green bulbs) on a thin wire. |
+| `l1_window_view.png` | A wooden cantina-style window frame set into a warm adobe wall, with a hazy, softer-detailed distant desert scene visible through the glass: silhouettes of far-off cacti and low hills under a warm sunset sky, suggesting depth beyond the window. |
+
+**Asset list, Level 2 -- Nacho Kitchen:**
+| File | Prompt |
+|---|---|
+| `l2_obstacle_small.png` | A single nacho serving tray standing on its edge, red plastic basket-style tray with a few tortilla chips visible. |
+| `l2_obstacle_medium.png` | Two stacked nacho serving trays, same style. |
+| `l2_obstacle_large.png` | Three stacked nacho trays topped with a block of yellow cheese. |
+| `l2_hazard_fill.png` | Seamless tileable texture: bubbling molten nacho cheese, glossy orange-yellow, bubble highlights, melty texture, no visible seam. |
+| `l2_ground_tile.png` | Seamless tileable checkered nacho-bar floor, alternating warm yellow and tan tiles, no visible seam. |
+| `l2_chip.png` | A single cartoon tortilla chip, triangular, golden-tan with brown speckles. |
+| `l2_cheese_drip.png` | A single cartoon cheese-drip/dollop hanging shape, glossy orange-yellow. |
+| `l2_window_view.png` | A window frame set into a tiled cheese-yellow kitchen wall, with a hazy, softer-detailed distant scene visible through the glass: a softly-lit dining area or second kitchen counter, suggesting depth beyond the window. |
+
+**Generation notes:** obstacles and background-scenery items (cactus, string lights, chip, cheese drip, window views) are icon-style assets on solid magenta, same treatment as character art. Hazard-fill and ground-tile textures are NOT magenta/chroma-key assets -- they're requested directly as seamless tileable patterns, since the whole image is the visible texture rather than an icon to key out. Same reference images (`cornchip_frame1.png`, `hot_sauce_boss_frame1.png`) used for all, for style consistency.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
 - ~~FB2 — Remaining 6 levels~~ — Level 2 (Nacho Kitchen) built, see F10. Guac Stand, Market Tomatoes, Frosty Fridge, Sizzling Griddle, and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
