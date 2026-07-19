@@ -133,7 +133,17 @@ $sprites = @(
         "a cartoon jalapeño pepper character, glossy green skin, small comedic stick legs, big round friendly-but-mischievous cartoon eyes, simple mouth." `
         "hopping, crouching down then springing up" `
         "a spicy wink/taunt, one eye winking with a small heat-wave squiggle above its head" `
-        "a dizzy, defeated pose, slightly wilted") }
+        "a dizzy, defeated pose, slightly wilted") },
+    @{ Name = "lime_grid"; Prompt = (Grid-Prompt `
+        "a wedge of lime with visible juicy green segments and white pith, small comedic stick legs, big round cartoon eyes, a mischievous grin." `
+        "hopping/bouncing in place, alternating a slight lean left and right" `
+        "squirting a stream of lime juice from a small pucker in its segments, the stream appearing then spraying out" `
+        "a dizzy, defeated pose, slightly squished, juice dripping") },
+    @{ Name = "onion_grid"; Prompt = (Grid-Prompt `
+        "a round onion with visible papery outer layers, small comedic stick legs, big round cartoon eyes, a sly smirking expression." `
+        "swaying gently side to side, alternating a slight lean left and right" `
+        "releasing wavy stink-fume lines from the top, fumes appearing then wafting upward" `
+        "a dizzy, defeated pose, wilted, peeling apart at the edges") }
 )
 
 if ($Only) {
