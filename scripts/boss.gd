@@ -16,6 +16,7 @@ extends CharacterBody2D
 @export var projectile_speed: float = 160.0
 @export var ingredient_scene: PackedScene
 @export var ingredient_spawn_position: Vector2
+@export var sleep_duration: float = 0.0  # > 0: a side touch puts the player to sleep instead of the normal hit stun (Cheese)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var hurt_area: Area2D = $HurtArea
@@ -80,6 +81,8 @@ func _on_hurt_area_body_entered(body: Node) -> void:
 	var is_stomp: bool = body.velocity.y > 0.0 and body.global_position.y < global_position.y - 10.0
 	if is_stomp:
 		_take_stomp_hit(body)
+	elif sleep_duration > 0.0 and body.has_method("put_to_sleep"):
+		body.put_to_sleep(sleep_duration)
 	elif body.has_method("hit_by_obstacle"):
 		body.hit_by_obstacle()
 

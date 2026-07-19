@@ -10,6 +10,7 @@ const RUN_BOB_SPEED := 14.0
 const RUN_TILT_DEGREES := 6.0
 const SPIN_DURATION := 1.0
 const SPIN_TINT := Color(1.3, 1.3, 0.6)
+const SLEEP_TINT := Color(0.55, 0.55, 0.9)
 
 # Emitted on every hit (obstacle or enemy), whatever the source -- Level1
 # listens to this to track lives, so any new hazard type gets lives-tracking
@@ -20,6 +21,7 @@ signal player_hit
 
 var spawn_position: Vector2
 var is_stunned := false
+var is_asleep := false
 var run_cycle_time := 0.0
 
 # Air Fryer power-up (feature.md FB7/FB10): once granted, pressing Up briefly
@@ -35,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	if is_stunned:
+	if is_stunned or is_asleep:
 		velocity.x = 0.0
 		move_and_slide()
 		return
@@ -95,7 +97,7 @@ func _update_animation(delta: float) -> void:
 # Level1 is what actually decrements the 3-life counter and restarts the
 # level at 0, keeping this stumble-and-recover feel unchanged either way.
 func hit_by_obstacle() -> void:
-	if is_stunned:
+	if is_stunned or is_asleep:
 		return
 	is_stunned = true
 	player_hit.emit()
@@ -114,3 +116,17 @@ func _respawn() -> void:
 	sprite.scale = SPRITE_SCALE
 	sprite.modulate = Color.WHITE if not is_spinning else SPIN_TINT
 	is_stunned = false
+
+# Cheese's signature effect (characters.txt Bestiary by Level, Level 2):
+# a timed incapacitation rather than a hit -- no life lost, just input
+# disabled for `duration` seconds while Cornchip naps in place.
+func put_to_sleep(duration: float) -> void:
+	if is_stunned or is_asleep:
+		return
+	is_asleep = true
+	velocity = Vector2.ZERO
+	sprite.play("idle")
+	sprite.modulate = SLEEP_TINT
+	await get_tree().create_timer(duration).timeout
+	is_asleep = false
+	sprite.modulate = Color.WHITE if not is_spinning else SPIN_TINT
