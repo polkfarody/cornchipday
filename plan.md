@@ -27,6 +27,7 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [x] Level 1 reworked to feel "grander/more epic" per direct user request: 4 real jump gaps (`FALL_RESPAWN_Y` in `player.gd`, same life-cost consequence as any hit), roughly doubled length, a layered sunset-patio background (procedural vector art, no new paid generation), and a distinct arena zone for the Hot Sauce fight — see `feature.md` F9
 - [x] Fixed a real gap: `Obstacle.tscn`/`Ingredient.tscn` had been documented as using real generated art but were still on the old placeholder shapes -- now actually wired in, plus a new `CheeseIngredient.tscn` for Level 2
 - [x] Level 2 (Nacho Kitchen) built in full: Queso Grande boss (new cheese-glob slow attack via `slow_projectile.gd`/`apply_slow()`), Jalapeño enemy, Cheese reused, bean tokens, 2 jump gaps, nacho-yellow background -- see `feature.md` F10
+- [x] Lime and Onion art generated for Level 3 (not yet built into scenes). Two quality notes from this batch: Lime came back with an extra squirt-attack frame (9 poses instead of 8, all legitimate -- just pick 2 of the 3 when building the scene, no cleanup needed). Onion lost its "releasing fumes" decoration on 2 of 8 frames -- the fume-line shapes were visible in the raw generated image but didn't survive `crop-sprites.ps1`'s small-blob filtering, likely because they're thin/low-pixel-area compared to the character body. Flagged in Open Questions rather than silently reprocessed or paid to regenerate.
 - [ ] Playtest with the target audience (or an age-appropriate proxy)
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)
@@ -38,7 +39,8 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [ ] Tomato power-up (see `feature.md` FB11)
 
 ### Phase 3 — Polish & Post-MVP Stretch
-- [ ] Full AI-art pass across all levels/characters for visual consistency
+- [ ] **Textures and style consistency pass** (user-requested addition): backgrounds are currently flat `ColorRect` bands per level (Level 1's sunset patio, Level 2's nacho-yellow) rather than real generated textures -- a proper tiled ground/background texture pass, plus a documented style guide (palette, line weight, proportions) to keep new batches consistent as more levels/characters get generated, would replace ad hoc per-level color choices with something more deliberate. Related to FB4 below but broader than just "more character art."
+- [ ] Full AI-art pass across all levels/characters for visual consistency (FB4)
 - [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)
 - [ ] 2-player local co-op investigation (Cheeto)
 
@@ -52,6 +54,7 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 Canonical list of confirmed product decisions lives in `instructions-ai.txt` under "Confirmed Product Decisions." Update both files together when a decision changes.
 
 ## Open Questions / Risks
+- **Onion's fume-line decoration is missing from 2 of its 8 frames** (see Phase 1 note above) -- ship as-is (the blur/wobble gameplay effect doesn't depend on the art showing fumes), try to recover it with a crop-script tweak (risk: might let real noise back in elsewhere), or pay to regenerate with a prompt tuned to draw thicker/larger fumes more likely to survive processing?
 - Whether the Wrap final battle plays as straight combat like other bosses, or shifts tone for the reconciliation moment.
 - Reference art/style direction still needed for the sprite-generation pipeline.
-- Levels 3-6 need new art (Lime, Onion, Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter) -- each batch gets confirmed with prompts before generating, per standing practice.
+- Levels 3-6 need new art (Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter) -- each batch gets confirmed with prompts before generating, per standing practice.
