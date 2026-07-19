@@ -102,7 +102,10 @@ func _die() -> void:
 	sprite.play("defeated")
 	if ingredient_scene:
 		var ingredient := ingredient_scene.instantiate()
-		get_tree().current_scene.add_child(ingredient)
+		var level := get_tree().current_scene
+		level.add_child(ingredient)
 		ingredient.global_position = ingredient_spawn_position
+		if level.has_method("register_level_ingredient"):
+			level.register_level_ingredient(ingredient)
 	await get_tree().create_timer(1.0).timeout
 	queue_free()
