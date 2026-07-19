@@ -82,6 +82,11 @@ foreach ($refPath in $referenceImagePaths) {
 
 $styleSuffix = "Flat vector illustration style, thick clean outlines, bright saturated colors, flat shading, no gradients. Background must be solid flat magenta (#FF00FF) throughout the entire image, completely uniform, no pattern, no checkerboard, no watermark, no logo, no text. Absolutely no drop shadows or shadow of any kind beneath or around any character or object."
 
+# For tileable ground/hazard textures -- NOT icon-on-magenta assets. The whole
+# canvas IS the texture, so no chroma-key background and no cropping applies
+# (crop-sprites.ps1 explicitly skips *_hazard_fill.png / *_ground_tile.png).
+$textureSuffix = "Flat vector illustration style, thick clean outlines, bright saturated colors, flat shading. The entire image must be a seamless, tileable pattern designed to repeat edge-to-edge with no visible seam and no single-object silhouette floating on a separate background -- the whole canvas is the texture itself. No watermark, no logo, no text."
+
 $gridSuffix = "Arrange as a clean 4-column by 2-row grid of the 8 poses listed above, left-to-right then top-to-bottom, with generous empty magenta space between every pose so no two poses touch or overlap. The character's design, colors, and proportions must stay exactly consistent across all 8 cells. $styleSuffix"
 
 function Grid-Prompt([string]$character, [string]$move, [string]$action, [string]$pose8) {
@@ -143,7 +148,28 @@ $sprites = @(
         "a round onion with visible papery outer layers, small comedic stick legs, big round cartoon eyes, a sly smirking expression." `
         "swaying gently side to side, alternating a slight lean left and right" `
         "releasing wavy stink-fume lines from the top, fumes appearing then wafting upward" `
-        "a dizzy, defeated pose, wilted, peeling apart at the edges") }
+        "a dizzy, defeated pose, wilted, peeling apart at the edges") },
+
+    # Level 1/2 environment art pass (feature.md F11) -- obstacles, scenery,
+    # and window/parallax views are icon-on-magenta like everything above;
+    # hazard-fill and ground-tile textures use $textureSuffix instead (no
+    # magenta, no cropping -- see crop-sprites.ps1's skip list).
+    @{ Name = "l1_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single stack of two red salsa jars with cartoon labels, glossy glass, a small comedic wobble to the stack. $styleSuffix" },
+    @{ Name = "l1_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: a small pyramid of three stacked red salsa jars with cartoon labels, glossy glass. $styleSuffix" },
+    @{ Name = "l1_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: a tall pyramid of five stacked red salsa jars with cartoon labels, glossy glass, slightly leaning for a comedic wobble. $styleSuffix" },
+    @{ Name = "l1_hazard_fill"; Prompt = "A texture of bubbling hot molten salsa, glossy red-orange surface with bubble highlights and a subtle simmering texture. $textureSuffix" },
+    @{ Name = "l1_ground_tile"; Prompt = "A texture of warm terracotta patio floor tiles, small grout lines between square tiles, warm reddish-brown tones. $textureSuffix" },
+    @{ Name = "l1_cactus"; Prompt = "A simple cartoon saguaro cactus silhouette for a platformer background, two side arms, bright green with lighter highlight lines. $styleSuffix" },
+    @{ Name = "l1_string_lights"; Prompt = "A short strand of 3 festive string lights (small round bulbs in red, yellow, and green) connected by a thin wire, for a platformer background decoration. $styleSuffix" },
+    @{ Name = "l1_window_view"; Prompt = "A wooden cantina-style window frame set into a warm adobe wall, with a hazy, softer-detailed distant desert scene visible through the glass: silhouettes of far-off cacti and low hills under a warm sunset sky, suggesting depth beyond the window. $styleSuffix" },
+    @{ Name = "l2_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single nacho serving tray standing on its edge, red plastic basket-style tray with a few tortilla chips visible. $styleSuffix" },
+    @{ Name = "l2_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: two stacked nacho serving trays, red plastic basket-style trays with tortilla chips visible. $styleSuffix" },
+    @{ Name = "l2_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: three stacked nacho serving trays topped with a block of yellow cheese, red plastic basket-style trays with tortilla chips visible. $styleSuffix" },
+    @{ Name = "l2_hazard_fill"; Prompt = "A texture of bubbling molten nacho cheese, glossy orange-yellow surface with bubble highlights and a subtle melty texture. $textureSuffix" },
+    @{ Name = "l2_ground_tile"; Prompt = "A texture of a checkered nacho-bar floor, alternating warm yellow and tan square tiles. $textureSuffix" },
+    @{ Name = "l2_chip"; Prompt = "A single cartoon tortilla chip, triangular, golden-tan with small brown speckles, for a platformer background decoration. $styleSuffix" },
+    @{ Name = "l2_cheese_drip"; Prompt = "A single cartoon cheese drip/dollop hanging shape, glossy orange-yellow, for a platformer background decoration. $styleSuffix" },
+    @{ Name = "l2_window_view"; Prompt = "A window frame set into a tiled cheese-yellow kitchen wall, with a hazy, softer-detailed distant scene visible through the glass: a softly-lit dining area or second kitchen counter, suggesting depth beyond the window. $styleSuffix" }
 )
 
 if ($Only) {

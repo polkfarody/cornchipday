@@ -187,6 +187,13 @@ Get-ChildItem "$dir\*.png" | ForEach-Object {
     if ($_.Name -match '_frame\d+\.png$' -or $_.Name -match '_puddle\.png$') {
         return
     }
+    # Tileable textures (feature.md F11) are the whole canvas, not an icon on
+    # a chroma-key background -- running the magenta-removal/crop logic on
+    # these would misidentify the texture's own dominant hue as "background"
+    # and destroy it. Leave them exactly as generated.
+    if ($_.Name -match '_hazard_fill\.png$' -or $_.Name -match '_ground_tile\.png$') {
+        return
+    }
 
     $path = $_.FullName
     $isGrid = $_.Name -like "*_grid.png"
