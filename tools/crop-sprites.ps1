@@ -95,6 +95,11 @@ function Remove-MagentaBackground([byte[]]$bytes, [int]$w, [int]$h, [int]$stride
         $b = $bytes[$off]; $g = $bytes[$off + 1]; $r = $bytes[$off + 2]
 
         if (-not (Test-IsBackgroundPixel $r $g $b $refHue)) { continue }
+        # Zero RGB too, not just alpha -- otherwise the magenta stays baked
+        # into the color channels of a fully-transparent pixel. Godot (and
+        # any correct PNG viewer) respects alpha and never shows it, but it's
+        # a needless landmine for any tool/preview that doesn't.
+        $bytes[$off] = 0; $bytes[$off + 1] = 0; $bytes[$off + 2] = 0
         $bytes[$off + 3] = 0
 
         if ($px -gt 0) { $n = $idx - 1; if (-not $visited[$n]) { $stack.Push($n) } }
