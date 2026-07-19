@@ -129,6 +129,7 @@ offset_top = -40.0
 offset_right = 300.0
 offset_bottom = 40.0
 texture = ExtResource("12_ground_tile")
+expand_mode = 1
 
 [node name="GroundB" type="StaticBody2D" parent="."]
 position = Vector2(945, 400)
@@ -142,6 +143,7 @@ offset_top = -40.0
 offset_right = 355.0
 offset_bottom = 40.0
 texture = ExtResource("12_ground_tile")
+expand_mode = 1
 
 [node name="GroundC" type="StaticBody2D" parent="."]
 position = Vector2(1795, 400)
@@ -163,6 +165,7 @@ offset_top = 0.0
 offset_right = 45.0
 offset_bottom = 200.0
 texture = ExtResource("13_hazard_fill")
+expand_mode = 1
 
 [node name="HazardFill2" type="TextureRect" parent="."]
 position = Vector2(1345, 360)
@@ -171,6 +174,7 @@ offset_top = 0.0
 offset_right = 45.0
 offset_bottom = 200.0
 texture = ExtResource("13_hazard_fill")
+expand_mode = 1
 
 [node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
 position = Vector2(340, 344)
