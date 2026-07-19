@@ -19,9 +19,10 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)
 - [ ] Ability-gated upgrade system unlocked between levels
-- [ ] Remaining 6 levels, each with its own ingredient and obstacle puns
-- [ ] Wrap narrative beats / end-game reconciliation scene
-- [ ] Resolve open question: literal boss encounter vs. narrative-only Wrap
+- [ ] Stomp-to-defeat enemy mechanic (Cornchip's baseline combat ability, see `feature.md` FB8)
+- [ ] Remaining 6 levels, each with its own ingredient, obstacle puns, and boss battle (see `feature.md` FB9)
+- [ ] Design remaining boss roster beyond Hot Sauce and Avocado (Cheese's role as boss vs. hazard enemy still undecided)
+- [ ] Wrap final-boss battle and end-game reconciliation scene
 
 ### Phase 3 — Polish & Post-MVP Stretch
 - [ ] Full AI-art pass across all levels/characters for visual consistency
@@ -38,6 +39,8 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 Canonical list of confirmed product decisions lives in `instructions-ai.txt` under "Confirmed Product Decisions." Update both files together when a decision changes.
 
 ## Open Questions / Risks
-- Is Wrap a literal end-of-game boss encounter, a narrative/dialogue-only figure, or both?
+- Full boss roster/order across all 7 levels; Cheese's status as boss vs. hazard enemy is still undecided.
+- How boss battles and the jump-to-defeat mechanic square with the no-fail-state pillar (working assumption: losing just means an immediate retry, no penalty).
+- Whether the Wrap final battle plays as straight combat like other bosses, or shifts tone for the reconciliation moment.
 - Do the 7 levels map to a specific real crunch-wrap ingredient list/order?
-- Reference art/style direction still needed for the AI sprite-generation pipeline.
+- Reference art/style direction still needed for the sprite-generation pipeline.
