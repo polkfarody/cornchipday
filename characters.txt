@@ -59,7 +59,7 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 
 ### Level 3 — Guac Stand
 - **Boss:** Avocado (already designed/generated)
-- **Enemies (new):** Lime — bounces around; its attack briefly reverses Cornchip's left/right controls instead of costing a life, a genuinely new interaction rather than another hit type. Onion — a stationary enemy whose nearby presence blurs/wobbles the screen briefly (a nuisance, not a hit).
+- **Enemies:** Lime (user-specified, additions.txt) — a wedge of lime that squirts toxic lime juice at Cornchip, a ranged attack (presumably the standard hit/stun like other projectiles unless told otherwise). Replaces an earlier AI-invented version of this character that had it bouncing around and reversing Cornchip's controls -- that idea is dropped now that a real spec exists. Onion (still AI-invented/unconfirmed) — a stationary enemy whose nearby presence blurs/wobbles the screen briefly (a nuisance, not a hit).
 - **Palette/setting:** produce stand, greens.
 
 ### Level 4 — Market Tomatoes
