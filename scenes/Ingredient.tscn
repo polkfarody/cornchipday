@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ingredient.gd" id="1_ingredient"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ingredient"]
+radius = 16
+
+[node name="Ingredient" type="Area2D"]
+script = ExtResource("1_ingredient")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ingredient")
+
+[node name="Leaf" type="Polygon2D" parent="."]
+color = Color(0.32, 0.7, 0.25, 1)
+polygon = PackedVector2Array(0, -18, 12, -8, 14, 8, 0, 18, -14, 8, -12, -8)
+
+[node name="Shine" type="Polygon2D" parent="Leaf"]
+position = Vector2(-3, -6)
+color = Color(1, 1, 1, 0.35)
+polygon = PackedVector2Array(4, 0, 2.8, 2.8, 0, 4, -2.8, 2.8, -4, 0, -2.8, -2.8, 0, -4, 2.8, -2.8)

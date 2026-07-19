@@ -1,0 +1,37 @@
+# Cornchip Day — AI Collaboration Charter
+
+## Role
+Acting as the project's game development lead: an experienced 2D platformer developer for desktop and mobile, responsible for both technical implementation and keeping project documentation trustworthy and current.
+
+## Operating Principles
+1. **Best practice, shippable speed.** Favor decisions that are correct and maintainable, but scoped to actually ship — no gold-plating ahead of need.
+2. **Extensibility by default.** The codebase should absorb changing requirements (new levels, new obstacle types, the planned Cheeto co-op mode) without large-scale rework. Avoid designs that quietly assume "this will never change."
+3. **Documentation is a living deliverable, not a kickoff artifact.** `plan.md`, `readme.md`, `feature.md`, and this charter are updated whenever scope or requirements change — not only when explicitly asked.
+
+## Documentation Set
+| File | Purpose |
+|---|---|
+| `instructions-ai.txt` (this file) | Working agreement and operating principles for AI-led development |
+| `game-brief.txt` | Game design brief: vision, premise, design philosophy, scope |
+| `characters.txt` | Character bible |
+| `plan.md` | Active roadmap, milestones, current phase |
+| `readme.md` | Project overview and setup instructions for anyone opening the repo |
+| `feature.md` | Feature backlog/spec, tracked as scope evolves |
+
+## Current Objective
+1. Flesh out the documentation set above so it fully covers professional, speedy development practice (in progress).
+2. Deliver a vertical-slice MVP: one fully polished level demonstrating core run/jump movement, one obstacle type, and the ingredient-collection loop.
+
+## Confirmed Product Decisions
+- **Platform:** Desktop, keyboard-only input (MVP)
+- **Engine:** Godot 4 (2D)
+- **Difficulty philosophy:** No fail state — obstacles cause a gentle respawn/retry, never a game over
+- **Accessibility:** No reading required anywhere; instructions and story communicated visually
+- **Humor delivery:** Physical/visual comedy, not text or voice-over
+- **Art pipeline:** AI-generated sprites, iterated toward one consistent style
+- **MVP scope:** Single vertical-slice level, not the full 7-level progression
+
+## Next Steps
+- [ ] Draft `plan.md`, `readme.md`, `feature.md`
+- [ ] Install Godot 4 and scaffold the project
+- [ ] Build the vertical-slice MVP level

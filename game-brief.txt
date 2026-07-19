@@ -1,0 +1,51 @@
+# Cornchip Day — Game Design Brief
+
+## Overview
+- **Working Title:** Cornchip Day
+- **Genre:** 2D single-player platformer
+- **Engine:** Godot 4
+- **Platform (MVP):** Desktop, keyboard input
+- **Target Audience:** Children ages 5–8, playing solo or with light parental supervision
+- **Player Count (MVP):** 1 (local co-op is a post-MVP stretch goal — see Future Scope)
+
+## Elevator Pitch
+Cornchip, a walking corn chip, sets out across seven pun-filled levels to track down his estranged brother Wrap and win him back — collecting the ingredients for the ultimate crunch wrap along the way.
+
+## Premise
+Cornchip and Wrap had an argument and split up. To reconcile, Cornchip must cross seven levels, each themed around an ingredient needed to build "the ultimate crunch wrap." Wrap, hurt by the falling-out, pelts Cornchip with obstacles throughout the journey — played for laughs rather than menace (e.g. "mild" salsa, vegetarian cheese). At the end of each level, Cornchip collects that level's ingredient; collecting all seven and presenting them to Wrap is what wins his brother back.
+
+## Design Philosophy
+The primary players are 5 and 8 years old. Every design decision should be filtered through:
+- **No fail state.** Obstacles interrupt progress (a stumble, a gentle respawn) but never end the game or punish the player. Confidence and forward momentum matter more than challenge.
+- **No reading required.** All instructions, feedback, and story beats are communicated through animation, icons, and visual staging — not text.
+- **Humor is physical, not verbal.** The pun-based obstacles (mild salsa, vegetarian cheese, etc.) land through exaggerated visual comedy — a wilting reaction, a comedic slip — so the joke works even for a player who can't read the label.
+
+## Core Gameplay Loop
+1. Run and jump through a level, reacting to Wrap's thrown obstacles.
+2. Reach the end of the level and collect that level's ingredient.
+3. Periodically unlock a new movement ability, required to access later levels.
+4. Repeat across all 7 levels; final ingredient collection triggers the reconciliation ending.
+
+## Player Abilities & Progression
+- **Starting abilities:** run, jump.
+- **Unlockable upgrades:** earned progressively across levels; each new ability is required to progress (i.e., gates level access rather than being purely optional), keeping a metroidvania-lite sense of growth without adding failure risk.
+
+## Level & Narrative Structure
+- **7 levels total**, each tied to one ingredient for the ultimate crunch wrap.
+- Each level introduces or riffs on a food-based obstacle pun consistent with a "world of a walking corn chip."
+- Wrap is present narratively throughout (see `characters.txt` for his framing as the recurring obstacle-thrower / end-of-journey reunion figure).
+
+## Art & Audio Direction
+- **Art pipeline:** AI-generated sprites, iterated toward a single consistent visual style across characters and levels.
+- **Character silhouettes:** simple geometric comedy — Cornchip as an upside-down triangle, Wrap as a rounded cylinder — both with cartoon limbs, eyes, and mouths (full detail in `characters.txt`).
+
+## MVP Scope
+A single, fully polished vertical-slice level demonstrating: core run/jump movement, one obstacle type, and the end-of-level ingredient-collection loop. Full 7-level progression and ability-gating follow post-MVP.
+
+## Future Scope (Post-MVP)
+- **2-player local co-op:** Cornchip's best friend Cheeto joins the quest as a second playable character. Explicitly out of scope for MVP; the codebase should avoid decisions that would make adding a second player unusually difficult later (see `instructions-ai.txt` extensibility principle).
+
+## Open Questions
+- Is Wrap intended as a literal end-of-game boss encounter, a series of narrative/dialogue beats, or both? (`characters.txt` currently labels him "main boss.")
+- Should each level map to a specific real-world crunch wrap ingredient (lettuce, cheese, salsa, etc.), and if so, is there a preferred list/order?
+- Any preferred reference art/style touchstones for the AI-generated sprite pipeline?

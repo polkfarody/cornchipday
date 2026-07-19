@@ -1,0 +1,21 @@
+# Cornchip Day — Character Bible
+
+## Cornchip (Protagonist / Playable Character)
+- **Silhouette:** An upside-down triangle, corn-chip textured, with comedic articulated legs, expressive eyes, and a mouth.
+- **Role:** Player character. Runs, jumps, and collects ingredients across 7 levels to win back his brother.
+- **Personality (draft — pending confirmation):** Plucky, determined, food-pun-driven optimist; treats every obstacle as a minor, laughable setback rather than a threat, consistent with the game's no-fail-state design philosophy.
+
+## Wrap (Cornchip's Brother)
+- **Silhouette:** A rounded, wrap/burrito-shaped body with comedic articulated legs, expressive eyes, and a mouth.
+- **Role:** Cornchip's brother and the source of each level's obstacles — thrown pun ingredients ("mild" salsa, vegetarian cheese, etc.). Currently framed as the game's recurring antagonist / "main boss" figure.
+- **Narrative Function:** Estranged from Cornchip after an argument. Reconciliation occurs once Cornchip has collected all 7 ingredients and presents them to make "the ultimate crunch wrap."
+- **Personality (draft — pending confirmation):** Proud and stubborn on the surface; the obstacle-throwing reads as wounded-sibling antics rather than genuine villainy, and he wants to reconcile as much as Cornchip does.
+
+## Cheeto (Post-MVP)
+- **Role:** Cornchip's best friend; planned second playable character for a future local co-op mode.
+- **Status:** Concept only — no visual design or mechanics required for MVP.
+
+## Open Items
+- Confirm the two "draft — pending confirmation" personality notes above, or replace with your intended characterization.
+- Confirm whether Wrap should play as a literal end-of-level/end-of-game boss encounter (with attack patterns, etc.) or appear only in narrative/dialogue beats between levels.
+- Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the AI sprite-generation pipeline starts producing final assets.
