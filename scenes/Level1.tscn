@@ -1,31 +1,28 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene format=3 uid="uid://bwh8mf6fv40gf"]
 
-[ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
-[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://dtjfmty408xld" path="res://scripts/level_base.gd" id="0_level_base"]
+[ext_resource type="PackedScene" uid="uid://bkyka5e7ykkp3" path="res://scenes/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/Obstacle.tscn" id="2_obstacle"]
 [ext_resource type="PackedScene" path="res://scenes/Ingredient.tscn" id="3_ingredient"]
-[ext_resource type="Script" path="res://scripts/obstacle_trigger.gd" id="4_trigger"]
+[ext_resource type="Script" uid="uid://cfcasgb6kki8b" path="res://scripts/obstacle_trigger.gd" id="4_trigger"]
 [ext_resource type="PackedScene" path="res://scenes/HotSauceBoss.tscn" id="5_boss"]
 [ext_resource type="PackedScene" path="res://scenes/BossProjectile.tscn" id="6_boss_projectile"]
 [ext_resource type="PackedScene" path="res://scenes/CheeseEnemy.tscn" id="7_cheese"]
 [ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="8_airfryer"]
-[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="9_life_icon"]
+[ext_resource type="Texture2D" uid="uid://cg0lvb1imvqdh" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="9_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="10_bean"]
 [ext_resource type="PackedScene" path="res://scenes/SalsaBowlEnemy.tscn" id="11_salsabowl"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_obstacle_small.png" id="12_obstacle_small"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_obstacle_medium.png" id="13_obstacle_medium"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_obstacle_large.png" id="14_obstacle_large"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_ground_tile.png" id="15_ground_tile"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_hazard_fill.png" id="16_hazard_fill"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_cactus.png" id="17_cactus"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_string_lights.png" id="18_string_lights"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
-size = Vector2(20, 400)
+[ext_resource type="Texture2D" uid="uid://bsfu0swwtjyet" path="res://Assets/generated/environment/level1/l1_obstacle_small.png" id="12_obstacle_small"]
+[ext_resource type="Texture2D" uid="uid://3nmxm1bvddla" path="res://Assets/generated/environment/level1/l1_obstacle_medium.png" id="13_obstacle_medium"]
+[ext_resource type="Texture2D" uid="uid://d355tlma1lid5" path="res://Assets/generated/environment/level1/l1_obstacle_large.png" id="14_obstacle_large"]
+[ext_resource type="Texture2D" uid="uid://c14srlseq5uj4" path="res://Assets/generated/environment/level1/l1_ground_tile.png" id="15_ground_tile"]
+[ext_resource type="Texture2D" uid="uid://dy6vlywtd0s6q" path="res://Assets/generated/environment/level1/l1_hazard_fill.png" id="16_hazard_fill"]
+[ext_resource type="Texture2D" uid="uid://co5j5fpv6yv5w" path="res://Assets/generated/environment/level1/l1_cactus.png" id="17_cactus"]
+[ext_resource type="Texture2D" uid="uid://dg8lgmuhpoumd" path="res://Assets/generated/environment/level1/l1_string_lights.png" id="18_string_lights"]
+[ext_resource type="Texture2D" uid="uid://btsioems04pvs" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
-size = Vector2(600, 80)
+size = Vector2(978, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundB"]
 size = Vector2(690, 80)
@@ -48,492 +45,512 @@ size = Vector2(42, 46)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
 size = Vector2(22, 58)
 
-[node name="Level1" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(20, 400)
+
+[node name="Level1" type="Node2D" unique_id=1358928885]
 script = ExtResource("0_level_base")
 next_level_path = "res://scenes/Level2.tscn"
 
-[node name="WindowParallax" type="ParallaxBackground" parent="."]
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1458772826]
+offset_left = -1377.0
+offset_top = -1486.0
+offset_right = 1721.0
+offset_bottom = -768.0
+color = Color(0.5803922, 0.36078432, 0.14901961, 1)
 
-[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
-motion_scale = Vector2(0.4, 1.0)
+[node name="WindowParallax" type="ParallaxBackground" parent="." unique_id=1959147230]
 
-[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="BackdropLayer" type="ParallaxLayer" parent="WindowParallax" unique_id=1125049668]
+motion_scale = Vector2(0, 0)
+
+[node name="Backdrop" type="ColorRect" parent="WindowParallax/BackdropLayer" unique_id=1972282623]
+offset_left = -700.0
+offset_top = -450.0
+offset_right = 5127.0
+offset_bottom = 750.0
+color = Color(0.76, 0.33, 0.2, 1)
+
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax" unique_id=1882900687]
+motion_scale = Vector2(0.4, 1)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=1542071071]
 position = Vector2(450, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer/Window1" unique_id=292387589]
+position = Vector2(-1312.1211, 3.8146973e-06)
+scale = Vector2(0.99, 0.99)
+texture = ExtResource("19_window_view")
+
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=160548417]
 position = Vector2(1750, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=1922571636]
 position = Vector2(3050, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=1781715640]
 position = Vector2(4350, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Cactus1" type="Sprite2D" parent="."]
+[node name="Cactus1" type="Sprite2D" parent="." unique_id=1416643728]
 position = Vector2(450, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
-[node name="Cactus2" type="Sprite2D" parent="."]
+[node name="Cactus2" type="Sprite2D" parent="." unique_id=1873963989]
 position = Vector2(1200, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
-[node name="Cactus3" type="Sprite2D" parent="."]
+[node name="Cactus3" type="Sprite2D" parent="." unique_id=213734724]
 position = Vector2(2400, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
-[node name="Cactus4" type="Sprite2D" parent="."]
+[node name="Cactus4" type="Sprite2D" parent="." unique_id=1269989037]
 position = Vector2(3150, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
-[node name="Light1" type="Sprite2D" parent="."]
-position = Vector2(-30.0, -20)
+[node name="Light1" type="Sprite2D" parent="." unique_id=662980503]
+position = Vector2(-30.000008, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light2" type="Sprite2D" parent="."]
-position = Vector2(110.0, -20)
+[node name="Light2" type="Sprite2D" parent="." unique_id=456850308]
+position = Vector2(110, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light3" type="Sprite2D" parent="."]
-position = Vector2(250.0, -20)
+[node name="Light3" type="Sprite2D" parent="." unique_id=1936031382]
+position = Vector2(250, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light4" type="Sprite2D" parent="."]
-position = Vector2(390.0, -20)
+[node name="Light4" type="Sprite2D" parent="." unique_id=232585240]
+position = Vector2(390, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light5" type="Sprite2D" parent="."]
-position = Vector2(530.0, -20)
+[node name="Light5" type="Sprite2D" parent="." unique_id=1365557932]
+position = Vector2(530, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light6" type="Sprite2D" parent="."]
-position = Vector2(670.0, -20)
+[node name="Light6" type="Sprite2D" parent="." unique_id=930283131]
+position = Vector2(670, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light7" type="Sprite2D" parent="."]
-position = Vector2(810.0, -20)
+[node name="Light7" type="Sprite2D" parent="." unique_id=295362889]
+position = Vector2(810, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light8" type="Sprite2D" parent="."]
-position = Vector2(950.0, -20)
+[node name="Light8" type="Sprite2D" parent="." unique_id=831613111]
+position = Vector2(950, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light9" type="Sprite2D" parent="."]
-position = Vector2(1090.0, -20)
+[node name="Light9" type="Sprite2D" parent="." unique_id=1048611426]
+position = Vector2(1090, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light10" type="Sprite2D" parent="."]
-position = Vector2(1230.0, -20)
+[node name="Light10" type="Sprite2D" parent="." unique_id=587489480]
+position = Vector2(1230, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light11" type="Sprite2D" parent="."]
-position = Vector2(1370.0, -20)
+[node name="Light11" type="Sprite2D" parent="." unique_id=922950710]
+position = Vector2(1370, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light12" type="Sprite2D" parent="."]
-position = Vector2(1510.0, -20)
+[node name="Light12" type="Sprite2D" parent="." unique_id=693095684]
+position = Vector2(1510, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light13" type="Sprite2D" parent="."]
-position = Vector2(1650.0, -20)
+[node name="Light13" type="Sprite2D" parent="." unique_id=2125469384]
+position = Vector2(1650, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light14" type="Sprite2D" parent="."]
-position = Vector2(1790.0, -20)
+[node name="Light14" type="Sprite2D" parent="." unique_id=104118807]
+position = Vector2(1790, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light15" type="Sprite2D" parent="."]
-position = Vector2(1930.0, -20)
+[node name="Light15" type="Sprite2D" parent="." unique_id=1347192157]
+position = Vector2(1930, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light16" type="Sprite2D" parent="."]
-position = Vector2(2070.0, -20)
+[node name="Light16" type="Sprite2D" parent="." unique_id=938165506]
+position = Vector2(2070, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light17" type="Sprite2D" parent="."]
-position = Vector2(2210.0, -20)
+[node name="Light17" type="Sprite2D" parent="." unique_id=1893808285]
+position = Vector2(2210, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light18" type="Sprite2D" parent="."]
-position = Vector2(2350.0, -20)
+[node name="Light18" type="Sprite2D" parent="." unique_id=476322225]
+position = Vector2(2350, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light19" type="Sprite2D" parent="."]
-position = Vector2(2490.0, -20)
+[node name="Light19" type="Sprite2D" parent="." unique_id=635384179]
+position = Vector2(2490, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light20" type="Sprite2D" parent="."]
-position = Vector2(2630.0, -20)
+[node name="Light20" type="Sprite2D" parent="." unique_id=426772550]
+position = Vector2(2630, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light21" type="Sprite2D" parent="."]
-position = Vector2(2770.0, -20)
+[node name="Light21" type="Sprite2D" parent="." unique_id=1877058485]
+position = Vector2(2770, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light22" type="Sprite2D" parent="."]
-position = Vector2(2910.0, -20)
+[node name="Light22" type="Sprite2D" parent="." unique_id=327925802]
+position = Vector2(2910, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light23" type="Sprite2D" parent="."]
-position = Vector2(3050.0, -20)
+[node name="Light23" type="Sprite2D" parent="." unique_id=495047421]
+position = Vector2(3050, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light24" type="Sprite2D" parent="."]
-position = Vector2(3190.0, -20)
+[node name="Light24" type="Sprite2D" parent="." unique_id=850279177]
+position = Vector2(3190, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light25" type="Sprite2D" parent="."]
-position = Vector2(3330.0, -20)
+[node name="Light25" type="Sprite2D" parent="." unique_id=1955078529]
+position = Vector2(3330, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light26" type="Sprite2D" parent="."]
-position = Vector2(3470.0, -20)
+[node name="Light26" type="Sprite2D" parent="." unique_id=996110885]
+position = Vector2(3470, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light27" type="Sprite2D" parent="."]
-position = Vector2(3610.0, -20)
+[node name="Light27" type="Sprite2D" parent="." unique_id=1098913812]
+position = Vector2(3610, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light28" type="Sprite2D" parent="."]
-position = Vector2(3750.0, -20)
+[node name="Light28" type="Sprite2D" parent="." unique_id=174917088]
+position = Vector2(3750, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="Light29" type="Sprite2D" parent="."]
-position = Vector2(3890.0, -20)
+[node name="Light29" type="Sprite2D" parent="." unique_id=922262727]
+position = Vector2(3890, -305)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="GroundA" type="StaticBody2D" parent="."]
+[node name="GroundA" type="StaticBody2D" parent="." unique_id=222188618]
 position = Vector2(200, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA" unique_id=1608865820]
+position = Vector2(-189, 0)
 shape = SubResource("RectangleShape2D_groundA")
 
-[node name="GroundVisual" type="TextureRect" parent="GroundA"]
-offset_left = -300.0
+[node name="GroundVisual" type="TextureRect" parent="GroundA" unique_id=423979790]
+offset_left = -677.0
 offset_top = -40.0
 offset_right = 300.0
-offset_bottom = 40.0
+offset_bottom = 264.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="GroundB" type="StaticBody2D" parent="."]
+[node name="GroundB" type="StaticBody2D" parent="." unique_id=1335661357]
 position = Vector2(935, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB" unique_id=420403370]
 shape = SubResource("RectangleShape2D_groundB")
 
-[node name="GroundVisual" type="TextureRect" parent="GroundB"]
+[node name="GroundVisual" type="TextureRect" parent="GroundB" unique_id=2015800550]
 offset_left = -345.0
 offset_top = -40.0
 offset_right = 345.0
-offset_bottom = 40.0
+offset_bottom = 268.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="GroundC" type="StaticBody2D" parent="."]
+[node name="GroundC" type="StaticBody2D" parent="." unique_id=393606070]
 position = Vector2(1725, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC" unique_id=1043073825]
 shape = SubResource("RectangleShape2D_groundC")
 
-[node name="GroundVisual" type="TextureRect" parent="GroundC"]
+[node name="GroundVisual" type="TextureRect" parent="GroundC" unique_id=715484845]
 offset_left = -355.0
 offset_top = -40.0
 offset_right = 355.0
-offset_bottom = 40.0
+offset_bottom = 287.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="GroundD" type="StaticBody2D" parent="."]
+[node name="GroundD" type="StaticBody2D" parent="." unique_id=1709041009]
 position = Vector2(2535, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundD"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundD" unique_id=111788969]
 shape = SubResource("RectangleShape2D_groundD")
 
-[node name="GroundVisual" type="TextureRect" parent="GroundD"]
+[node name="GroundVisual" type="TextureRect" parent="GroundD" unique_id=1647499110]
 offset_left = -365.0
 offset_top = -40.0
 offset_right = 365.0
-offset_bottom = 40.0
+offset_bottom = 299.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="GroundArena" type="StaticBody2D" parent="."]
+[node name="GroundArena" type="StaticBody2D" parent="." unique_id=2040058374]
 position = Vector2(3400, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundArena"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundArena" unique_id=1838919525]
 shape = SubResource("RectangleShape2D_arena")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundArena"]
+[node name="GroundVisual" type="ColorRect" parent="GroundArena" unique_id=277642844]
 offset_left = -400.0
 offset_top = -40.0
 offset_right = 400.0
-offset_bottom = 40.0
+offset_bottom = 312.0
 color = Color(0.55, 0.14, 0.1, 1)
 
-[node name="ArenaBanner" type="Node2D" parent="."]
+[node name="ArenaBanner" type="Node2D" parent="." unique_id=302778868]
 position = Vector2(3000, -80)
 
-[node name="Pennant1" type="Polygon2D" parent="ArenaBanner"]
+[node name="Pennant1" type="Polygon2D" parent="ArenaBanner" unique_id=1745827763]
 color = Color(0.85, 0.2, 0.15, 1)
 polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 
-[node name="Pennant2" type="Polygon2D" parent="ArenaBanner"]
+[node name="Pennant2" type="Polygon2D" parent="ArenaBanner" unique_id=617958428]
 position = Vector2(40, 6)
 color = Color(0.95, 0.8, 0.1, 1)
 polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 
-[node name="Pennant3" type="Polygon2D" parent="ArenaBanner"]
+[node name="Pennant3" type="Polygon2D" parent="ArenaBanner" unique_id=1252306576]
 position = Vector2(80, 0)
 color = Color(0.85, 0.2, 0.15, 1)
 polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 
-[node name="Pennant4" type="Polygon2D" parent="ArenaBanner"]
+[node name="Pennant4" type="Polygon2D" parent="ArenaBanner" unique_id=1409480808]
 position = Vector2(120, 6)
 color = Color(0.95, 0.8, 0.1, 1)
 polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 
-[node name="Pennant5" type="Polygon2D" parent="ArenaBanner"]
+[node name="Pennant5" type="Polygon2D" parent="ArenaBanner" unique_id=1764533740]
 position = Vector2(160, 0)
 color = Color(0.85, 0.2, 0.15, 1)
 polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 
-[node name="HazardFill1" type="TextureRect" parent="."]
+[node name="HazardFill1" type="TextureRect" parent="." unique_id=1391699587]
 offset_left = 500.0
 offset_top = 360.0
 offset_right = 590.0
-offset_bottom = 560.0
+offset_bottom = 670.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="HazardFill2" type="TextureRect" parent="."]
+[node name="HazardFill2" type="TextureRect" parent="." unique_id=1792952976]
 offset_left = 1280.0
 offset_top = 360.0
 offset_right = 1370.0
-offset_bottom = 560.0
+offset_bottom = 687.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="HazardFill3" type="TextureRect" parent="."]
+[node name="HazardFill3" type="TextureRect" parent="." unique_id=1517627715]
 offset_left = 2080.0
 offset_top = 360.0
 offset_right = 2170.0
-offset_bottom = 560.0
+offset_bottom = 695.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="HazardFill4" type="TextureRect" parent="."]
+[node name="HazardFill4" type="TextureRect" parent="." unique_id=128850818]
 offset_left = 2900.0
 offset_top = 360.0
 offset_right = 3000.0
-offset_bottom = 560.0
+offset_bottom = 745.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
+[node name="JumpObstacleSmall1" type="StaticBody2D" parent="." unique_id=1693703184]
 position = Vector2(320, 344)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1" unique_id=2050696777]
 shape = SubResource("RectangleShape2D_obstacle_small")
 
-[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleSmall1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1/CollisionShape2D" unique_id=1502608446]
+shape = SubResource("RectangleShape2D_obstacle_small")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleSmall1" unique_id=1028235593]
 scale = Vector2(0.0348, 0.0348)
 texture = ExtResource("12_obstacle_small")
 
-[node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
+[node name="JumpObstacleMedium1" type="StaticBody2D" parent="." unique_id=1242030582]
 position = Vector2(830, 337)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1" unique_id=1966473099]
 shape = SubResource("RectangleShape2D_obstacle_medium")
 
-[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium1"]
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium1" unique_id=751761280]
 scale = Vector2(0.0644, 0.0644)
 texture = ExtResource("13_obstacle_medium")
 
-[node name="JumpObstacleLarge1" type="StaticBody2D" parent="."]
+[node name="JumpObstacleLarge1" type="StaticBody2D" parent="." unique_id=1136833005]
 position = Vector2(1870, 331)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1" unique_id=2096299478]
 shape = SubResource("RectangleShape2D_obstacle_large")
 
-[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleLarge1"]
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleLarge1" unique_id=366883450]
 scale = Vector2(0.0583, 0.0583)
 texture = ExtResource("14_obstacle_large")
 
-[node name="JumpObstacleMedium2" type="StaticBody2D" parent="."]
+[node name="JumpObstacleMedium2" type="StaticBody2D" parent="." unique_id=1489946287]
 position = Vector2(2500, 337)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium2" unique_id=858020807]
 shape = SubResource("RectangleShape2D_obstacle_medium")
 
-[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium2"]
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium2" unique_id=36806661]
 scale = Vector2(0.0644, 0.0644)
 texture = ExtResource("13_obstacle_medium")
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
-position = Vector2(100, 300)
+[node name="Player" parent="." unique_id=1238794382 instance=ExtResource("1_player")]
+position = Vector2(75, 317)
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1684075905]
 
-[node name="Life1" type="TextureRect" parent="HUD"]
-position = Vector2(20, 20)
-size = Vector2(36, 36)
+[node name="Life1" type="TextureRect" parent="HUD" unique_id=282842817]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 56.0
+offset_bottom = 56.0
 texture = ExtResource("9_life_icon")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Life2" type="TextureRect" parent="HUD"]
-position = Vector2(64, 20)
-size = Vector2(36, 36)
+[node name="Life2" type="TextureRect" parent="HUD" unique_id=1153015528]
+offset_left = 64.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 56.0
 texture = ExtResource("9_life_icon")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Life3" type="TextureRect" parent="HUD"]
-position = Vector2(108, 20)
-size = Vector2(36, 36)
+[node name="Life3" type="TextureRect" parent="HUD" unique_id=91795120]
+offset_left = 108.0
+offset_top = 20.0
+offset_right = 144.0
+offset_bottom = 56.0
 texture = ExtResource("9_life_icon")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="BeanToken1" parent="." instance=ExtResource("10_bean")]
-position = Vector2(200, 330)
-groups = ["bean_token"]
+[node name="BeanToken1" parent="." unique_id=222576548 instance=ExtResource("10_bean")]
+position = Vector2(203, 331)
 
-[node name="BeanToken2" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken2" parent="." unique_id=425202733 instance=ExtResource("10_bean")]
 position = Vector2(240, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken3" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken3" parent="." unique_id=1152111681 instance=ExtResource("10_bean")]
 position = Vector2(280, 330)
-groups = ["bean_token"]
 
-[node name="CheeseEnemy1" parent="." instance=ExtResource("7_cheese")]
+[node name="CheeseEnemy1" parent="." unique_id=423271622 instance=ExtResource("7_cheese")]
 position = Vector2(400, 330)
 
-[node name="BeanToken4" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken4" parent="." unique_id=1760632632 instance=ExtResource("10_bean")]
 position = Vector2(650, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken5" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken5" parent="." unique_id=150040612 instance=ExtResource("10_bean")]
 position = Vector2(690, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken6" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken6" parent="." unique_id=1780383324 instance=ExtResource("10_bean")]
 position = Vector2(730, 330)
-groups = ["bean_token"]
 
-[node name="ObstacleTrigger" type="Area2D" parent="."]
+[node name="ObstacleTrigger" type="Area2D" parent="." unique_id=863959240]
 position = Vector2(900, 300)
 script = ExtResource("4_trigger")
 obstacle_scene = ExtResource("2_obstacle")
 spawn_position = Vector2(900, -100)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleTrigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleTrigger" unique_id=940685080]
 shape = SubResource("RectangleShape2D_trigger")
 
-[node name="BeanToken7" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken7" parent="." unique_id=1814819419 instance=ExtResource("10_bean")]
 position = Vector2(1150, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken8" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken8" parent="." unique_id=1975676006 instance=ExtResource("10_bean")]
 position = Vector2(1190, 330)
-groups = ["bean_token"]
 
-[node name="AirFryer" parent="." instance=ExtResource("8_airfryer")]
+[node name="AirFryer" parent="." unique_id=613594203 instance=ExtResource("8_airfryer")]
 position = Vector2(1430, 330)
 
-[node name="CheeseEnemy2" parent="." instance=ExtResource("7_cheese")]
+[node name="CheeseEnemy2" parent="." unique_id=1903020836 instance=ExtResource("7_cheese")]
 position = Vector2(1580, 330)
 
-[node name="SalsaBowlEnemy1" parent="." instance=ExtResource("11_salsabowl")]
+[node name="SalsaBowlEnemy1" parent="." unique_id=2036308015 instance=ExtResource("11_salsabowl")]
 position = Vector2(1750, 330)
 projectile_scene = ExtResource("6_boss_projectile")
 
-[node name="BeanToken9" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken9" parent="." unique_id=1590681426 instance=ExtResource("10_bean")]
 position = Vector2(1950, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken10" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken10" parent="." unique_id=1936044303 instance=ExtResource("10_bean")]
 position = Vector2(1990, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken11" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken11" parent="." unique_id=881408108 instance=ExtResource("10_bean")]
 position = Vector2(2030, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken12" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken12" parent="." unique_id=1988775806 instance=ExtResource("10_bean")]
 position = Vector2(2230, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken13" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken13" parent="." unique_id=1364102733 instance=ExtResource("10_bean")]
 position = Vector2(2270, 330)
-groups = ["bean_token"]
 
-[node name="CheeseEnemy3" parent="." instance=ExtResource("7_cheese")]
+[node name="CheeseEnemy3" parent="." unique_id=40857250 instance=ExtResource("7_cheese")]
 position = Vector2(2400, 330)
 
-[node name="SalsaBowlEnemy2" parent="." instance=ExtResource("11_salsabowl")]
+[node name="SalsaBowlEnemy2" parent="." unique_id=2102597169 instance=ExtResource("11_salsabowl")]
 position = Vector2(2600, 330)
 projectile_scene = ExtResource("6_boss_projectile")
 
-[node name="BeanToken14" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken14" parent="." unique_id=1409530233 instance=ExtResource("10_bean")]
 position = Vector2(2800, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken15" parent="." instance=ExtResource("10_bean")]
+[node name="BeanToken15" parent="." unique_id=596337372 instance=ExtResource("10_bean")]
 position = Vector2(2840, 330)
-groups = ["bean_token"]
 
-[node name="HotSauceBoss" parent="." instance=ExtResource("5_boss")]
+[node name="HotSauceBoss" parent="." unique_id=2055478076 instance=ExtResource("5_boss")]
 position = Vector2(3400, 330)
 projectile_scene = ExtResource("6_boss_projectile")
 ingredient_scene = ExtResource("3_ingredient")

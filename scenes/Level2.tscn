@@ -1,31 +1,31 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene format=3 uid="uid://cwq4jalcst1ve"]
 
-[ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
-[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://dtjfmty408xld" path="res://scripts/level_base.gd" id="0_level_base"]
+[ext_resource type="PackedScene" uid="uid://bkyka5e7ykkp3" path="res://scenes/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/CheeseIngredient.tscn" id="2_ingredient"]
 [ext_resource type="PackedScene" path="res://scenes/QuesoGrandeBoss.tscn" id="3_boss"]
 [ext_resource type="PackedScene" path="res://scenes/SlowProjectile.tscn" id="4_slow_projectile"]
 [ext_resource type="PackedScene" path="res://scenes/CheeseEnemy.tscn" id="5_cheese"]
 [ext_resource type="PackedScene" path="res://scenes/JalapenoEnemy.tscn" id="6_jalapeno"]
-[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="7_life_icon"]
+[ext_resource type="Texture2D" uid="uid://cg0lvb1imvqdh" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="7_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="8_bean"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_obstacle_small.png" id="9_obstacle_small"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_obstacle_medium.png" id="10_obstacle_medium"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_obstacle_large.png" id="11_obstacle_large"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_ground_tile.png" id="12_ground_tile"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_hazard_fill.png" id="13_hazard_fill"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_chip.png" id="14_chip"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_cheese_drip.png" id="15_cheese_drip"]
-[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_window_view.png" id="16_window_view"]
+[ext_resource type="Texture2D" uid="uid://cf12eq1kkwt3e" path="res://Assets/generated/environment/level2/l2_obstacle_small.png" id="9_obstacle_small"]
+[ext_resource type="Texture2D" uid="uid://ctpsjg04d5r11" path="res://Assets/generated/environment/level2/l2_obstacle_medium.png" id="10_obstacle_medium"]
+[ext_resource type="Texture2D" uid="uid://b50gtyaqjbhxh" path="res://Assets/generated/environment/level2/l2_obstacle_large.png" id="11_obstacle_large"]
+[ext_resource type="Texture2D" uid="uid://bwinbeo3gdpv7" path="res://Assets/generated/environment/level2/l2_ground_tile.png" id="12_ground_tile"]
+[ext_resource type="Texture2D" uid="uid://cickj4fqhibxp" path="res://Assets/generated/environment/level2/l2_hazard_fill.png" id="13_hazard_fill"]
+[ext_resource type="Texture2D" uid="uid://cct5qcgweoy6j" path="res://Assets/generated/environment/level2/l2_chip.png" id="14_chip"]
+[ext_resource type="Texture2D" uid="uid://cimqxbx5i60t8" path="res://Assets/generated/environment/level2/l2_cheese_drip.png" id="15_cheese_drip"]
+[ext_resource type="Texture2D" uid="uid://dchmvgp0pmh53" path="res://Assets/generated/environment/level2/l2_window_view.png" id="16_window_view"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
-size = Vector2(600, 80)
+size = Vector2(1036, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundB"]
 size = Vector2(710, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundC"]
-size = Vector2(810, 80)
+size = Vector2(1337, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_small"]
 size = Vector2(15, 32)
@@ -36,234 +36,239 @@ size = Vector2(54, 46)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
 size = Vector2(58, 58)
 
-[node name="Level2" type="Node2D"]
+[node name="Level2" type="Node2D" unique_id=209566101]
 script = ExtResource("0_level_base")
 next_level_path = "res://scenes/Level3.tscn"
 
-[node name="WindowParallax" type="ParallaxBackground" parent="."]
+[node name="WindowParallax" type="ParallaxBackground" parent="." unique_id=983599640]
 
-[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
-motion_scale = Vector2(0.4, 1.0)
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax" unique_id=1068841182]
+motion_scale = Vector2(0.4, 1)
 
-[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(142, -20)
+[node name="Backdrop" type="ColorRect" parent="WindowParallax/WindowLayer" unique_id=1703623559]
+offset_left = -860.0
+offset_top = -523.0
+offset_right = 3123.0
+offset_bottom = 1357.0001
+color = Color(0.88, 0.68, 0.3, 1)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=1971217593]
+position = Vector2(142, -11)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
 
-[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(827, -20)
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=913646484]
+position = Vector2(810.00006, -11)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
 
-[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(1512, -20)
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=270730994]
+position = Vector2(1478.0001, -11)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
 
-[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(2196, -20)
+[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer" unique_id=718176218]
+position = Vector2(2146.0002, -11)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
 
-[node name="Chip1" type="Sprite2D" parent="."]
-position = Vector2(350, 325)
-scale = Vector2(0.0884, 0.0884)
-texture = ExtResource("14_chip")
-
-[node name="Chip2" type="Sprite2D" parent="."]
-position = Vector2(1000, 325)
-scale = Vector2(0.0884, 0.0884)
-texture = ExtResource("14_chip")
-
-[node name="Chip3" type="Sprite2D" parent="."]
-position = Vector2(1600, 325)
-scale = Vector2(0.0884, 0.0884)
-texture = ExtResource("14_chip")
-
-[node name="Chip4" type="Sprite2D" parent="."]
-position = Vector2(2000, 325)
-scale = Vector2(0.0884, 0.0884)
-texture = ExtResource("14_chip")
-
-[node name="CheeseDrip1" type="Sprite2D" parent="."]
-position = Vector2(250, -40)
-scale = Vector2(0.0718, 0.0718)
-texture = ExtResource("15_cheese_drip")
-
-[node name="CheeseDrip2" type="Sprite2D" parent="."]
-position = Vector2(1200, -40)
-scale = Vector2(0.0718, 0.0718)
-texture = ExtResource("15_cheese_drip")
-
-[node name="CheeseDrip3" type="Sprite2D" parent="."]
-position = Vector2(1900, -40)
-scale = Vector2(0.0718, 0.0718)
-texture = ExtResource("15_cheese_drip")
-
-[node name="GroundA" type="StaticBody2D" parent="."]
+[node name="GroundA" type="StaticBody2D" parent="." unique_id=1602695292]
 position = Vector2(200, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA" unique_id=678897015]
+position = Vector2(-218, 0)
 shape = SubResource("RectangleShape2D_groundA")
 
-[node name="GroundVisual" type="TextureRect" parent="GroundA"]
-offset_left = -300.0
+[node name="GroundVisual" type="TextureRect" parent="GroundA" unique_id=1920009565]
+offset_left = -742.0
 offset_top = -40.0
 offset_right = 300.0
-offset_bottom = 40.0
+offset_bottom = 248.0
 texture = ExtResource("12_ground_tile")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="GroundB" type="StaticBody2D" parent="."]
+[node name="GroundB" type="StaticBody2D" parent="." unique_id=1438361536]
 position = Vector2(945, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB" unique_id=51048861]
 shape = SubResource("RectangleShape2D_groundB")
 
-[node name="GroundVisual" type="TextureRect" parent="GroundB"]
+[node name="GroundVisual" type="TextureRect" parent="GroundB" unique_id=81404741]
 offset_left = -355.0
 offset_top = -40.0
 offset_right = 355.0
-offset_bottom = 40.0
+offset_bottom = 256.0
 texture = ExtResource("12_ground_tile")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="GroundC" type="StaticBody2D" parent="."]
+[node name="GroundC" type="StaticBody2D" parent="." unique_id=1936741463]
 position = Vector2(1795, 400)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC" unique_id=1312172323]
+position = Vector2(263.5, 0)
 shape = SubResource("RectangleShape2D_groundC")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+[node name="GroundVisual" type="ColorRect" parent="GroundC" unique_id=1229538840]
 offset_left = -405.0
 offset_top = -40.0
-offset_right = 405.0
-offset_bottom = 40.0
+offset_right = 966.0
+offset_bottom = 255.0
 color = Color(0.6, 0.4, 0.08, 1)
 
-[node name="HazardFill1" type="TextureRect" parent="."]
+[node name="Chip1" type="Sprite2D" parent="." unique_id=619290217]
+position = Vector2(776.00006, 67.00003)
+scale = Vector2(0.09662399, 0.08397672)
+texture = ExtResource("14_chip")
+
+[node name="Chip2" type="Sprite2D" parent="." unique_id=1508378483]
+position = Vector2(1691.258, -59.751614)
+scale = Vector2(0.1949754, 0.19886772)
+texture = ExtResource("14_chip")
+
+[node name="Chip3" type="Sprite2D" parent="." unique_id=725931981]
+position = Vector2(1079.0001, 58.00003)
+scale = Vector2(0.0884, 0.0884)
+texture = ExtResource("14_chip")
+
+[node name="Chip4" type="Sprite2D" parent="." unique_id=878855896]
+position = Vector2(926.00006, 40.00003)
+scale = Vector2(0.2758647, 0.30935153)
+texture = ExtResource("14_chip")
+
+[node name="HazardFill1" type="TextureRect" parent="." unique_id=2072688652]
 offset_left = 500.0
 offset_top = 360.0
 offset_right = 590.0
-offset_bottom = 560.0
+offset_bottom = 653.0
 texture = ExtResource("13_hazard_fill")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="HazardFill2" type="TextureRect" parent="."]
+[node name="HazardFill2" type="TextureRect" parent="." unique_id=217236591]
 offset_left = 1300.0
 offset_top = 360.0
 offset_right = 1390.0
-offset_bottom = 560.0
+offset_bottom = 656.0
 texture = ExtResource("13_hazard_fill")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
+[node name="CheeseDrip1" type="Sprite2D" parent="." unique_id=893125628]
+position = Vector2(249.99998, 375)
+scale = Vector2(0.0718, 0.0718)
+texture = ExtResource("15_cheese_drip")
+
+[node name="CheeseDrip2" type="Sprite2D" parent="." unique_id=561051096]
+position = Vector2(1200, 375)
+scale = Vector2(0.0718, 0.0718)
+texture = ExtResource("15_cheese_drip")
+
+[node name="CheeseDrip3" type="Sprite2D" parent="." unique_id=1447252793]
+position = Vector2(1900, 375)
+scale = Vector2(0.0718, 0.0718)
+texture = ExtResource("15_cheese_drip")
+
+[node name="JumpObstacleSmall1" type="StaticBody2D" parent="." unique_id=1531853081]
 position = Vector2(320, 344)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1" unique_id=1895293982]
 shape = SubResource("RectangleShape2D_obstacle_small")
 
-[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleSmall1"]
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleSmall1" unique_id=1418292571]
 scale = Vector2(0.0572, 0.0572)
 texture = ExtResource("9_obstacle_small")
 
-[node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
+[node name="JumpObstacleMedium1" type="StaticBody2D" parent="." unique_id=2075385557]
 position = Vector2(800, 337)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1" unique_id=588146148]
 shape = SubResource("RectangleShape2D_obstacle_medium")
 
-[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium1"]
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium1" unique_id=725156449]
 scale = Vector2(0.0725, 0.0725)
 texture = ExtResource("10_obstacle_medium")
 
-[node name="JumpObstacleLarge1" type="StaticBody2D" parent="."]
+[node name="JumpObstacleLarge1" type="StaticBody2D" parent="." unique_id=661008778]
 position = Vector2(1020, 331)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1" unique_id=2093210997]
 shape = SubResource("RectangleShape2D_obstacle_large")
 
-[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleLarge1"]
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleLarge1" unique_id=1699458874]
 scale = Vector2(0.1014, 0.1014)
 texture = ExtResource("11_obstacle_large")
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
+[node name="Player" parent="." unique_id=657436422 instance=ExtResource("1_player")]
 position = Vector2(100, 300)
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=385596232]
 
-[node name="Life1" type="TextureRect" parent="HUD"]
-position = Vector2(20, 20)
-size = Vector2(36, 36)
+[node name="Life1" type="TextureRect" parent="HUD" unique_id=686343387]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 56.0
+offset_bottom = 56.0
 texture = ExtResource("7_life_icon")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Life2" type="TextureRect" parent="HUD"]
-position = Vector2(64, 20)
-size = Vector2(36, 36)
+[node name="Life2" type="TextureRect" parent="HUD" unique_id=1192501108]
+offset_left = 64.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 56.0
 texture = ExtResource("7_life_icon")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Life3" type="TextureRect" parent="HUD"]
-position = Vector2(108, 20)
-size = Vector2(36, 36)
+[node name="Life3" type="TextureRect" parent="HUD" unique_id=1649732720]
+offset_left = 108.0
+offset_top = 20.0
+offset_right = 144.0
+offset_bottom = 56.0
 texture = ExtResource("7_life_icon")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="BeanToken1" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken1" parent="." unique_id=1465120980 instance=ExtResource("8_bean")]
 position = Vector2(200, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken2" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken2" parent="." unique_id=573388233 instance=ExtResource("8_bean")]
 position = Vector2(240, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken3" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken3" parent="." unique_id=543958716 instance=ExtResource("8_bean")]
 position = Vector2(280, 330)
-groups = ["bean_token"]
 
-[node name="JalapenoEnemy1" parent="." instance=ExtResource("6_jalapeno")]
+[node name="JalapenoEnemy1" parent="." unique_id=1798067350 instance=ExtResource("6_jalapeno")]
 position = Vector2(400, 330)
 
-[node name="BeanToken4" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken4" parent="." unique_id=1248680078 instance=ExtResource("8_bean")]
 position = Vector2(650, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken5" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken5" parent="." unique_id=332943943 instance=ExtResource("8_bean")]
 position = Vector2(690, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken6" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken6" parent="." unique_id=1962911382 instance=ExtResource("8_bean")]
 position = Vector2(730, 330)
-groups = ["bean_token"]
 
-[node name="CheeseEnemy1" parent="." instance=ExtResource("5_cheese")]
+[node name="CheeseEnemy1" parent="." unique_id=13972416 instance=ExtResource("5_cheese")]
 position = Vector2(900, 330)
 
-[node name="BeanToken7" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken7" parent="." unique_id=1738141928 instance=ExtResource("8_bean")]
 position = Vector2(1100, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken8" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken8" parent="." unique_id=805536718 instance=ExtResource("8_bean")]
 position = Vector2(1140, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken9" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken9" parent="." unique_id=1975230124 instance=ExtResource("8_bean")]
 position = Vector2(1450, 330)
-groups = ["bean_token"]
 
-[node name="BeanToken10" parent="." instance=ExtResource("8_bean")]
+[node name="BeanToken10" parent="." unique_id=1913847732 instance=ExtResource("8_bean")]
 position = Vector2(1490, 330)
-groups = ["bean_token"]
 
-[node name="QuesoGrandeBoss" parent="." instance=ExtResource("3_boss")]
+[node name="QuesoGrandeBoss" parent="." unique_id=442270635 instance=ExtResource("3_boss")]
 position = Vector2(1795, 330)
 projectile_scene = ExtResource("4_slow_projectile")
 ingredient_scene = ExtResource("2_ingredient")
