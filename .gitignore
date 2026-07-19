@@ -5,3 +5,6 @@ export_presets.cfg
 
 # Secrets
 .env
+
+# Additions is just for me to prompt the AI to update without needing to use CLAUDE
+additions.txt

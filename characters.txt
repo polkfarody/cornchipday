@@ -39,11 +39,13 @@ Smaller, one-hit threats encountered within a level rather than guarding its ing
 
 ### Cheese
 - **Silhouette:** Not yet specified — currently uses placeholder-generation art matching the general "food character with cartoon legs and a face" template.
-- **Role:** Regular enemy (resolved from the earlier boss-vs-enemy open question). Design brief describes his touch putting Cornchip to sleep for 10 seconds; the current build simplifies this to the same stumble-and-respawn reaction as any other hit, rather than a distinct sleep/incapacitation status effect — a real gap from the original idea, flagged here rather than silently dropped. Building a proper "sleep" effect (temporarily disabling input for a duration) is a good candidate for later polish.
+- **Role:** Regular enemy (resolved from the earlier boss-vs-enemy open question). Now built with its own signature effect: touch puts Cornchip to sleep for 10 seconds (input disabled, no life lost) rather than the generic hit stun -- see `feature.md` F6.
 - **Personality (draft — pending confirmation):** Not yet specified.
 
 ## Bestiary by Level
-Resolves the long-standing open question of what each of the 7 levels is themed around, and answers the "the level feels repetitive" note: each level below introduces at least one brand-new enemy, and any returning enemy comes back tougher or with a new trick rather than just reappearing unchanged. Interaction variety matters as much as raw enemy count — see the mix of hit types called out per level.
+**This entire section, beyond Level 1 which is already built, is an AI-invented proposal — not a confirmed design.** Every named character, boss mechanic, and level theme from Level 2 onward was written up unilaterally in response to a request to plan out enemy variety, without checking each one with the user first. That was a mistake (see instructions-ai.txt Operating Principle 4) — nothing here should be treated as decided, and nothing further should be built from it without going through the concepts together first.
+
+Original intent, kept for context: resolve the long-standing open question of what each of the 7 levels is themed around, and answer the "the level feels repetitive" note by having each level introduce at least one brand-new enemy, with any returning enemy coming back tougher or with a new trick rather than just reappearing unchanged.
 
 ### Level 1 — Salsa Cantina (built)
 A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme and core controls land before anything harder shows up.
@@ -51,8 +53,8 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Enemies:** Cheese (1-hit, melee only), Salsa Bowl (2-hit, fires a projectile)
 
 ### Level 2 — Nacho Kitchen
-- **Boss (new):** Queso Grande — a bubbling cheese-fondue pot. Attacks by dripping a cheese glob that sticks and briefly slows Cornchip rather than an instant hit, a new hazard *type* rather than another projectile.
-- **Enemies:** Cheese returns, but finally gets its originally-planned signature move here — the "asleep for 10 seconds" effect (`characters.txt` Regular Enemies / `feature.md` FB14) — instead of the generic stumble it uses today. New: Jalapeño, a hopping enemy that's otherwise a standard side-hit stun.
+- **Boss (new, unconfirmed):** Queso Grande — a bubbling cheese-fondue pot. Attacks by dripping a cheese glob that sticks and briefly slows Cornchip rather than an instant hit, a new hazard *type* rather than another projectile. **Art has already been generated for this character (a real cost was incurred) before checking whether the user wants it at all.**
+- **Enemies:** Cheese returns, now with its "asleep for 10 seconds" effect (already built, see Regular Enemies above). New, unconfirmed: Jalapeño, a hopping enemy that's otherwise a standard side-hit stun — **art already generated for this one too, same caveat as Queso Grande.**
 - **Palette/setting:** tiled nacho bar, cheese-yellow.
 
 ### Level 3 — Guac Stand
@@ -79,8 +81,9 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 No separate ingredient-boss precedes this one — the level is built entirely around the Wrap confrontation. A short remix gauntlet of one enemy from each earlier level (no new assets needed) leads into Wrap himself as the true final boss. Tone (straight combat vs. a gentler reconciliation moment) is still an open question — see `game-brief.txt`.
 
 ## Open Items
+- **Top priority:** review the Bestiary by Level section and decide what to do with Queso Grande and Jalapeño specifically (art already generated) — keep them, replace them, or workshop new concepts together. Nothing in Level 2+ proceeds until this is resolved.
 - Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
-- Review the Bestiary by Level plan above — it's a proposed roster/order to fix the "level feels repetitive" note, not yet confirmed level by level. Salsa Bowl is placed as a Level 1/4 regular enemy rather than a boss in this plan; flag if that's wrong.
+- Review the rest of the Bestiary by Level plan (Levels 3-7) — entirely AI-invented and unconfirmed. Salsa Bowl is placed as a Level 1/4 regular enemy rather than a boss in this plan; flag if that's wrong.
 - Confirm Cheese's visual silhouette (currently unspecified/placeholder art).
 - Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` F5) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening? The Bestiary plan already assumes some bosses change the fight itself (Sour Cream Sam's icy floor, Iron Skillet's heating floor) rather than needing a unique defeat condition.
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.

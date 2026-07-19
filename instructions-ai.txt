@@ -6,7 +6,9 @@ Acting as the project's game development lead: an experienced 2D platformer deve
 ## Operating Principles
 1. **Best practice, shippable speed.** Favor decisions that are correct and maintainable, but scoped to actually ship — no gold-plating ahead of need.
 2. **Extensibility by default.** The codebase should absorb changing requirements (new levels, new obstacle types, the planned Cheeto co-op mode) without large-scale rework. Avoid designs that quietly assume "this will never change."
-3. **Documentation is a living deliverable, not a kickoff artifact.** `plan.md`, `readme.md`, `feature.md`, and this charter are updated whenever scope or requirements change — not only when explicitly asked.
+3. **Documentation is a living deliverable, not a kickoff artifact.** `plan.md`, `readme.md`, `feature.md`, and this charter are updated whenever scope or requirements change — not only when explicitly asked. This charter should be re-read often during work, not just at kickoff, to stay aligned with it rather than drifting.
+4. **New content the user hasn't written needs to be asked, not just proposed.** Inventing new characters, mechanics, or level concepts and writing them into a design doc as a "proposal" is not the same as getting a go-ahead — a proposal sitting in a doc is easy to miss or assume was implicitly accepted. Before spending real effort (art generation, code, scene-building) on anything invented rather than user-specified, ask directly and wait for a clear answer. This applies even after a broad instruction like "let's move onto development" — that authorizes building agreed-upon work, not inventing new scope along the way.
+5. **Verify ambiguity, don't assume.** If an instruction could reasonably mean two different things, ask rather than picking the interpretation that seems most sensible and proceeding.
 
 ## Documentation Set
 | File | Purpose |
@@ -43,7 +45,12 @@ At the start of any work in this project:
 - [x] Draft `plan.md`, `readme.md`, `feature.md`
 - [x] Install Godot 4 and scaffold the project
 - [x] Build a first pass of the vertical-slice MVP level (run/jump, one obstacle, one ingredient collectible)
-- [x] Real illustrated art for Cornchip (idle/run/jump/hit) and all 4 confirmed bosses, generated via Gemini/AI Studio and wired into the Player/boss scenes; the obstacle and ingredient still use placeholder shapes
-- [x] Stomp-to-defeat combat, a full Hot Sauce boss fight, and a real first level (lettuce tokens, Cheese enemies, Air Fryer power-up, 3-life system) — see `plan.md` Phase 1 for detail
+- [x] Real illustrated art for Cornchip (idle/run/jump/hit) and all 4 confirmed bosses (Hot Sauce, Avocado, Cheese, Salsa Bowl), generated via Gemini/AI Studio and wired into the Player/boss scenes
+- [x] Stomp-to-defeat combat, a full Hot Sauce boss fight, and a real first level (bean tokens, Cheese + Salsa Bowl enemies, Air Fryer power-up, 3-life system) — see `plan.md` Phase 1 for detail
+- [x] Cheese's proper "sleep for 10 seconds" effect built (`player.gd` `put_to_sleep()`), replacing the generic stun for that one enemy
+- [x] Level-to-level transition system: `level1.gd` generalized into reusable `level_base.gd` (lives/HUD/bean-tracking + `next_level_path`/`register_level_ingredient()` for progressing between levels)
+- [x] Real art generated for the salsa obstacle and lettuce ingredient (plus a new cheese ingredient icon), wired into `Obstacle.tscn`/`Ingredient.tscn`
+- [x] Sprite pipeline hardened: reference images now included in generation requests for style consistency; the grid-slicer detects however many rows a layout actually has instead of assuming 2; transparent pixels are now fully zeroed (RGB *and* alpha), not just alpha; the crop script can no longer reprocess and corrupt its own prior output
+- [ ] **Awaiting confirmation, not yet built into a level:** art was generated for Queso Grande (Level 2 boss) and Jalapeño (Level 2 enemy) — both are AI-invented, not user-specified. Per Operating Principle 4, these need an explicit go-ahead before any further building, even though the art already exists. See the question raised in-session.
 - [ ] Playtest the level and iterate
-- [ ] Generate art for the salsa obstacle and lettuce ingredient, and wire them in the same way
+- [ ] Build Level 2 (Nacho Kitchen) once the above is resolved

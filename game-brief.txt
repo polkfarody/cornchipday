@@ -55,4 +55,4 @@ A single, fully polished vertical-slice level demonstrating: core run/jump movem
 ## Resolved Questions (kept for history)
 - **Lettuce/beans: token vs. ingredient?** Beans (not lettuce) are the scattered collectible-currency layer, counted but with no on-screen tally yet; lettuce stays an ingredient-only concept, unattached to any specific level in the current proposed order.
 - **Lives vs. no-fail-state?** Resolved: 3 lives, level restarts from the beginning at 0 (see Design Philosophy above).
-- **Should each level map to a specific real ingredient?** Yes — see the proposed order in Level & Narrative Structure above and the full Bestiary by Level in `characters.txt`.
+- **Should each level map to a specific real ingredient?** Conceptually yes, but the specific order/list is still an unconfirmed AI-written proposal (see Level & Narrative Structure above and `characters.txt` Bestiary by Level) — don't treat the list itself as decided.
