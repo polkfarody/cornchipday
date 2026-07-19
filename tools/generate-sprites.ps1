@@ -25,8 +25,13 @@
 # Polygon2D shapes currently in the Godot scenes.
 #
 # Usage:
-#   .\generate-sprites.ps1            # generate all sprites
+#   .\generate-sprites.ps1            # generate all sprites (careful -- costs money per image)
 #   .\generate-sprites.ps1 -Only cornchip_grid   # generate just one, by Name
+#
+# Reference images: every request includes cornchip_frame1.png and
+# hot_sauce_boss_frame1.png as image inputs alongside the text prompt, so
+# new characters match the established art style instead of relying on
+# prompt wording alone to stay consistent.
 
 param(
     [string]$Only = $null
@@ -56,6 +61,24 @@ if (-not $apiKey -or $apiKey -eq "your-key-here") {
 
 $outDir = Join-Path $projectRoot "Assets\generated"
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
+
+$referenceImagePaths = @(
+    (Join-Path $outDir "cornchip_frame1.png"),
+    (Join-Path $outDir "hot_sauce_boss_frame1.png")
+)
+$referenceImageInputs = @()
+foreach ($refPath in $referenceImagePaths) {
+    if (Test-Path $refPath) {
+        $refBytes = [IO.File]::ReadAllBytes($refPath)
+        $referenceImageInputs += @{
+            type      = "image"
+            mime_type = "image/png"
+            data      = [Convert]::ToBase64String($refBytes)
+        }
+    } else {
+        Write-Warning "Reference image not found, skipping: $refPath"
+    }
+}
 
 $styleSuffix = "Flat vector illustration style, thick clean outlines, bright saturated colors, flat shading, no gradients. Background must be solid flat magenta (#FF00FF) throughout the entire image, completely uniform, no pattern, no checkerboard, no watermark, no logo, no text. Absolutely no drop shadows or shadow of any kind beneath or around any character or object."
 
@@ -99,7 +122,18 @@ $sprites = @(
         "firing a tomato chunk, the chunk forming then flying out" `
         "a dizzy, defeated pose, tipped over on its side") },
     @{ Name = "salsa_obstacle"; Prompt = "A cartoon thrown food projectile: a small round blob of red salsa with a comedic wobbly splat shape, glossy highlight. $styleSuffix" },
-    @{ Name = "lettuce_ingredient"; Prompt = "A cute cartoon lettuce leaf collectible icon for a kids' video game, bright green with a glossy highlight, centered composition. $styleSuffix" }
+    @{ Name = "lettuce_ingredient"; Prompt = "A cute cartoon lettuce leaf collectible icon for a kids' video game, bright green with a glossy highlight, centered composition. $styleSuffix" },
+    @{ Name = "cheese_ingredient"; Prompt = "A cartoon wedge of yellow cheese collectible icon for a kids' video game, glossy highlight, simple visible holes, centered composition. $styleSuffix" },
+    @{ Name = "queso_grande_grid"; Prompt = (Grid-Prompt `
+        "a giant bubbling pot of nacho cheese fondue: a wide bowl-shaped body, warm orange-yellow molten cheese color, cartoon eyes and mouth on the front, small comedic stick legs, bubbles/steam rising from the top." `
+        "wobbling/bubbling in place, alternating a slight lean left and right" `
+        "dripping a cheese glob from its rim, the glob stretching down then dropping off" `
+        "a dizzy, defeated pose, tipped over, cheese drooping") },
+    @{ Name = "jalapeno_grid"; Prompt = (Grid-Prompt `
+        "a cartoon jalapeño pepper character, glossy green skin, small comedic stick legs, big round friendly-but-mischievous cartoon eyes, simple mouth." `
+        "hopping, crouching down then springing up" `
+        "a spicy wink/taunt, one eye winking with a small heat-wave squiggle above its head" `
+        "a dizzy, defeated pose, slightly wilted") }
 )
 
 if ($Only) {
@@ -114,9 +148,10 @@ $maxRetries = 4
 
 foreach ($sprite in $sprites) {
     Write-Host "Generating $($sprite.Name)..."
+    $inputItems = @(@{ type = "text"; text = $sprite.Prompt }) + $referenceImageInputs
     $body = @{
-        model = "gemini-3.1-flash-lite-image"
-        input = @(@{ type = "text"; text = $sprite.Prompt })
+        model = "gemini-3.1-flash-image"
+        input = $inputItems
     } | ConvertTo-Json -Depth 10
 
     $attempt = 0
