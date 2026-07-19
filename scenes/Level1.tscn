@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
@@ -13,35 +13,228 @@
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="10_bean"]
 [ext_resource type="PackedScene" path="res://scenes/SalsaBowlEnemy.tscn" id="11_salsabowl"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
-size = Vector2(3000, 80)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(20, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
+size = Vector2(600, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundB"]
+size = Vector2(690, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundC"]
+size = Vector2(710, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundD"]
+size = Vector2(730, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arena"]
+size = Vector2(800, 80)
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("0_level_base")
 next_level_path = "res://scenes/Level2.tscn"
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="SkyTop" type="ColorRect" parent="."]
 offset_left = -200.0
 offset_top = -600.0
-offset_right = 3000.0
+offset_right = 3900.0
+offset_bottom = -250.0
+color = Color(0.22, 0.22, 0.5, 1)
+
+[node name="SkyMid" type="ColorRect" parent="."]
+offset_left = -200.0
+offset_top = -250.0
+offset_right = 3900.0
+offset_bottom = 50.0
+color = Color(0.75, 0.45, 0.55, 1)
+
+[node name="SkyHorizon" type="ColorRect" parent="."]
+offset_left = -200.0
+offset_top = 50.0
+offset_right = 3900.0
 offset_bottom = 400.0
-color = Color(0.53, 0.81, 0.92, 1)
+color = Color(0.95, 0.72, 0.42, 1)
 
-[node name="Ground" type="StaticBody2D" parent="."]
-position = Vector2(1400, 400)
+[node name="Cactus1" type="Polygon2D" parent="."]
+position = Vector2(450, 300)
+color = Color(0.22, 0.5, 0.32, 1)
+polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
-shape = SubResource("RectangleShape2D_ground")
+[node name="Cactus2" type="Polygon2D" parent="."]
+position = Vector2(1200, 300)
+color = Color(0.22, 0.5, 0.32, 1)
+polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
 
-[node name="GroundVisual" type="ColorRect" parent="Ground"]
-offset_left = -1500.0
+[node name="Cactus3" type="Polygon2D" parent="."]
+position = Vector2(2400, 300)
+color = Color(0.22, 0.5, 0.32, 1)
+polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
+
+[node name="Cactus4" type="Polygon2D" parent="."]
+position = Vector2(3150, 300)
+color = Color(0.22, 0.5, 0.32, 1)
+polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
+
+[node name="LightCluster1" type="Node2D" parent="."]
+position = Vector2(300, -20)
+
+[node name="Bulb1" type="Polygon2D" parent="LightCluster1"]
+color = Color(0.9, 0.2, 0.15, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb2" type="Polygon2D" parent="LightCluster1"]
+position = Vector2(40, 8)
+color = Color(0.95, 0.8, 0.1, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb3" type="Polygon2D" parent="LightCluster1"]
+position = Vector2(80, 0)
+color = Color(0.2, 0.6, 0.3, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="LightCluster2" type="Node2D" parent="."]
+position = Vector2(1000, -20)
+
+[node name="Bulb1" type="Polygon2D" parent="LightCluster2"]
+color = Color(0.9, 0.2, 0.15, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb2" type="Polygon2D" parent="LightCluster2"]
+position = Vector2(40, 8)
+color = Color(0.95, 0.8, 0.1, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb3" type="Polygon2D" parent="LightCluster2"]
+position = Vector2(80, 0)
+color = Color(0.2, 0.6, 0.3, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="LightCluster3" type="Node2D" parent="."]
+position = Vector2(1700, -20)
+
+[node name="Bulb1" type="Polygon2D" parent="LightCluster3"]
+color = Color(0.9, 0.2, 0.15, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb2" type="Polygon2D" parent="LightCluster3"]
+position = Vector2(40, 8)
+color = Color(0.95, 0.8, 0.1, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb3" type="Polygon2D" parent="LightCluster3"]
+position = Vector2(80, 0)
+color = Color(0.2, 0.6, 0.3, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="LightCluster4" type="Node2D" parent="."]
+position = Vector2(2400, -20)
+
+[node name="Bulb1" type="Polygon2D" parent="LightCluster4"]
+color = Color(0.9, 0.2, 0.15, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb2" type="Polygon2D" parent="LightCluster4"]
+position = Vector2(40, 8)
+color = Color(0.95, 0.8, 0.1, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="Bulb3" type="Polygon2D" parent="LightCluster4"]
+position = Vector2(80, 0)
+color = Color(0.2, 0.6, 0.3, 1)
+polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+
+[node name="GroundA" type="StaticBody2D" parent="."]
+position = Vector2(200, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+shape = SubResource("RectangleShape2D_groundA")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+offset_left = -300.0
 offset_top = -40.0
-offset_right = 1500.0
+offset_right = 300.0
 offset_bottom = 40.0
-color = Color(0.45, 0.32, 0.18, 1)
+color = Color(0.72, 0.4, 0.24, 1)
+
+[node name="GroundB" type="StaticBody2D" parent="."]
+position = Vector2(935, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
+shape = SubResource("RectangleShape2D_groundB")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+offset_left = -345.0
+offset_top = -40.0
+offset_right = 345.0
+offset_bottom = 40.0
+color = Color(0.72, 0.4, 0.24, 1)
+
+[node name="GroundC" type="StaticBody2D" parent="."]
+position = Vector2(1725, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
+shape = SubResource("RectangleShape2D_groundC")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+offset_left = -355.0
+offset_top = -40.0
+offset_right = 355.0
+offset_bottom = 40.0
+color = Color(0.72, 0.4, 0.24, 1)
+
+[node name="GroundD" type="StaticBody2D" parent="."]
+position = Vector2(2535, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundD"]
+shape = SubResource("RectangleShape2D_groundD")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundD"]
+offset_left = -365.0
+offset_top = -40.0
+offset_right = 365.0
+offset_bottom = 40.0
+color = Color(0.72, 0.4, 0.24, 1)
+
+[node name="GroundArena" type="StaticBody2D" parent="."]
+position = Vector2(3400, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundArena"]
+shape = SubResource("RectangleShape2D_arena")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundArena"]
+offset_left = -400.0
+offset_top = -40.0
+offset_right = 400.0
+offset_bottom = 40.0
+color = Color(0.55, 0.14, 0.1, 1)
+
+[node name="ArenaBanner" type="Node2D" parent="."]
+position = Vector2(3000, -80)
+
+[node name="Pennant1" type="Polygon2D" parent="ArenaBanner"]
+color = Color(0.85, 0.2, 0.15, 1)
+polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
+
+[node name="Pennant2" type="Polygon2D" parent="ArenaBanner"]
+position = Vector2(40, 6)
+color = Color(0.95, 0.8, 0.1, 1)
+polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
+
+[node name="Pennant3" type="Polygon2D" parent="ArenaBanner"]
+position = Vector2(80, 0)
+color = Color(0.85, 0.2, 0.15, 1)
+polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
+
+[node name="Pennant4" type="Polygon2D" parent="ArenaBanner"]
+position = Vector2(120, 6)
+color = Color(0.95, 0.8, 0.1, 1)
+polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
+
+[node name="Pennant5" type="Polygon2D" parent="ArenaBanner"]
+position = Vector2(160, 0)
+color = Color(0.85, 0.2, 0.15, 1)
+polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(100, 300)
@@ -70,53 +263,96 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="BeanToken1" parent="." instance=ExtResource("10_bean")]
-position = Vector2(300, 330)
+position = Vector2(200, 330)
 groups = ["bean_token"]
 
 [node name="BeanToken2" parent="." instance=ExtResource("10_bean")]
-position = Vector2(340, 330)
+position = Vector2(240, 330)
 groups = ["bean_token"]
 
 [node name="BeanToken3" parent="." instance=ExtResource("10_bean")]
-position = Vector2(380, 330)
+position = Vector2(280, 330)
 groups = ["bean_token"]
 
 [node name="CheeseEnemy1" parent="." instance=ExtResource("7_cheese")]
-position = Vector2(550, 330)
+position = Vector2(400, 330)
+
+[node name="BeanToken4" parent="." instance=ExtResource("10_bean")]
+position = Vector2(650, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken5" parent="." instance=ExtResource("10_bean")]
+position = Vector2(690, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken6" parent="." instance=ExtResource("10_bean")]
+position = Vector2(730, 330)
+groups = ["bean_token"]
 
 [node name="ObstacleTrigger" type="Area2D" parent="."]
-position = Vector2(750, 300)
+position = Vector2(900, 300)
 script = ExtResource("4_trigger")
 obstacle_scene = ExtResource("2_obstacle")
-spawn_position = Vector2(750, -100)
+spawn_position = Vector2(900, -100)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleTrigger"]
 shape = SubResource("RectangleShape2D_trigger")
 
-[node name="BeanToken4" parent="." instance=ExtResource("10_bean")]
-position = Vector2(950, 330)
+[node name="BeanToken7" parent="." instance=ExtResource("10_bean")]
+position = Vector2(1150, 330)
 groups = ["bean_token"]
 
-[node name="BeanToken5" parent="." instance=ExtResource("10_bean")]
-position = Vector2(990, 330)
-groups = ["bean_token"]
-
-[node name="BeanToken6" parent="." instance=ExtResource("10_bean")]
-position = Vector2(1030, 330)
+[node name="BeanToken8" parent="." instance=ExtResource("10_bean")]
+position = Vector2(1190, 330)
 groups = ["bean_token"]
 
 [node name="AirFryer" parent="." instance=ExtResource("8_airfryer")]
-position = Vector2(1150, 330)
+position = Vector2(1430, 330)
 
 [node name="CheeseEnemy2" parent="." instance=ExtResource("7_cheese")]
-position = Vector2(1400, 330)
+position = Vector2(1580, 330)
 
 [node name="SalsaBowlEnemy1" parent="." instance=ExtResource("11_salsabowl")]
-position = Vector2(1600, 330)
+position = Vector2(1750, 330)
 projectile_scene = ExtResource("6_boss_projectile")
 
+[node name="BeanToken9" parent="." instance=ExtResource("10_bean")]
+position = Vector2(1950, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken10" parent="." instance=ExtResource("10_bean")]
+position = Vector2(1990, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken11" parent="." instance=ExtResource("10_bean")]
+position = Vector2(2030, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken12" parent="." instance=ExtResource("10_bean")]
+position = Vector2(2230, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken13" parent="." instance=ExtResource("10_bean")]
+position = Vector2(2270, 330)
+groups = ["bean_token"]
+
+[node name="CheeseEnemy3" parent="." instance=ExtResource("7_cheese")]
+position = Vector2(2400, 330)
+
+[node name="SalsaBowlEnemy2" parent="." instance=ExtResource("11_salsabowl")]
+position = Vector2(2600, 330)
+projectile_scene = ExtResource("6_boss_projectile")
+
+[node name="BeanToken14" parent="." instance=ExtResource("10_bean")]
+position = Vector2(2800, 330)
+groups = ["bean_token"]
+
+[node name="BeanToken15" parent="." instance=ExtResource("10_bean")]
+position = Vector2(2840, 330)
+groups = ["bean_token"]
+
 [node name="HotSauceBoss" parent="." instance=ExtResource("5_boss")]
-position = Vector2(1900, 330)
+position = Vector2(3400, 330)
 projectile_scene = ExtResource("6_boss_projectile")
 ingredient_scene = ExtResource("3_ingredient")
-ingredient_spawn_position = Vector2(1900, 330)
+ingredient_spawn_position = Vector2(3400, 330)
