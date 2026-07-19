@@ -43,9 +43,9 @@ Smaller, one-hit threats encountered within a level rather than guarding its ing
 - **Personality (draft — pending confirmation):** Not yet specified.
 
 ## Bestiary by Level
-**This entire section, beyond Level 1 which is already built, is an AI-invented proposal — not a confirmed design.** Every named character, boss mechanic, and level theme from Level 2 onward was written up unilaterally in response to a request to plan out enemy variety, without checking each one with the user first. That was a mistake (see instructions-ai.txt Operating Principle 4) — nothing here should be treated as decided, and nothing further should be built from it without going through the concepts together first.
+**Confirmed by the user** as the roster/order for Levels 2-7, including keeping Queso Grande and Jalapeño as-is. Originally written up unilaterally without checking each character first (see instructions-ai.txt Operating Principle 4) -- flagged, reviewed, and approved as a whole rather than being silently treated as decided.
 
-Original intent, kept for context: resolve the long-standing open question of what each of the 7 levels is themed around, and answer the "the level feels repetitive" note by having each level introduce at least one brand-new enemy, with any returning enemy coming back tougher or with a new trick rather than just reappearing unchanged.
+Resolves the long-standing open question of what each of the 7 levels is themed around, and answers the "the level feels repetitive" note by having each level introduce at least one brand-new enemy, with any returning enemy coming back tougher or with a new trick rather than just reappearing unchanged.
 
 ### Level 1 — Salsa Cantina (built)
 A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme and core controls land before anything harder shows up.
@@ -53,27 +53,27 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Enemies:** Cheese (1-hit, melee only), Salsa Bowl (2-hit, fires a projectile)
 
 ### Level 2 — Nacho Kitchen
-- **Boss (new, unconfirmed):** Queso Grande — a bubbling cheese-fondue pot. Attacks by dripping a cheese glob that sticks and briefly slows Cornchip rather than an instant hit, a new hazard *type* rather than another projectile. **Art has already been generated for this character (a real cost was incurred) before checking whether the user wants it at all.**
-- **Enemies:** Cheese returns, now with its "asleep for 10 seconds" effect (already built, see Regular Enemies above). New, unconfirmed: Jalapeño, a hopping enemy that's otherwise a standard side-hit stun — **art already generated for this one too, same caveat as Queso Grande.**
+- **Boss:** Queso Grande — a bubbling cheese-fondue pot. Attacks by dripping a cheese glob that sticks and briefly slows Cornchip rather than an instant hit, a new hazard *type* rather than another projectile. Art already generated.
+- **Enemies:** Cheese returns, now with its "asleep for 10 seconds" effect (already built, see Regular Enemies above). Jalapeño, a hopping enemy that's otherwise a standard side-hit stun. Art already generated.
 - **Palette/setting:** tiled nacho bar, cheese-yellow.
 
 ### Level 3 — Guac Stand
 - **Boss:** Avocado (already designed/generated)
-- **Enemies:** Lime (user-specified, additions.txt) — a wedge of lime that squirts toxic lime juice at Cornchip, a ranged attack (presumably the standard hit/stun like other projectiles unless told otherwise). Replaces an earlier AI-invented version of this character that had it bouncing around and reversing Cornchip's controls -- that idea is dropped now that a real spec exists. Onion (still AI-invented/unconfirmed) — a stationary enemy whose nearby presence blurs/wobbles the screen briefly (a nuisance, not a hit).
+- **Enemies:** Lime (user-specified, additions.txt) — a wedge of lime that squirts toxic lime juice at Cornchip, a ranged attack (standard hit/stun like other projectiles). Replaces an earlier AI-invented version that had it reversing Cornchip's controls -- dropped now that a real spec exists. Onion — a stationary enemy whose nearby presence blurs/wobbles the screen briefly (a nuisance, not a hit). Neither has art yet.
 - **Palette/setting:** produce stand, greens.
 
 ### Level 4 — Market Tomatoes
-- **Boss (new):** Big Red — a giant tomato that splits into two Cherry Tomato enemies partway through the fight, an evolving-fight-pattern boss rather than Hot Sauce's single-phase loop.
-- **Enemies:** Cherry Tomato (new — small, fast, 1-hit; also the thing Big Red spawns), Salsa Bowl returns tougher (faster fire rate).
+- **Boss:** Big Red — a giant tomato that splits into two Cherry Tomato enemies partway through the fight, an evolving-fight-pattern boss rather than Hot Sauce's single-phase loop.
+- **Enemies:** Cherry Tomato (small, fast, 1-hit; also the thing Big Red spawns), Salsa Bowl returns tougher (faster fire rate).
 - **Palette/setting:** outdoor market stalls, reds.
 
 ### Level 5 — Frosty Fridge (Sour Cream)
-- **Boss (new):** Sour Cream Sam — the arena floor turns icy/slippery for this fight, changing how Cornchip's movement feels rather than adding another attack type.
-- **Enemies (new):** Ice Cube — fast, low-health, slides back and forth. Chive Bit — tiny, appears in small swarms.
+- **Boss:** Sour Cream Sam — the arena floor turns icy/slippery for this fight, changing how Cornchip's movement feels rather than adding another attack type.
+- **Enemies:** Ice Cube — fast, low-health, slides back and forth. Chive Bit — tiny, appears in small swarms.
 - **Palette/setting:** walk-in fridge, cool blues.
 
 ### Level 6 — Sizzling Griddle (Crunchy Shell)
-- **Boss (new):** Iron Skillet — the whole arena floor periodically heats up (can't stand still), an escalation of Sour Cream Sam's floor-changes-the-fight idea.
+- **Boss:** Iron Skillet — the whole arena floor periodically heats up (can't stand still), an escalation of Sour Cream Sam's floor-changes-the-fight idea.
 - **Enemies:** Jalapeño and Onion return tougher (explicit callback, not brand new) alongside one new one: Grease Splatter — hazard-only, cannot be stomped, must be avoided entirely (a deliberately different interaction type from every stompable enemy so far).
 - **Palette/setting:** kitchen grill station, reds/oranges.
 
@@ -81,9 +81,8 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 No separate ingredient-boss precedes this one — the level is built entirely around the Wrap confrontation. A short remix gauntlet of one enemy from each earlier level (no new assets needed) leads into Wrap himself as the true final boss. Tone (straight combat vs. a gentler reconciliation moment) is still an open question — see `game-brief.txt`.
 
 ## Open Items
-- **Top priority:** review the Bestiary by Level section and decide what to do with Queso Grande and Jalapeño specifically (art already generated) — keep them, replace them, or workshop new concepts together. Nothing in Level 2+ proceeds until this is resolved.
 - Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
-- Review the rest of the Bestiary by Level plan (Levels 3-7) — entirely AI-invented and unconfirmed. Salsa Bowl is placed as a Level 1/4 regular enemy rather than a boss in this plan; flag if that's wrong.
 - Confirm Cheese's visual silhouette (currently unspecified/placeholder art).
 - Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` F5) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening? The Bestiary plan already assumes some bosses change the fight itself (Sour Cream Sam's icy floor, Iron Skillet's heating floor) rather than needing a unique defeat condition.
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.
+- Levels 3-6 need new art generated for: Lime, Onion, Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter. Each generation batch will be confirmed with prompts before running, per standing practice.
