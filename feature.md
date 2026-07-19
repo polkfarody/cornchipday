@@ -21,6 +21,7 @@
 - AI-generated Cornchip sprite: idle, run, jump, and "hit" reaction states
 - AI-generated sprite for the one obstacle type
 - Simple background/tileset for the single level
+- **Pipeline note:** sprites are generated on a solid magenta (`#FF00FF`) background rather than requested as "transparent" — diffusion image models can't natively output real alpha, so a transparency request just yields a checkerboard baked into opaque pixels. `tools/generate-sprites.ps1` produces the raw images; `tools/crop-sprites.ps1` chroma-keys the magenta out and crops to content. See `tools/` scripts for the current prompt/pose list, which also covers idle art for the four confirmed bosses (Hot Sauce, Avocado, Cheese, Salsa Bowl) ahead of their Phase 2 implementation.
 
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels

@@ -1,12 +1,20 @@
 # Generates first-pass sprites via the Gemini API (Google AI Studio), using
 # the prompts derived from characters.txt / game-brief.txt. Requires a .env
 # file in the project root with GEMINI_API_KEY=<your key> (copy .env.example).
-# Output lands in Assets/generated/ as transparent-background PNGs, meant to
-# replace the placeholder Polygon2D shapes currently in the Godot scenes.
+#
+# Sprites are requested on a solid magenta (#FF00FF) background rather than
+# "transparent" -- diffusion image models can't natively output real alpha,
+# and asking for "transparent background" just gets you a picture of a
+# checkerboard baked into opaque pixels. Solid magenta gives crop-sprites.ps1
+# a reliable color to key out. None of the current cast uses magenta/pink,
+# so there's no risk of keying out part of a character.
+#
+# Output lands in Assets/generated/ as PNGs, meant to replace the placeholder
+# Polygon2D shapes currently in the Godot scenes.
 #
 # Usage:
 #   .\generate-sprites.ps1            # generate all sprites
-#   .\generate-sprites.ps1 -Only cornchip   # generate just one, by Name
+#   .\generate-sprites.ps1 -Only cornchip_idle   # generate just one, by Name
 
 param(
     [string]$Only = $null
@@ -37,14 +45,20 @@ if (-not $apiKey -or $apiKey -eq "your-key-here") {
 $outDir = Join-Path $projectRoot "Assets\generated"
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
+$bgSuffix = "2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated colors, flat shading. Background must be solid flat magenta (#FF00FF), completely uniform with no gradient, no pattern, no checkerboard, no watermark, no logo, and no text anywhere in the image."
+
 $sprites = @(
-    @{ Name = "cornchip"; Prompt = "A cheerful cartoon video-game character: a walking corn chip shaped like an upside-down triangle (wide at top, pointed at bottom), warm golden-yellow with subtle corn speckles, small comedic stick legs, big round friendly cartoon eyes, simple open smiling mouth. 2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated colors, flat shading, transparent background, neutral standing idle pose. No text, no watermark." },
-    @{ Name = "wrap"; Prompt = "A cartoon video-game character: a round tubular burrito/wrap, tan-beige tortilla color with a visible fold seam, small comedic stick legs, big expressive round cartoon eyes, a stubborn/proud mouth expression. 2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated colors, flat shading, transparent background, neutral standing idle pose. No text, no watermark." },
-    @{ Name = "salsa_obstacle"; Prompt = "A cartoon thrown food projectile: a small round blob of red salsa with a comedic wobbly splat shape, glossy highlight, flat vector illustration style, thick clean outline, bright saturated red-orange, transparent background, no text, no watermark, game sprite icon style." },
-    @{ Name = "lettuce_ingredient"; Prompt = "A cute cartoon lettuce leaf collectible icon for a kids' video game, bright green with a glossy highlight, flat vector illustration style, thick clean outline, transparent background, centered composition, no text, no watermark." },
-    @{ Name = "hot_sauce_boss"; Prompt = "A cartoon video-game boss character: a happy squeeze bottle of hot sauce whose cap is shaped like a sombrero, small comedic cartoon legs, an expressive face, glowing lava-like sauce visible at the nozzle. 2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated reds and oranges, flat shading, transparent background, neutral standing pose. No text, no watermark." },
-    @{ Name = "avocado_boss"; Prompt = "A cartoon video-game boss character: a dancing avocado with small comedic cartoon legs mid dance pose, an expressive happy face, glossy pit visible, a small puddle of guacamole near its feet. 2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated greens, flat shading, transparent background. No text, no watermark." },
-    @{ Name = "cheese_enemy"; Prompt = "A cartoon video-game enemy character: a friendly-looking wedge of yellow cheese with small comedic cartoon legs and a sleepy, mischievous expression, small visible cheese holes. 2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated yellow, flat shading, transparent background, neutral standing pose. No text, no watermark." }
+    @{ Name = "cornchip_idle"; Prompt = "A cheerful cartoon video-game character standing in a neutral idle pose: a walking corn chip shaped like an upside-down triangle (wide at top, pointed at bottom), warm golden-yellow with subtle corn speckles, small comedic stick legs, big round friendly cartoon eyes, simple open smiling mouth. $bgSuffix" },
+    @{ Name = "cornchip_run"; Prompt = "The same cheerful corn chip character -- upside-down triangle shape, golden-yellow with corn speckles, comedic stick legs, big round friendly eyes, smiling mouth -- in a mid-run pose, one leg stretched forward and one leg back, body leaning slightly forward as if running. $bgSuffix" },
+    @{ Name = "cornchip_jump"; Prompt = "The same cheerful corn chip character -- upside-down triangle shape, golden-yellow with corn speckles, comedic stick legs, big round friendly eyes, smiling mouth -- in a mid-air jump pose, both legs tucked up beneath the body. $bgSuffix" },
+    @{ Name = "cornchip_hit"; Prompt = "The same corn chip character -- upside-down triangle shape, golden-yellow with corn speckles, comedic stick legs -- in a comedic dazed reaction pose, eyes squeezed shut or dazed, body slightly squashed and tilted as if stumbling. $bgSuffix" },
+    @{ Name = "wrap_idle"; Prompt = "A cartoon video-game character standing in a neutral idle pose: a round tubular burrito/wrap, tan-beige tortilla color with a visible fold seam, small comedic stick legs, big expressive round cartoon eyes, a stubborn/proud mouth expression. $bgSuffix" },
+    @{ Name = "salsa_obstacle"; Prompt = "A cartoon thrown food projectile: a small round blob of red salsa with a comedic wobbly splat shape, glossy highlight. $bgSuffix" },
+    @{ Name = "lettuce_ingredient"; Prompt = "A cute cartoon lettuce leaf collectible icon for a kids' video game, bright green with a glossy highlight, centered composition. $bgSuffix" },
+    @{ Name = "hot_sauce_boss_idle"; Prompt = "A cartoon video-game boss character standing in a neutral idle pose: a happy squeeze bottle of hot sauce whose cap is shaped like a sombrero, small comedic cartoon legs, an expressive face, glowing lava-like sauce visible at the nozzle. $bgSuffix" },
+    @{ Name = "avocado_boss_idle"; Prompt = "A cartoon video-game boss character: a dancing avocado with small comedic cartoon legs mid dance pose, an expressive happy face, glossy pit visible, a small puddle of guacamole near its feet. $bgSuffix" },
+    @{ Name = "cheese_enemy_idle"; Prompt = "A cartoon video-game enemy character standing in a neutral idle pose: a friendly-looking wedge of yellow cheese with small comedic cartoon legs and a sleepy, mischievous expression, small visible cheese holes. $bgSuffix" },
+    @{ Name = "salsa_bowl_boss_idle"; Prompt = "A cartoon video-game boss character: a rolling bowl full of red salsa, mounted on small corn-cob-shaped wheels, with big cartoon eyes and a mouth on the front of the bowl, appearing mid-roll. $bgSuffix" }
 )
 
 if ($Only) {
@@ -60,7 +74,7 @@ $maxRetries = 4
 foreach ($sprite in $sprites) {
     Write-Host "Generating $($sprite.Name)..."
     $body = @{
-        model = "gemini-3.1-flash-image"
+        model = "gemini-3.1-flash-lite-image"
         input = @(@{ type = "text"; text = $sprite.Prompt })
     } | ConvertTo-Json -Depth 10
 

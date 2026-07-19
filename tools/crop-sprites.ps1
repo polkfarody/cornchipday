@@ -1,10 +1,8 @@
-# The raw Gemini/AI Studio sprite exports are NOT actually transparent --
-# every pixel has alpha=255, and the "transparent" checkerboard is baked in
-# as opaque neutral-gray pixels (~217,217,217 and ~171,171,171). This script:
-#   1. Flood-fills inward from the image border, clearing any pixel that's
-#      part of that connected checkerboard region to real alpha=0.
-#   2. Crops the result to the bounding box of what's left, plus padding.
-# Overwrites each PNG in Assets/generated in place.
+# Removes the solid magenta (#FF00FF) chroma-key background from each PNG in
+# Assets/generated, keeps only the largest connected foreground blob (so any
+# stray watermark/logo artifact gets discarded rather than pinning the crop
+# to the full canvas), and crops to that blob's bounding box plus padding.
+# Overwrites each PNG in place.
 
 Add-Type -AssemblyName System.Drawing
 
@@ -12,21 +10,12 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Split-Path -Parent $scriptDir
 $dir = Join-Path $projectRoot "Assets\generated"
 $padding = 10
-$grayTolerance = 6      # how close R/G/B must be to each other to count as "neutral gray"
-$checkerTolerance = 14  # how close the gray value must be to one of the two checker shades
-$checkerShades = @(217, 171)
+$magentaTolerance = 60  # per-channel distance from (255, 0, 255) to count as background
 
-function Test-IsCheckerPixel([byte]$b, [byte]$g, [byte]$r) {
-    if (([Math]::Abs([int]$r - [int]$g) -gt $grayTolerance) -or
-        ([Math]::Abs([int]$g - [int]$b) -gt $grayTolerance) -or
-        ([Math]::Abs([int]$r - [int]$b) -gt $grayTolerance)) {
-        return $false
-    }
-    $avg = ([int]$r + [int]$g + [int]$b) / 3
-    foreach ($shade in $checkerShades) {
-        if ([Math]::Abs($avg - $shade) -le $checkerTolerance) { return $true }
-    }
-    return $false
+function Test-IsMagentaPixel([byte]$r, [byte]$g, [byte]$b) {
+    return ([Math]::Abs([int]$r - 255) -le $magentaTolerance) -and
+           ([Math]::Abs([int]$g - 0) -le $magentaTolerance) -and
+           ([Math]::Abs([int]$b - 255) -le $magentaTolerance)
 }
 
 Get-ChildItem "$dir\*.png" | ForEach-Object {
@@ -43,17 +32,18 @@ Get-ChildItem "$dir\*.png" | ForEach-Object {
     $bytes = New-Object byte[] ($stride * $h)
     [System.Runtime.InteropServices.Marshal]::Copy($data.Scan0, $bytes, 0, $bytes.Length)
 
-    # Flood fill (iterative, stack-based) from every border pixel.
+    # Flood fill (iterative, stack-based) from every border pixel, clearing
+    # alpha for any magenta-background pixel connected to the edge.
     $visited = New-Object bool[] ($w * $h)
     $stack = New-Object System.Collections.Generic.Stack[int]
 
     for ($x = 0; $x -lt $w; $x++) {
-        $stack.Push($x)                      # top row
-        $stack.Push(($h - 1) * $w + $x)       # bottom row
+        $stack.Push($x)
+        $stack.Push(($h - 1) * $w + $x)
     }
     for ($y = 0; $y -lt $h; $y++) {
-        $stack.Push($y * $w)                  # left col
-        $stack.Push($y * $w + ($w - 1))       # right col
+        $stack.Push($y * $w)
+        $stack.Push($y * $w + ($w - 1))
     }
 
     while ($stack.Count -gt 0) {
@@ -66,9 +56,9 @@ Get-ChildItem "$dir\*.png" | ForEach-Object {
         $off = $py * $stride + $px * 4
         $b = $bytes[$off]; $g = $bytes[$off + 1]; $r = $bytes[$off + 2]
 
-        if (-not (Test-IsCheckerPixel $b $g $r)) { continue }
+        if (-not (Test-IsMagentaPixel $r $g $b)) { continue }
 
-        $bytes[$off + 3] = 0   # clear alpha
+        $bytes[$off + 3] = 0
 
         if ($px -gt 0) { $n = $idx - 1; if (-not $visited[$n]) { $stack.Push($n) } }
         if ($px -lt $w - 1) { $n = $idx + 1; if (-not $visited[$n]) { $stack.Push($n) } }
@@ -76,10 +66,8 @@ Get-ChildItem "$dir\*.png" | ForEach-Object {
         if ($py -lt $h - 1) { $n = $idx + $w; if (-not $visited[$n]) { $stack.Push($n) } }
     }
 
-    # Second pass: label connected components of remaining (alpha > 10)
-    # pixels and keep only the largest one -- discards small leftover
-    # artifacts (e.g. a watermark icon) that would otherwise pin the
-    # bounding box to the full canvas.
+    # Label connected components of remaining (alpha > 10) pixels; keep only
+    # the largest one, discarding small leftover artifacts.
     $label = New-Object int[] ($w * $h)
     for ($i = 0; $i -lt $label.Length; $i++) { $label[$i] = -1 }
     $componentSizes = New-Object System.Collections.Generic.List[int]
@@ -138,7 +126,6 @@ Get-ChildItem "$dir\*.png" | ForEach-Object {
         }
     }
 
-    # Clear alpha for every foreground pixel that isn't part of the main blob.
     $minX = $w; $maxX = -1; $minY = $h; $maxY = -1
     for ($y = 0; $y -lt $h; $y++) {
         $rowOff = $y * $stride
