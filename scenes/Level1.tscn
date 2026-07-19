@@ -20,7 +20,6 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_cactus.png" id="17_cactus"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_string_lights.png" id="18_string_lights"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
-[ext_resource type="Script" path="res://scripts/parallax_scroll.gd" id="20_parallax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(20, 400)
@@ -53,26 +52,27 @@ size = Vector2(22, 58)
 script = ExtResource("0_level_base")
 next_level_path = "res://scenes/Level2.tscn"
 
-[node name="WindowScroll" type="Node2D" parent="."]
-script = ExtResource("20_parallax")
-motion_scale = 0.4
+[node name="WindowParallax" type="ParallaxBackground" parent="."]
 
-[node name="Window1" type="Sprite2D" parent="WindowScroll"]
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0.4, 1.0)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(450, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window2" type="Sprite2D" parent="WindowScroll"]
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1750, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window3" type="Sprite2D" parent="WindowScroll"]
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(3050, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window4" type="Sprite2D" parent="WindowScroll"]
+[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(4350, -20)
 scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")

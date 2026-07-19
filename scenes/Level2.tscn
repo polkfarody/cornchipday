@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_chip.png" id="14_chip"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_cheese_drip.png" id="15_cheese_drip"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_window_view.png" id="16_window_view"]
-[ext_resource type="Script" path="res://scripts/parallax_scroll.gd" id="17_parallax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(600, 80)
@@ -41,26 +40,27 @@ size = Vector2(58, 58)
 script = ExtResource("0_level_base")
 next_level_path = "res://scenes/Level3.tscn"
 
-[node name="WindowScroll" type="Node2D" parent="."]
-script = ExtResource("17_parallax")
-motion_scale = 0.4
+[node name="WindowParallax" type="ParallaxBackground" parent="."]
 
-[node name="Window1" type="Sprite2D" parent="WindowScroll"]
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0.4, 1.0)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(142, -20)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
 
-[node name="Window2" type="Sprite2D" parent="WindowScroll"]
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(827, -20)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
 
-[node name="Window3" type="Sprite2D" parent="WindowScroll"]
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1512, -20)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
 
-[node name="Window4" type="Sprite2D" parent="WindowScroll"]
+[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(2196, -20)
 scale = Vector2(0.7548, 0.7548)
 texture = ExtResource("16_window_view")
