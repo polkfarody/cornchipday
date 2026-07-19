@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/boss.gd" id="1_boss"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame1.png" id="tex_idle1"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame2.png" id="tex_idle2"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame3.png" id="tex_move1"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame4.png" id="tex_move2"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame5.png" id="tex_attack1"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame6.png" id="tex_attack2"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame7.png" id="tex_hit"]
-[ext_resource type="Texture2D" path="res://Assets/generated/queso_grande_frame8.png" id="tex_defeated"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame1.png" id="tex_idle1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame2.png" id="tex_idle2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame3.png" id="tex_move1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame4.png" id="tex_move2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame5.png" id="tex_attack1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame6.png" id="tex_attack2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame7.png" id="tex_hit"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/queso_grande/queso_grande_frame8.png" id="tex_defeated"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(44, 44)

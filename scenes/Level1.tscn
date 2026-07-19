@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/BossProjectile.tscn" id="6_boss_projectile"]
 [ext_resource type="PackedScene" path="res://scenes/CheeseEnemy.tscn" id="7_cheese"]
 [ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="8_airfryer"]
-[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame1.png" id="9_life_icon"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="9_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="10_bean"]
 [ext_resource type="PackedScene" path="res://scenes/SalsaBowlEnemy.tscn" id="11_salsabowl"]
 

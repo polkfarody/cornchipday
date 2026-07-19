@@ -1,4 +1,7 @@
-# Processes every PNG in Assets/generated:
+# Processes every PNG in Assets/generated, recursing into its subfolders
+# (characters/<name>/, items/, environment/level1|2/ -- see generate-sprites.ps1's
+# Get-AssetSubdir for how a fresh generation picks its folder). Output for a
+# given input always lands next to it, in that same subfolder:
 #   - "*_grid.png" files (one per character, an 8-pose grid: 4 cols x 2 rows)
 #     get their magenta background keyed out, each of the 8 poses isolated as
 #     its own connected blob, sorted into reading order (row-major), cropped,
@@ -201,7 +204,7 @@ function Get-ComponentBoxes([int[]]$label, [int]$w, [int]$h, [System.Collections
     return $boxes
 }
 
-Get-ChildItem "$dir\*.png" | Where-Object { -not $Only -or $Only -contains $_.Name } | ForEach-Object {
+Get-ChildItem -Path $dir -Filter "*.png" -Recurse | Where-Object { -not $Only -or $Only -contains $_.Name } | ForEach-Object {
     # Never reprocess this script's own prior output -- re-running the
     # single-prop "keep largest blob, crop tight" path on an already-sliced
     # frame silently destroys the uniform per-character canvas size that
@@ -371,7 +374,7 @@ Get-ChildItem "$dir\*.png" | Where-Object { -not $Only -or $Only -contains $_.Na
         $gfx.Dispose()
         $frame.Dispose()
 
-        $outPath = Join-Path $dir "$($baseName)_frame$($i + 1).png"
+        $outPath = Join-Path $_.DirectoryName "$($baseName)_frame$($i + 1).png"
         $canvas.Save($outPath, [System.Drawing.Imaging.ImageFormat]::Png)
         $canvas.Dispose()
     }

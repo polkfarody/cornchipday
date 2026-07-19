@@ -62,9 +62,30 @@ if (-not $apiKey -or $apiKey -eq "your-key-here") {
 $outDir = Join-Path $projectRoot "Assets\generated"
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
+# Assets/generated is organized into subfolders (characters/<name>/, items/,
+# environment/level1|2/) so it doesn't turn into one flat pile of 100+ files.
+# This maps a sprite's Name to its subfolder so generation writes straight to
+# the right place instead of needing a manual sort afterward.
+function Get-AssetSubdir([string]$name) {
+    if ($name -like "*_grid") {
+        $character = $name -replace "_grid$", ""
+        return "characters\$character"
+    }
+    if ($name -in @("salsa_obstacle", "lettuce_ingredient", "cheese_ingredient")) {
+        return "items"
+    }
+    if ($name -like "l1_*") {
+        return "environment\level1"
+    }
+    if ($name -like "l2_*") {
+        return "environment\level2"
+    }
+    return ""
+}
+
 $referenceImagePaths = @(
-    (Join-Path $outDir "cornchip_frame1.png"),
-    (Join-Path $outDir "hot_sauce_boss_frame1.png")
+    (Join-Path $outDir "characters\cornchip\cornchip_frame1.png"),
+    (Join-Path $outDir "characters\hot_sauce_boss\hot_sauce_boss_frame1.png")
 )
 $referenceImageInputs = @()
 foreach ($refPath in $referenceImagePaths) {
@@ -220,7 +241,10 @@ foreach ($sprite in $sprites) {
             }
 
             $bytes = [Convert]::FromBase64String($imageData)
-            $outPath = Join-Path $outDir "$($sprite.Name).png"
+            $subdir = Get-AssetSubdir $sprite.Name
+            $targetDir = if ($subdir) { Join-Path $outDir $subdir } else { $outDir }
+            New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
+            $outPath = Join-Path $targetDir "$($sprite.Name).png"
             [IO.File]::WriteAllBytes($outPath, $bytes)
             Write-Host "Saved $outPath"
             $succeeded = $true

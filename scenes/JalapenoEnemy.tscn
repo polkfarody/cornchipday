@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/boss.gd" id="1_boss"]
-[ext_resource type="Texture2D" path="res://Assets/generated/jalapeno_frame1.png" id="tex_idle1"]
-[ext_resource type="Texture2D" path="res://Assets/generated/jalapeno_frame2.png" id="tex_idle2"]
-[ext_resource type="Texture2D" path="res://Assets/generated/jalapeno_frame3.png" id="tex_move1"]
-[ext_resource type="Texture2D" path="res://Assets/generated/jalapeno_frame4.png" id="tex_move2"]
-[ext_resource type="Texture2D" path="res://Assets/generated/jalapeno_frame7.png" id="tex_hit"]
-[ext_resource type="Texture2D" path="res://Assets/generated/jalapeno_frame8.png" id="tex_defeated"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/jalapeno/jalapeno_frame1.png" id="tex_idle1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/jalapeno/jalapeno_frame2.png" id="tex_idle2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/jalapeno/jalapeno_frame3.png" id="tex_move1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/jalapeno/jalapeno_frame4.png" id="tex_move2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/jalapeno/jalapeno_frame7.png" id="tex_hit"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/jalapeno/jalapeno_frame8.png" id="tex_defeated"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(32, 48)

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/SlowProjectile.tscn" id="4_slow_projectile"]
 [ext_resource type="PackedScene" path="res://scenes/CheeseEnemy.tscn" id="5_cheese"]
 [ext_resource type="PackedScene" path="res://scenes/JalapenoEnemy.tscn" id="6_jalapeno"]
-[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame1.png" id="7_life_icon"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="7_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="8_bean"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
