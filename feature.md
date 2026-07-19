@@ -7,10 +7,10 @@
 - Single jump (Space)
 - No double-jump or other upgrades in the MVP — those arrive later as unlockable, level-gating abilities (see Phase 2 in `plan.md`)
 
-### F2 — No-Fail Obstacle Interaction
+### F2 — Obstacle Interaction & Lives
 - One obstacle type for the MVP: thrown "mild" salsa (per `game-brief.txt`)
-- On contact: a comedic visual reaction (e.g. Cornchip wilts or slips), then a brief respawn at the last safe point
-- No lives counter, no game-over screen, no score penalty of any kind
+- On contact: a comedic visual reaction (e.g. Cornchip wilts or slips), then a brief respawn at the last safe point -- this per-hit feel is unchanged
+- Every hit also costs one of 3 lives, shown as icon-only HUD (no numbers/text) in the top-left. At 0 lives, the whole level restarts from the beginning with lives reset to 3 -- no game-over screen. `level1.gd` owns the life count; `player.gd` just emits `player_hit` on every hit regardless of source, so any future hazard gets lives-tracking for free.
 
 ### F3 — Ingredient Collection & Level Completion
 - The level's ingredient is no longer just sitting out in the open — it spawns at the boss's position once the boss is defeated (see F5)
@@ -23,6 +23,20 @@
 - Implemented as a reusable `boss.gd` (patrol between two points, periodic projectile attack, N-hit health, defeat animation) rather than one script per boss, since more bosses are already planned
 - The vertical slice's level now ends with a real boss fight: Hot Sauce patrols, fires a horizontal projectile at intervals, and takes 3 stomps to defeat; defeating him spawns the level's ingredient
 - Promoted out of the backlog (was FB8/FB9) once actually built — see `plan.md` for status
+
+### F6 — Little Enemies
+- Cheese now appears as a regular in-level enemy (resolved from the boss-vs-enemy open question in `characters.txt`): same `boss.gd` script as bosses, but configured with 1 hit point, no projectile, and a tighter patrol range
+- Defeated the same way as any boss (stomp from above); a side touch costs a life like any obstacle
+- Known simplification: the brief's "puts Cornchip to sleep for 10 seconds" effect isn't built yet -- Cheese currently uses the generic hit reaction
+
+### F7 — Scattered Lettuce Tokens
+- Multiple lettuce pickups placed throughout the level (reusing `Ingredient.tscn`/`ingredient.gd`, tagged with the `lettuce_token` group instead of ending the level)
+- Separate from the boss-dropped level ingredient, which is unchanged
+- Counted in `level1.gd` (`lettuce_tokens_collected`); no on-screen counter yet -- flagged as a follow-up, not built this pass
+
+### F8 — Air Fryer Power-Up (Spin Dash)
+- A pickup (placeholder art) that grants Cornchip a spin-dash: pressing Up (`ui_up`, already bound by default -- avoided hand-editing the InputMap) triggers ~1 second where touching any enemy defeats it instead of hurting him, same code path as a stomp
+- Visual feedback is a color tint on the sprite for now, not a real spin animation -- flagged as future art/polish, not a functional gap
 
 ### F4 — First-Pass Art
 - AI-generated Cornchip sprite: idle, run, jump, and "hit" reaction states
@@ -39,12 +53,13 @@
 - **FB6** — 2-player local co-op with Cheeto
 - **FB7** — "Spin dash" upgrade: Cornchip spins rapidly, letting him plow through enemies unharmed while they comically fly off-screen (front- or back-flipping). Unlocked via the Air Fryer collectible (see below). Candidate for the ability-gated upgrade system (FB1).
 - ~~FB8 — Stomp-to-defeat~~ and ~~FB9 — Per-level boss battles~~ — built, see F5. Remaining boss-battle work: Avocado, Cheese, Salsa Bowl still need their own boss instances (art is ready), and further stomp-triggered upgrades (beyond the baseline stomp) are still backlog.
-- **FB10** — Air Fryer collectible: grants Cornchip the spin-dash ability (FB7) once picked up.
-- **FB11** — Tomato collectible: temporary power-up letting Cornchip fire seeds at enemies from range for a short duration.
-- **FB12** — Lettuce as the main collectible token: scattered throughout each level (not just a single end-of-level pickup), functioning as the game's primary currency/collectible, alongside the per-level boss-guarded ingredient. **Open question:** does this replace the "one ingredient per level" model from the original brief, or sit alongside it as a separate collectible layer (see game-brief.txt Open Questions)?
+- ~~FB10 — Air Fryer collectible~~ — built, see F8.
+- **FB11** — Tomato collectible: temporary power-up letting Cornchip fire seeds at enemies from range for a short duration. Still not built.
+- ~~FB12 — Lettuce as the main collectible token~~ — built, see F7. Resolved as an additional collectible layer alongside the per-level boss-guarded ingredient, not a replacement for it (see game-brief.txt Resolved Questions).
+- **FB13** — On-screen lettuce token counter (icon + count, no reading-heavy number if avoidable). `level1.gd` already tracks the count; only the display is missing.
+- **FB14** — Cheese's "sleep for 10 seconds" effect, replacing the generic stumble reaction it currently uses.
 
 ## Explicitly Out of Scope (MVP)
 - Touch/mobile input
-- Any lives, game-over, or fail state
 - Text-based instructions or dialogue
 - Multiplayer

@@ -28,21 +28,23 @@ Each level culminates in a boss battle guarding that level's ingredient; Wrap is
 - **Role:** Level boss. Dances and jumps rhythmically; each landing drops a puddle of guacamole that Cornchip cannot touch — a hazard-terrain attack rather than a direct projectile.
 - **Personality (draft — pending confirmation):** Groovy, carefree, always mid-dance.
 
-### Cheese
-- **Silhouette:** Not yet specified.
-- **Role:** Enemy — on contact, puts Cornchip to sleep for 10 seconds. A timed incapacitation, not a fail state: no lives lost, no restart, just a delay.
-- **Personality (draft — pending confirmation):** Not yet specified.
-- **Open question:** Is Cheese a full level boss (guarding an ingredient) or a regular enemy encountered within a level?
-
 ### Salsa Bowl
 - **Silhouette:** A rolling bowl of salsa, mounted on small corn-shaped wheels.
 - **Role:** Fires tomato chunks at Cornchip while rolling around.
 - **Personality (draft — pending confirmation):** Not yet specified.
 - **Open question:** Is Salsa Bowl a full level boss (like Hot Sauce/Avocado) or a regular enemy encountered within a level?
 
+## Regular Enemies
+Smaller, one-hit threats encountered within a level rather than guarding its ingredient. Unlike bosses, they don't patrol as far, don't attack at range, and go down in a single stomp.
+
+### Cheese
+- **Silhouette:** Not yet specified — currently uses placeholder-generation art matching the general "food character with cartoon legs and a face" template.
+- **Role:** Regular enemy (resolved from the earlier boss-vs-enemy open question). Design brief describes his touch putting Cornchip to sleep for 10 seconds; the current build simplifies this to the same stumble-and-respawn reaction as any other hit, rather than a distinct sleep/incapacitation status effect — a real gap from the original idea, flagged here rather than silently dropped. Building a proper "sleep" effect (temporarily disabling input for a duration) is a good candidate for later polish.
+- **Personality (draft — pending confirmation):** Not yet specified.
+
 ## Open Items
-- Confirm the two "draft — pending confirmation" personality notes for Cornchip and Wrap, or replace with your intended characterization.
-- Confirm the full boss roster and level order across all 7 levels — Hot Sauce and Avocado are confirmed candidates; more are likely needed, and Cheese's and Salsa Bowl's boss-vs-enemy status are still open.
-- Confirm Cheese's visual silhouette and personality.
-- Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` FB8) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening?
+- Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
+- Confirm the full boss roster and level order across all 7 levels — Hot Sauce and Avocado are confirmed level bosses; Salsa Bowl's boss-vs-enemy status is still open; more bosses are likely needed for the remaining levels.
+- Confirm Cheese's visual silhouette, and whether to build the "10-second sleep" effect described in the brief instead of the current generic stumble reaction.
+- Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` F5) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening?
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.

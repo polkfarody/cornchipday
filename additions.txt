@@ -8,3 +8,5 @@
 - Collectable: tomato gives ability to fire seeds at foes for a short period. 
 - Collectable: lettuce, collected throughout the level and is the main token for the game.
 - Collectable: Air Fryer: Gives cornchip the spin feature that spins him and knocks enemies off the screen
+- Alter: Beans should be collected not lettuce. Lettuce should remain an ingredient only.
+- Level: 1: Fun mexican restaurant vibe. THis should ease everyone into the game and make it nice and simple to undersatnd the theme and concept

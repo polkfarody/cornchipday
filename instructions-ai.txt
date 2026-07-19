@@ -33,7 +33,7 @@ At the start of any work in this project:
 ## Confirmed Product Decisions
 - **Platform:** Desktop, keyboard-only input (MVP)
 - **Engine:** Godot 4 (2D)
-- **Difficulty philosophy:** No fail state — obstacles cause a gentle respawn/retry, never a game over
+- **Difficulty philosophy:** Gentle stakes, not a true fail state — every hit stumbles-and-recovers with no consequence except costing 1 of 3 lives (icon HUD, no numbers); at 0 lives the level restarts from the beginning with lives reset to 3, never a game-over screen
 - **Accessibility:** No reading required anywhere; instructions and story communicated visually
 - **Humor delivery:** Physical/visual comedy, not text or voice-over
 - **Art pipeline:** AI-generated sprites, iterated toward one consistent style
@@ -43,6 +43,7 @@ At the start of any work in this project:
 - [x] Draft `plan.md`, `readme.md`, `feature.md`
 - [x] Install Godot 4 and scaffold the project
 - [x] Build a first pass of the vertical-slice MVP level (run/jump, one obstacle, one ingredient collectible)
-- [x] Real illustrated art for Cornchip (idle/run/jump/hit), generated via Gemini/AI Studio and wired into the Player scene; the obstacle and ingredient still use placeholder shapes
-- [ ] Playtest the vertical slice and iterate
+- [x] Real illustrated art for Cornchip (idle/run/jump/hit) and all 4 confirmed bosses, generated via Gemini/AI Studio and wired into the Player/boss scenes; the obstacle and ingredient still use placeholder shapes
+- [x] Stomp-to-defeat combat, a full Hot Sauce boss fight, and a real first level (lettuce tokens, Cheese enemies, Air Fryer power-up, 3-life system) — see `plan.md` Phase 1 for detail
+- [ ] Playtest the level and iterate
 - [ ] Generate art for the salsa obstacle and lettuce ingredient, and wire them in the same way

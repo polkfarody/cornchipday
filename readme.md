@@ -14,7 +14,7 @@ Pre-alpha — vertical-slice MVP in development. See [plan.md](plan.md) for the 
 1. Install [Godot 4.x](https://godotengine.org/download).
 2. Clone or open this repository.
 3. Open `project.godot` in Godot.
-4. Press **Run** (F5) to play the current vertical slice.
+4. Press **Run** (F5) to play the current Level 1.
 
 ## Project Documentation
 | File | Purpose |
@@ -26,7 +26,7 @@ Pre-alpha — vertical-slice MVP in development. See [plan.md](plan.md) for the 
 | `instructions-ai.txt` | AI collaboration charter / working agreement |
 
 ## Design Pillars
-- **No fail state** — the game never punishes the player; obstacles interrupt, never end, a run.
+- **Gentle stakes, not a fail state** — hits cost a life (icon HUD only, no numbers), but running out just restarts the level from the beginning, never a game-over screen.
 - **No reading required** — every instruction and story beat is communicated visually.
 - **Physical comedy over verbal jokes** — puns land through animation, not text or voice.
 - **Built to extend** — architecture should absorb more levels and the planned 2-player co-op mode without large rewrites.

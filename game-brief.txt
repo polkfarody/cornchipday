@@ -16,7 +16,7 @@ Cornchip and Wrap had an argument and split up. To reconcile, Cornchip must cros
 
 ## Design Philosophy
 The primary players are 5 and 8 years old. Every design decision should be filtered through:
-- **No fail state.** Obstacles interrupt progress (a stumble, a gentle respawn) but never end the game or punish the player. Confidence and forward momentum matter more than challenge.
+- **Gentle stakes, not a fail state.** Every hit is a stumble-and-recover with no consequence, *except* it costs one of Cornchip's 3 lives (shown as icons, never a number). At 0 lives, the level restarts from the beginning with lives back to 3 — no game-over screen, no lost progress beyond replaying the level. This is a deliberate softening of the original "zero-consequence" pillar (see Open Questions history): after playtesting, pure zero-stakes respawn felt flat, so a small, forgiving amount of real stakes was added back in.
 - **No reading required.** All instructions, feedback, and story beats are communicated through animation, icons, and visual staging — not text.
 - **Humor is physical, not verbal.** The pun-based obstacles (mild salsa, vegetarian cheese, etc.) land through exaggerated visual comedy — a wilting reaction, a comedic slip — so the joke works even for a player who can't read the label.
 
@@ -46,9 +46,11 @@ A single, fully polished vertical-slice level demonstrating: core run/jump movem
 - **2-player local co-op:** Cornchip's best friend Cheeto joins the quest as a second playable character. Explicitly out of scope for MVP; the codebase should avoid decisions that would make adding a second player unusually difficult later (see `instructions-ai.txt` extensibility principle).
 
 ## Open Questions
-- Lettuce is noted as a token collected throughout each level (like coins/rings) *and* as "the main token for the game" — does this replace the original "one ingredient collected at level's end" model, or are these two separate collectible layers (in-level lettuce tokens + a per-level boss-guarded ingredient)?
-- Full boss roster and per-level order across all 7 levels — Hot Sauce, Avocado, and Salsa Bowl are confirmed candidates; Cheese's and Salsa Bowl's status as boss vs. regular enemy is still undecided.
-- How do boss battles and the jump-to-defeat mechanic square with the no-fail-state pillar? Working assumption: losing to a boss just means an immediate retry with no penalty, same as any other obstacle — worth confirming explicitly.
+- Full boss roster and per-level order across all 7 levels — Hot Sauce and Avocado are confirmed level bosses; Salsa Bowl's status as boss vs. regular enemy is still undecided; Cheese is resolved as a regular in-level enemy, not a boss (see `characters.txt`).
 - Is the Wrap confrontation framed the same as other boss battles (combat-first), or does it shift tone toward a gentler final reconciliation moment, given the sibling-reunion story?
 - Should each level map to a specific real-world crunch wrap ingredient (lettuce, cheese, salsa, etc.), and if so, is there a preferred list/order?
 - Any preferred reference art/style touchstones for the sprite-generation pipeline?
+
+## Resolved Questions (kept for history)
+- **Lettuce: token vs. ingredient?** Both — scattered lettuce tokens are a separate collectible layer (currently just counted, no on-screen tally yet) alongside the per-level boss-guarded ingredient, which is unchanged.
+- **Lives vs. no-fail-state?** Resolved: 3 lives, level restarts from the beginning at 0 (see Design Philosophy above).
