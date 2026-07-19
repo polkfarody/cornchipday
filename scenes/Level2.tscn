@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
@@ -9,6 +9,14 @@
 [ext_resource type="PackedScene" path="res://scenes/JalapenoEnemy.tscn" id="6_jalapeno"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="7_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="8_bean"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_obstacle_small.png" id="9_obstacle_small"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_obstacle_medium.png" id="10_obstacle_medium"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_obstacle_large.png" id="11_obstacle_large"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_ground_tile.png" id="12_ground_tile"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_hazard_fill.png" id="13_hazard_fill"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_chip.png" id="14_chip"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_cheese_drip.png" id="15_cheese_drip"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level2/l2_window_view.png" id="16_window_view"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(600, 80)
@@ -18,6 +26,15 @@ size = Vector2(710, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundC"]
 size = Vector2(810, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_small"]
+size = Vector2(15, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_medium"]
+size = Vector2(54, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
+size = Vector2(58, 58)
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("0_level_base")
@@ -44,40 +61,61 @@ offset_right = 2300.0
 offset_bottom = 400.0
 color = Color(0.95, 0.88, 0.55, 1)
 
-[node name="Chip1" type="Polygon2D" parent="."]
+[node name="WindowParallax" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(300, -80)
+scale = Vector2(0.1788, 0.1788)
+texture = ExtResource("16_window_view")
+
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(1300, -80)
+scale = Vector2(0.1788, 0.1788)
+texture = ExtResource("16_window_view")
+
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(2100, -80)
+scale = Vector2(0.1788, 0.1788)
+texture = ExtResource("16_window_view")
+
+[node name="Chip1" type="Sprite2D" parent="."]
 position = Vector2(350, 300)
-color = Color(0.82, 0.62, 0.25, 1)
-polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+scale = Vector2(0.0884, 0.0884)
+texture = ExtResource("14_chip")
 
-[node name="Chip2" type="Polygon2D" parent="."]
+[node name="Chip2" type="Sprite2D" parent="."]
 position = Vector2(1000, 300)
-color = Color(0.82, 0.62, 0.25, 1)
-polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+scale = Vector2(0.0884, 0.0884)
+texture = ExtResource("14_chip")
 
-[node name="Chip3" type="Polygon2D" parent="."]
+[node name="Chip3" type="Sprite2D" parent="."]
 position = Vector2(1600, 300)
-color = Color(0.82, 0.62, 0.25, 1)
-polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+scale = Vector2(0.0884, 0.0884)
+texture = ExtResource("14_chip")
 
-[node name="Chip4" type="Polygon2D" parent="."]
+[node name="Chip4" type="Sprite2D" parent="."]
 position = Vector2(2000, 300)
-color = Color(0.82, 0.62, 0.25, 1)
-polygon = PackedVector2Array(-14, 10, 14, 10, 0, -14)
+scale = Vector2(0.0884, 0.0884)
+texture = ExtResource("14_chip")
 
-[node name="CheeseDrip1" type="Polygon2D" parent="."]
+[node name="CheeseDrip1" type="Sprite2D" parent="."]
 position = Vector2(250, -40)
-color = Color(0.95, 0.78, 0.2, 1)
-polygon = PackedVector2Array(0, -10, 6, 0, 4, 10, 0, 14, -4, 10, -6, 0)
+scale = Vector2(0.0718, 0.0718)
+texture = ExtResource("15_cheese_drip")
 
-[node name="CheeseDrip2" type="Polygon2D" parent="."]
+[node name="CheeseDrip2" type="Sprite2D" parent="."]
 position = Vector2(1200, -40)
-color = Color(0.95, 0.78, 0.2, 1)
-polygon = PackedVector2Array(0, -10, 6, 0, 4, 10, 0, 14, -4, 10, -6, 0)
+scale = Vector2(0.0718, 0.0718)
+texture = ExtResource("15_cheese_drip")
 
-[node name="CheeseDrip3" type="Polygon2D" parent="."]
+[node name="CheeseDrip3" type="Sprite2D" parent="."]
 position = Vector2(1900, -40)
-color = Color(0.95, 0.78, 0.2, 1)
-polygon = PackedVector2Array(0, -10, 6, 0, 4, 10, 0, 14, -4, 10, -6, 0)
+scale = Vector2(0.0718, 0.0718)
+texture = ExtResource("15_cheese_drip")
 
 [node name="GroundA" type="StaticBody2D" parent="."]
 position = Vector2(200, 400)
@@ -85,12 +123,12 @@ position = Vector2(200, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
 shape = SubResource("RectangleShape2D_groundA")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+[node name="GroundVisual" type="TextureRect" parent="GroundA"]
 offset_left = -300.0
 offset_top = -40.0
 offset_right = 300.0
 offset_bottom = 40.0
-color = Color(0.78, 0.58, 0.16, 1)
+texture = ExtResource("12_ground_tile")
 
 [node name="GroundB" type="StaticBody2D" parent="."]
 position = Vector2(945, 400)
@@ -98,12 +136,12 @@ position = Vector2(945, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
 shape = SubResource("RectangleShape2D_groundB")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+[node name="GroundVisual" type="TextureRect" parent="GroundB"]
 offset_left = -355.0
 offset_top = -40.0
 offset_right = 355.0
 offset_bottom = 40.0
-color = Color(0.78, 0.58, 0.16, 1)
+texture = ExtResource("12_ground_tile")
 
 [node name="GroundC" type="StaticBody2D" parent="."]
 position = Vector2(1795, 400)
@@ -117,6 +155,52 @@ offset_top = -40.0
 offset_right = 405.0
 offset_bottom = 40.0
 color = Color(0.6, 0.4, 0.08, 1)
+
+[node name="HazardFill1" type="TextureRect" parent="."]
+position = Vector2(545, 360)
+offset_left = -45.0
+offset_top = 0.0
+offset_right = 45.0
+offset_bottom = 200.0
+texture = ExtResource("13_hazard_fill")
+
+[node name="HazardFill2" type="TextureRect" parent="."]
+position = Vector2(1345, 360)
+offset_left = -45.0
+offset_top = 0.0
+offset_right = 45.0
+offset_bottom = 200.0
+texture = ExtResource("13_hazard_fill")
+
+[node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
+position = Vector2(340, 344)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
+shape = SubResource("RectangleShape2D_obstacle_small")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleSmall1"]
+scale = Vector2(0.0572, 0.0572)
+texture = ExtResource("9_obstacle_small")
+
+[node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
+position = Vector2(700, 337)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
+shape = SubResource("RectangleShape2D_obstacle_medium")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium1"]
+scale = Vector2(0.0725, 0.0725)
+texture = ExtResource("10_obstacle_medium")
+
+[node name="JumpObstacleLarge1" type="StaticBody2D" parent="."]
+position = Vector2(1020, 331)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1"]
+shape = SubResource("RectangleShape2D_obstacle_large")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleLarge1"]
+scale = Vector2(0.1014, 0.1014)
+texture = ExtResource("11_obstacle_large")
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(100, 300)

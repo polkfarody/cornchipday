@@ -241,6 +241,22 @@ foreach ($sprite in $sprites) {
             }
 
             $bytes = [Convert]::FromBase64String($imageData)
+            # The API has been observed returning JPEG-encoded bytes (magic
+            # number FF D8 FF) even when saved with a .png extension -- this
+            # loads fine in most previewers but Godot's texture importer
+            # rejects it outright ("Failed loading resource"). Re-encode
+            # through System.Drawing so what's on disk always matches its
+            # extension.
+            if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xFF -and $bytes[1] -eq 0xD8 -and $bytes[2] -eq 0xFF) {
+                Write-Warning "$($sprite.Name): API returned JPEG bytes labeled .png -- re-encoding as real PNG"
+                Add-Type -AssemblyName System.Drawing
+                $srcMs = New-Object System.IO.MemoryStream(, $bytes)
+                $srcBmp = [System.Drawing.Bitmap]::FromStream($srcMs)
+                $pngMs = New-Object System.IO.MemoryStream
+                $srcBmp.Save($pngMs, [System.Drawing.Imaging.ImageFormat]::Png)
+                $bytes = $pngMs.ToArray()
+                $srcBmp.Dispose(); $srcMs.Dispose(); $pngMs.Dispose()
+            }
             $subdir = Get-AssetSubdir $sprite.Name
             $targetDir = if ($subdir) { Join-Path $outDir $subdir } else { $outDir }
             New-Item -ItemType Directory -Force -Path $targetDir | Out-Null

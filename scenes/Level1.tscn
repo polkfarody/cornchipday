@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=29 format=3]
 
 [ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
@@ -12,6 +12,14 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="9_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="10_bean"]
 [ext_resource type="PackedScene" path="res://scenes/SalsaBowlEnemy.tscn" id="11_salsabowl"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_obstacle_small.png" id="12_obstacle_small"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_obstacle_medium.png" id="13_obstacle_medium"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_obstacle_large.png" id="14_obstacle_large"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_ground_tile.png" id="15_ground_tile"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_hazard_fill.png" id="16_hazard_fill"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_cactus.png" id="17_cactus"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_string_lights.png" id="18_string_lights"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(20, 400)
@@ -30,6 +38,15 @@ size = Vector2(730, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arena"]
 size = Vector2(800, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_small"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_medium"]
+size = Vector2(42, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
+size = Vector2(22, 58)
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("0_level_base")
@@ -56,93 +73,71 @@ offset_right = 3900.0
 offset_bottom = 400.0
 color = Color(0.95, 0.72, 0.42, 1)
 
-[node name="Cactus1" type="Polygon2D" parent="."]
+[node name="WindowParallax" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(300, -80)
+scale = Vector2(0.2344, 0.2344)
+texture = ExtResource("19_window_view")
+
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(1300, -80)
+scale = Vector2(0.2344, 0.2344)
+texture = ExtResource("19_window_view")
+
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(2300, -80)
+scale = Vector2(0.2344, 0.2344)
+texture = ExtResource("19_window_view")
+
+[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(3300, -80)
+scale = Vector2(0.2344, 0.2344)
+texture = ExtResource("19_window_view")
+
+[node name="Cactus1" type="Sprite2D" parent="."]
 position = Vector2(450, 300)
-color = Color(0.22, 0.5, 0.32, 1)
-polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("17_cactus")
 
-[node name="Cactus2" type="Polygon2D" parent="."]
+[node name="Cactus2" type="Sprite2D" parent="."]
 position = Vector2(1200, 300)
-color = Color(0.22, 0.5, 0.32, 1)
-polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("17_cactus")
 
-[node name="Cactus3" type="Polygon2D" parent="."]
+[node name="Cactus3" type="Sprite2D" parent="."]
 position = Vector2(2400, 300)
-color = Color(0.22, 0.5, 0.32, 1)
-polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("17_cactus")
 
-[node name="Cactus4" type="Polygon2D" parent="."]
+[node name="Cactus4" type="Sprite2D" parent="."]
 position = Vector2(3150, 300)
-color = Color(0.22, 0.5, 0.32, 1)
-polygon = PackedVector2Array(-6, 60, -6, -60, -18, -60, -18, -45, -6, -45, -6, -70, 6, -70, 6, -45, 18, -45, 18, -60, 6, -60, 6, 60)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("17_cactus")
 
-[node name="LightCluster1" type="Node2D" parent="."]
+[node name="LightCluster1" type="Sprite2D" parent="."]
 position = Vector2(300, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
 
-[node name="Bulb1" type="Polygon2D" parent="LightCluster1"]
-color = Color(0.9, 0.2, 0.15, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb2" type="Polygon2D" parent="LightCluster1"]
-position = Vector2(40, 8)
-color = Color(0.95, 0.8, 0.1, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb3" type="Polygon2D" parent="LightCluster1"]
-position = Vector2(80, 0)
-color = Color(0.2, 0.6, 0.3, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="LightCluster2" type="Node2D" parent="."]
+[node name="LightCluster2" type="Sprite2D" parent="."]
 position = Vector2(1000, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
 
-[node name="Bulb1" type="Polygon2D" parent="LightCluster2"]
-color = Color(0.9, 0.2, 0.15, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb2" type="Polygon2D" parent="LightCluster2"]
-position = Vector2(40, 8)
-color = Color(0.95, 0.8, 0.1, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb3" type="Polygon2D" parent="LightCluster2"]
-position = Vector2(80, 0)
-color = Color(0.2, 0.6, 0.3, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="LightCluster3" type="Node2D" parent="."]
+[node name="LightCluster3" type="Sprite2D" parent="."]
 position = Vector2(1700, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
 
-[node name="Bulb1" type="Polygon2D" parent="LightCluster3"]
-color = Color(0.9, 0.2, 0.15, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb2" type="Polygon2D" parent="LightCluster3"]
-position = Vector2(40, 8)
-color = Color(0.95, 0.8, 0.1, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb3" type="Polygon2D" parent="LightCluster3"]
-position = Vector2(80, 0)
-color = Color(0.2, 0.6, 0.3, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="LightCluster4" type="Node2D" parent="."]
+[node name="LightCluster4" type="Sprite2D" parent="."]
 position = Vector2(2400, -20)
-
-[node name="Bulb1" type="Polygon2D" parent="LightCluster4"]
-color = Color(0.9, 0.2, 0.15, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb2" type="Polygon2D" parent="LightCluster4"]
-position = Vector2(40, 8)
-color = Color(0.95, 0.8, 0.1, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
-
-[node name="Bulb3" type="Polygon2D" parent="LightCluster4"]
-position = Vector2(80, 0)
-color = Color(0.2, 0.6, 0.3, 1)
-polygon = PackedVector2Array(6, 0, 4.24, 4.24, 0, 6, -4.24, 4.24, -6, 0, -4.24, -4.24, 0, -6, 4.24, -4.24)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
 
 [node name="GroundA" type="StaticBody2D" parent="."]
 position = Vector2(200, 400)
@@ -150,12 +145,12 @@ position = Vector2(200, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
 shape = SubResource("RectangleShape2D_groundA")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+[node name="GroundVisual" type="TextureRect" parent="GroundA"]
 offset_left = -300.0
 offset_top = -40.0
 offset_right = 300.0
 offset_bottom = 40.0
-color = Color(0.72, 0.4, 0.24, 1)
+texture = ExtResource("15_ground_tile")
 
 [node name="GroundB" type="StaticBody2D" parent="."]
 position = Vector2(935, 400)
@@ -163,12 +158,12 @@ position = Vector2(935, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
 shape = SubResource("RectangleShape2D_groundB")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+[node name="GroundVisual" type="TextureRect" parent="GroundB"]
 offset_left = -345.0
 offset_top = -40.0
 offset_right = 345.0
 offset_bottom = 40.0
-color = Color(0.72, 0.4, 0.24, 1)
+texture = ExtResource("15_ground_tile")
 
 [node name="GroundC" type="StaticBody2D" parent="."]
 position = Vector2(1725, 400)
@@ -176,12 +171,12 @@ position = Vector2(1725, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
 shape = SubResource("RectangleShape2D_groundC")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+[node name="GroundVisual" type="TextureRect" parent="GroundC"]
 offset_left = -355.0
 offset_top = -40.0
 offset_right = 355.0
 offset_bottom = 40.0
-color = Color(0.72, 0.4, 0.24, 1)
+texture = ExtResource("15_ground_tile")
 
 [node name="GroundD" type="StaticBody2D" parent="."]
 position = Vector2(2535, 400)
@@ -189,12 +184,12 @@ position = Vector2(2535, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundD"]
 shape = SubResource("RectangleShape2D_groundD")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundD"]
+[node name="GroundVisual" type="TextureRect" parent="GroundD"]
 offset_left = -365.0
 offset_top = -40.0
 offset_right = 365.0
 offset_bottom = 40.0
-color = Color(0.72, 0.4, 0.24, 1)
+texture = ExtResource("15_ground_tile")
 
 [node name="GroundArena" type="StaticBody2D" parent="."]
 position = Vector2(3400, 400)
@@ -235,6 +230,78 @@ polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 position = Vector2(160, 0)
 color = Color(0.85, 0.2, 0.15, 1)
 polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
+
+[node name="HazardFill1" type="TextureRect" parent="."]
+position = Vector2(545, 360)
+offset_left = -45.0
+offset_top = 0.0
+offset_right = 45.0
+offset_bottom = 200.0
+texture = ExtResource("16_hazard_fill")
+
+[node name="HazardFill2" type="TextureRect" parent="."]
+position = Vector2(1325, 360)
+offset_left = -45.0
+offset_top = 0.0
+offset_right = 45.0
+offset_bottom = 200.0
+texture = ExtResource("16_hazard_fill")
+
+[node name="HazardFill3" type="TextureRect" parent="."]
+position = Vector2(2125, 360)
+offset_left = -45.0
+offset_top = 0.0
+offset_right = 45.0
+offset_bottom = 200.0
+texture = ExtResource("16_hazard_fill")
+
+[node name="HazardFill4" type="TextureRect" parent="."]
+position = Vector2(2950, 360)
+offset_left = -50.0
+offset_top = 0.0
+offset_right = 50.0
+offset_bottom = 200.0
+texture = ExtResource("16_hazard_fill")
+
+[node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
+position = Vector2(340, 344)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
+shape = SubResource("RectangleShape2D_obstacle_small")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleSmall1"]
+scale = Vector2(0.0348, 0.0348)
+texture = ExtResource("12_obstacle_small")
+
+[node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
+position = Vector2(700, 337)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
+shape = SubResource("RectangleShape2D_obstacle_medium")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium1"]
+scale = Vector2(0.0644, 0.0644)
+texture = ExtResource("13_obstacle_medium")
+
+[node name="JumpObstacleLarge1" type="StaticBody2D" parent="."]
+position = Vector2(1870, 331)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1"]
+shape = SubResource("RectangleShape2D_obstacle_large")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleLarge1"]
+scale = Vector2(0.0583, 0.0583)
+texture = ExtResource("14_obstacle_large")
+
+[node name="JumpObstacleMedium2" type="StaticBody2D" parent="."]
+position = Vector2(2500, 337)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium2"]
+shape = SubResource("RectangleShape2D_obstacle_medium")
+
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium2"]
+scale = Vector2(0.0644, 0.0644)
+texture = ExtResource("13_obstacle_medium")
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(100, 300)

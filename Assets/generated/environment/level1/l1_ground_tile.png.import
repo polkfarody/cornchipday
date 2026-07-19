@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3cnoehf5fj1q"
-valid=false
+uid="uid://c14srlseq5uj4"
+path="res://.godot/imported/l1_ground_tile.png-aa9163b204a0d7b20d7a1a7f0c5a32f2.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://Assets/generated/environment/level1/l1_ground_tile.png"
+dest_files=["res://.godot/imported/l1_ground_tile.png-aa9163b204a0d7b20d7a1a7f0c5a32f2.ctex"]
 
 [params]
 

@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2l31ue2ry76s"
-valid=false
+uid="uid://cickj4fqhibxp"
+path="res://.godot/imported/l2_hazard_fill.png-a7443f7448fe6880e4ddf4109d09d8f4.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://Assets/generated/environment/level2/l2_hazard_fill.png"
+dest_files=["res://.godot/imported/l2_hazard_fill.png-a7443f7448fe6880e4ddf4109d09d8f4.ctex"]
 
 [params]
 
