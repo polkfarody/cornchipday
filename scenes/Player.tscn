@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame1.png" id="tex_idle1"]
 [ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame2.png" id="tex_idle2"]
 [ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame3.png" id="tex_run1"]
-[ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame4.png" id="tex_run2"]
 [ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame5.png" id="tex_jump1"]
 [ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame6.png" id="tex_jump2"]
 [ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame7.png" id="tex_hit"]
@@ -28,13 +27,10 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("tex_run1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("tex_run2")
 }],
 "loop": true,
 "name": &"run",
-"speed": 8.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
