@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/slow_projectile.gd" id="1_slow"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_glob"]
+radius = 12
+
+[node name="SlowProjectile" type="Area2D"]
+script = ExtResource("1_slow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_glob")
+
+[node name="Blob" type="Polygon2D" parent="."]
+color = Color(0.95, 0.75, 0.15, 1)
+polygon = PackedVector2Array(0, -12, 9, -8, 12, 2, 5, 10, -5, 10, -12, 2, -9, -8)
+
+[node name="Highlight" type="Polygon2D" parent="Blob"]
+position = Vector2(-3, -3)
+color = Color(1, 0.95, 0.6, 0.7)
+polygon = PackedVector2Array(4, 0, 2.8, 2.8, 0, 4, -2.8, 2.8, -4, 0, -2.8, -2.8, 0, -4, 2.8, -2.8)

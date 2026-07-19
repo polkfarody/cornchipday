@@ -12,6 +12,7 @@ const SPIN_DURATION := 1.0
 const SPIN_TINT := Color(1.3, 1.3, 0.6)
 const SLEEP_TINT := Color(0.55, 0.55, 0.9)
 const FALL_RESPAWN_Y := 650.0  # missed a jump gap -- same consequence as any other hit
+const SLOW_TINT := Color(1.0, 0.85, 0.3)
 
 # Emitted on every hit (obstacle or enemy), whatever the source -- Level1
 # listens to this to track lives, so any new hazard type gets lives-tracking
@@ -24,6 +25,7 @@ var spawn_position: Vector2
 var is_stunned := false
 var is_asleep := false
 var run_cycle_time := 0.0
+var speed_multiplier := 1.0
 
 # Air Fryer power-up (feature.md FB7/FB10): once granted, pressing Up briefly
 # lets Cornchip defeat any enemy he touches instead of being hurt by it.
@@ -47,7 +49,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var direction := Input.get_axis("ui_left", "ui_right")
-	velocity.x = direction * SPEED
+	velocity.x = direction * SPEED * speed_multiplier
 	if direction != 0.0:
 		sprite.flip_h = direction < 0.0
 
@@ -133,4 +135,14 @@ func put_to_sleep(duration: float) -> void:
 	sprite.modulate = SLEEP_TINT
 	await get_tree().create_timer(duration).timeout
 	is_asleep = false
+	sprite.modulate = Color.WHITE if not is_spinning else SPIN_TINT
+
+# Queso Grande's cheese-glob attack (characters.txt Bestiary by Level, Level 2):
+# a hazard that slows rather than hits -- no life lost, movement speed is
+# temporarily reduced instead.
+func apply_slow(duration: float, multiplier: float) -> void:
+	speed_multiplier = multiplier
+	sprite.modulate = SLOW_TINT
+	await get_tree().create_timer(duration).timeout
+	speed_multiplier = 1.0
 	sprite.modulate = Color.WHITE if not is_spinning else SPIN_TINT
