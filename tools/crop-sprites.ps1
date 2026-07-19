@@ -11,7 +11,17 @@
 #     largest connected blob (discarding small artifacts like a watermark),
 #     cropped to that blob's bounding box, and overwritten in place.
 #
-# Chroma key: solid magenta (#FF00FF), matching generate-sprites.ps1's prompts.
+# Chroma key: the generator prompt asks for solid magenta (#FF00FF), but the
+# model still draws a soft drop shadow under each character despite being
+# told not to. That shadow is just the background color multiplicatively
+# darkened -- same hue and saturation, lower brightness -- which is exactly
+# what you'd expect from a translucent black shadow layered over a flat
+# color. So instead of matching one fixed RGB value, we key on hue+saturation
+# (sampled from a corner pixel of each image, in case the exact magenta
+# shade drifts between generations) and ignore brightness entirely. That
+# catches the whole background-to-shadow gradient in one pass, while still
+# leaving character colors alone (yellow/brown/red/green are all far enough
+# away in hue, and outline/highlight pixels have too-low saturation to match).
 
 Add-Type -AssemblyName System.Drawing
 
@@ -19,16 +29,49 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Split-Path -Parent $scriptDir
 $dir = Join-Path $projectRoot "Assets\generated"
 $padding = 10
-$magentaTolerance = 60
+$hueTolerance = 30       # degrees
+$minSaturation = 0.35    # below this, treat as not-background regardless of hue (whites/blacks/outlines)
 $minComponentFraction = 0.005  # ignore blobs smaller than this fraction of the image area (noise/watermarks)
 
-function Test-IsMagentaPixel([byte]$r, [byte]$g, [byte]$b) {
-    return ([Math]::Abs([int]$r - 255) -le $magentaTolerance) -and
-           ([Math]::Abs([int]$g - 0) -le $magentaTolerance) -and
-           ([Math]::Abs([int]$b - 255) -le $magentaTolerance)
+function Get-HueSaturation([byte]$r, [byte]$g, [byte]$b) {
+    $rn = $r / 255.0; $gn = $g / 255.0; $bn = $b / 255.0
+    $max = [Math]::Max($rn, [Math]::Max($gn, $bn))
+    $min = [Math]::Min($rn, [Math]::Min($gn, $bn))
+    $delta = $max - $min
+    if ($max -le 0) { return @(0, 0) }
+    $sat = $delta / $max
+    if ($delta -eq 0) {
+        $hue = 0
+    } elseif ($max -eq $rn) {
+        $hue = 60 * (($gn - $bn) / $delta)
+    } elseif ($max -eq $gn) {
+        $hue = 60 * ((($bn - $rn) / $delta) + 2)
+    } else {
+        $hue = 60 * ((($rn - $gn) / $delta) + 4)
+    }
+    if ($hue -lt 0) { $hue += 360 }
+    return @($hue, $sat)
 }
 
-function Remove-MagentaBackground([byte[]]$bytes, [int]$w, [int]$h, [int]$stride) {
+function Get-HueDistance([double]$a, [double]$b) {
+    $d = [Math]::Abs($a - $b) % 360
+    if ($d -gt 180) { $d = 360 - $d }
+    return $d
+}
+
+function Get-ReferenceHue([byte[]]$bytes, [int]$stride) {
+    # Corner pixels are always background, never character or shadow.
+    $r = $bytes[2]; $g = $bytes[1]; $b = $bytes[0]
+    return (Get-HueSaturation $r $g $b)[0]
+}
+
+function Test-IsBackgroundPixel([byte]$r, [byte]$g, [byte]$b, [double]$refHue) {
+    $hs = Get-HueSaturation $r $g $b
+    if ($hs[1] -lt $minSaturation) { return $false }
+    return (Get-HueDistance $hs[0] $refHue) -le $hueTolerance
+}
+
+function Remove-MagentaBackground([byte[]]$bytes, [int]$w, [int]$h, [int]$stride, [double]$refHue) {
     $visited = New-Object bool[] ($w * $h)
     $stack = New-Object System.Collections.Generic.Stack[int]
 
@@ -51,7 +94,7 @@ function Remove-MagentaBackground([byte[]]$bytes, [int]$w, [int]$h, [int]$stride
         $off = $py * $stride + $px * 4
         $b = $bytes[$off]; $g = $bytes[$off + 1]; $r = $bytes[$off + 2]
 
-        if (-not (Test-IsMagentaPixel $r $g $b)) { continue }
+        if (-not (Test-IsBackgroundPixel $r $g $b $refHue)) { continue }
         $bytes[$off + 3] = 0
 
         if ($px -gt 0) { $n = $idx - 1; if (-not $visited[$n]) { $stack.Push($n) } }
@@ -146,7 +189,8 @@ Get-ChildItem "$dir\*.png" | ForEach-Object {
     $bytes = New-Object byte[] ($stride * $h)
     [System.Runtime.InteropServices.Marshal]::Copy($data.Scan0, $bytes, 0, $bytes.Length)
 
-    Remove-MagentaBackground $bytes $w $h $stride
+    $refHue = Get-ReferenceHue $bytes $stride
+    Remove-MagentaBackground $bytes $w $h $stride $refHue
     $cc = Get-ConnectedComponents $bytes $w $h $stride
     $minArea = $w * $h * $minComponentFraction
     $boxes = Get-ComponentBoxes $cc.Label $w $h $cc.Sizes $minArea
