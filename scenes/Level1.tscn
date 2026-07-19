@@ -57,85 +57,209 @@ offset_left = -200.0
 offset_top = -600.0
 offset_right = 3900.0
 offset_bottom = -250.0
-color = Color(0.22, 0.22, 0.5, 1)
+color = Color(0.62, 0.28, 0.18, 1)
 
 [node name="SkyMid" type="ColorRect" parent="."]
 offset_left = -200.0
 offset_top = -250.0
 offset_right = 3900.0
 offset_bottom = 50.0
-color = Color(0.75, 0.45, 0.55, 1)
+color = Color(0.75, 0.36, 0.22, 1)
 
 [node name="SkyHorizon" type="ColorRect" parent="."]
 offset_left = -200.0
 offset_top = 50.0
 offset_right = 3900.0
 offset_bottom = 400.0
-color = Color(0.95, 0.72, 0.42, 1)
+color = Color(0.85, 0.48, 0.3, 1)
 
 [node name="WindowParallax" type="ParallaxBackground" parent="."]
-layer = -1
 
 [node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
 motion_scale = Vector2(0.4, 0.4)
 
 [node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(300, -80)
-scale = Vector2(0.2344, 0.2344)
+scale = Vector2(0.2865, 0.2865)
 texture = ExtResource("19_window_view")
 
 [node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1300, -80)
-scale = Vector2(0.2344, 0.2344)
+scale = Vector2(0.2865, 0.2865)
 texture = ExtResource("19_window_view")
 
 [node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(2300, -80)
-scale = Vector2(0.2344, 0.2344)
+scale = Vector2(0.2865, 0.2865)
 texture = ExtResource("19_window_view")
 
 [node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(3300, -80)
-scale = Vector2(0.2344, 0.2344)
+scale = Vector2(0.2865, 0.2865)
 texture = ExtResource("19_window_view")
 
 [node name="Cactus1" type="Sprite2D" parent="."]
-position = Vector2(450, 300)
+position = Vector2(450, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
 [node name="Cactus2" type="Sprite2D" parent="."]
-position = Vector2(1200, 300)
+position = Vector2(1200, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
 [node name="Cactus3" type="Sprite2D" parent="."]
-position = Vector2(2400, 300)
+position = Vector2(2400, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
 [node name="Cactus4" type="Sprite2D" parent="."]
-position = Vector2(3150, 300)
+position = Vector2(3150, 315.1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("17_cactus")
 
-[node name="LightCluster1" type="Sprite2D" parent="."]
-position = Vector2(300, -20)
+[node name="Light1" type="Sprite2D" parent="."]
+position = Vector2(-30.0, -20)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="LightCluster2" type="Sprite2D" parent="."]
-position = Vector2(1000, -20)
+[node name="Light2" type="Sprite2D" parent="."]
+position = Vector2(110.0, -20)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="LightCluster3" type="Sprite2D" parent="."]
-position = Vector2(1700, -20)
+[node name="Light3" type="Sprite2D" parent="."]
+position = Vector2(250.0, -20)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
-[node name="LightCluster4" type="Sprite2D" parent="."]
-position = Vector2(2400, -20)
+[node name="Light4" type="Sprite2D" parent="."]
+position = Vector2(390.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light5" type="Sprite2D" parent="."]
+position = Vector2(530.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light6" type="Sprite2D" parent="."]
+position = Vector2(670.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light7" type="Sprite2D" parent="."]
+position = Vector2(810.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light8" type="Sprite2D" parent="."]
+position = Vector2(950.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light9" type="Sprite2D" parent="."]
+position = Vector2(1090.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light10" type="Sprite2D" parent="."]
+position = Vector2(1230.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light11" type="Sprite2D" parent="."]
+position = Vector2(1370.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light12" type="Sprite2D" parent="."]
+position = Vector2(1510.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light13" type="Sprite2D" parent="."]
+position = Vector2(1650.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light14" type="Sprite2D" parent="."]
+position = Vector2(1790.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light15" type="Sprite2D" parent="."]
+position = Vector2(1930.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light16" type="Sprite2D" parent="."]
+position = Vector2(2070.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light17" type="Sprite2D" parent="."]
+position = Vector2(2210.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light18" type="Sprite2D" parent="."]
+position = Vector2(2350.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light19" type="Sprite2D" parent="."]
+position = Vector2(2490.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light20" type="Sprite2D" parent="."]
+position = Vector2(2630.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light21" type="Sprite2D" parent="."]
+position = Vector2(2770.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light22" type="Sprite2D" parent="."]
+position = Vector2(2910.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light23" type="Sprite2D" parent="."]
+position = Vector2(3050.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light24" type="Sprite2D" parent="."]
+position = Vector2(3190.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light25" type="Sprite2D" parent="."]
+position = Vector2(3330.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light26" type="Sprite2D" parent="."]
+position = Vector2(3470.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light27" type="Sprite2D" parent="."]
+position = Vector2(3610.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light28" type="Sprite2D" parent="."]
+position = Vector2(3750.0, -20)
+scale = Vector2(0.0994, 0.0994)
+texture = ExtResource("18_string_lights")
+
+[node name="Light29" type="Sprite2D" parent="."]
+position = Vector2(3890.0, -20)
 scale = Vector2(0.0994, 0.0994)
 texture = ExtResource("18_string_lights")
 
@@ -152,6 +276,7 @@ offset_right = 300.0
 offset_bottom = 40.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundB" type="StaticBody2D" parent="."]
 position = Vector2(935, 400)
@@ -166,6 +291,7 @@ offset_right = 345.0
 offset_bottom = 40.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundC" type="StaticBody2D" parent="."]
 position = Vector2(1725, 400)
@@ -180,6 +306,7 @@ offset_right = 355.0
 offset_bottom = 40.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundD" type="StaticBody2D" parent="."]
 position = Vector2(2535, 400)
@@ -194,6 +321,7 @@ offset_right = 365.0
 offset_bottom = 40.0
 texture = ExtResource("15_ground_tile")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundArena" type="StaticBody2D" parent="."]
 position = Vector2(3400, 400)
@@ -236,43 +364,43 @@ color = Color(0.85, 0.2, 0.15, 1)
 polygon = PackedVector2Array(-12, 0, 12, 0, 0, 24)
 
 [node name="HazardFill1" type="TextureRect" parent="."]
-position = Vector2(545, 360)
-offset_left = -45.0
-offset_top = 0.0
-offset_right = 45.0
-offset_bottom = 200.0
+offset_left = 500.0
+offset_top = 360.0
+offset_right = 590.0
+offset_bottom = 560.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="HazardFill2" type="TextureRect" parent="."]
-position = Vector2(1325, 360)
-offset_left = -45.0
-offset_top = 0.0
-offset_right = 45.0
-offset_bottom = 200.0
+offset_left = 1280.0
+offset_top = 360.0
+offset_right = 1370.0
+offset_bottom = 560.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="HazardFill3" type="TextureRect" parent="."]
-position = Vector2(2125, 360)
-offset_left = -45.0
-offset_top = 0.0
-offset_right = 45.0
-offset_bottom = 200.0
+offset_left = 2080.0
+offset_top = 360.0
+offset_right = 2170.0
+offset_bottom = 560.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="HazardFill4" type="TextureRect" parent="."]
-position = Vector2(2950, 360)
-offset_left = -50.0
-offset_top = 0.0
-offset_right = 50.0
-offset_bottom = 200.0
+offset_left = 2900.0
+offset_top = 360.0
+offset_right = 3000.0
+offset_bottom = 560.0
 texture = ExtResource("16_hazard_fill")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
-position = Vector2(340, 344)
+position = Vector2(320, 344)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
 shape = SubResource("RectangleShape2D_obstacle_small")
@@ -282,7 +410,7 @@ scale = Vector2(0.0348, 0.0348)
 texture = ExtResource("12_obstacle_small")
 
 [node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
-position = Vector2(700, 337)
+position = Vector2(830, 337)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
 shape = SubResource("RectangleShape2D_obstacle_medium")

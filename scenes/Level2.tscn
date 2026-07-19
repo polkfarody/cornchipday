@@ -45,60 +45,59 @@ offset_left = -200.0
 offset_top = -600.0
 offset_right = 2300.0
 offset_bottom = -250.0
-color = Color(0.45, 0.3, 0.1, 1)
+color = Color(0.55, 0.38, 0.12, 1)
 
 [node name="SkyMid" type="ColorRect" parent="."]
 offset_left = -200.0
 offset_top = -250.0
 offset_right = 2300.0
 offset_bottom = 50.0
-color = Color(0.85, 0.65, 0.2, 1)
+color = Color(0.82, 0.62, 0.22, 1)
 
 [node name="SkyHorizon" type="ColorRect" parent="."]
 offset_left = -200.0
 offset_top = 50.0
 offset_right = 2300.0
 offset_bottom = 400.0
-color = Color(0.95, 0.88, 0.55, 1)
+color = Color(0.92, 0.8, 0.4, 1)
 
 [node name="WindowParallax" type="ParallaxBackground" parent="."]
-layer = -1
 
 [node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
 motion_scale = Vector2(0.4, 0.4)
 
 [node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(300, -80)
-scale = Vector2(0.1788, 0.1788)
+scale = Vector2(0.2185, 0.2185)
 texture = ExtResource("16_window_view")
 
 [node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1300, -80)
-scale = Vector2(0.1788, 0.1788)
+scale = Vector2(0.2185, 0.2185)
 texture = ExtResource("16_window_view")
 
 [node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(2100, -80)
-scale = Vector2(0.1788, 0.1788)
+scale = Vector2(0.2185, 0.2185)
 texture = ExtResource("16_window_view")
 
 [node name="Chip1" type="Sprite2D" parent="."]
-position = Vector2(350, 300)
+position = Vector2(350, 325)
 scale = Vector2(0.0884, 0.0884)
 texture = ExtResource("14_chip")
 
 [node name="Chip2" type="Sprite2D" parent="."]
-position = Vector2(1000, 300)
+position = Vector2(1000, 325)
 scale = Vector2(0.0884, 0.0884)
 texture = ExtResource("14_chip")
 
 [node name="Chip3" type="Sprite2D" parent="."]
-position = Vector2(1600, 300)
+position = Vector2(1600, 325)
 scale = Vector2(0.0884, 0.0884)
 texture = ExtResource("14_chip")
 
 [node name="Chip4" type="Sprite2D" parent="."]
-position = Vector2(2000, 300)
+position = Vector2(2000, 325)
 scale = Vector2(0.0884, 0.0884)
 texture = ExtResource("14_chip")
 
@@ -130,6 +129,7 @@ offset_right = 300.0
 offset_bottom = 40.0
 texture = ExtResource("12_ground_tile")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundB" type="StaticBody2D" parent="."]
 position = Vector2(945, 400)
@@ -144,6 +144,7 @@ offset_right = 355.0
 offset_bottom = 40.0
 texture = ExtResource("12_ground_tile")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundC" type="StaticBody2D" parent="."]
 position = Vector2(1795, 400)
@@ -159,25 +160,25 @@ offset_bottom = 40.0
 color = Color(0.6, 0.4, 0.08, 1)
 
 [node name="HazardFill1" type="TextureRect" parent="."]
-position = Vector2(545, 360)
-offset_left = -45.0
-offset_top = 0.0
-offset_right = 45.0
-offset_bottom = 200.0
+offset_left = 500.0
+offset_top = 360.0
+offset_right = 590.0
+offset_bottom = 560.0
 texture = ExtResource("13_hazard_fill")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="HazardFill2" type="TextureRect" parent="."]
-position = Vector2(1345, 360)
-offset_left = -45.0
-offset_top = 0.0
-offset_right = 45.0
-offset_bottom = 200.0
+offset_left = 1300.0
+offset_top = 360.0
+offset_right = 1390.0
+offset_bottom = 560.0
 texture = ExtResource("13_hazard_fill")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
-position = Vector2(340, 344)
+position = Vector2(320, 344)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
 shape = SubResource("RectangleShape2D_obstacle_small")
@@ -187,7 +188,7 @@ scale = Vector2(0.0572, 0.0572)
 texture = ExtResource("9_obstacle_small")
 
 [node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
-position = Vector2(700, 337)
+position = Vector2(800, 337)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
 shape = SubResource("RectangleShape2D_obstacle_medium")

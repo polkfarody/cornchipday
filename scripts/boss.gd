@@ -21,6 +21,7 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var hurt_area: Area2D = $HurtArea
 @onready var fire_timer: Timer = $FireTimer
+@onready var body_collision: CollisionShape2D = $CollisionShape2D
 
 var health: int
 var start_x: float
@@ -52,12 +53,37 @@ func _physics_process(delta: float) -> void:
 		patrol_direction = -1.0
 	elif offset < -patrol_half_width:
 		patrol_direction = 1.0
+	elif not _is_floor_ahead(patrol_direction):
+		# Turn around before walking off a platform edge, rather than only
+		# ever turning at a fixed distance from spawn (which breaks the
+		# moment an obstacle or a shorter platform sits inside that range).
+		patrol_direction = -patrol_direction
 	velocity.x = patrol_direction * move_speed
 	velocity.y = 0.0
 	move_and_slide()
+	# Also turn around immediately on hitting something solid (e.g. a jump
+	# obstacle) instead of silently stalling against it until the
+	# distance-based check above eventually (never) flips direction.
+	if get_slide_collision_count() > 0:
+		patrol_direction = -patrol_direction
 	sprite.flip_h = patrol_direction < 0.0
 	if sprite.animation != "move":
 		sprite.play("move")
+
+func _is_floor_ahead(direction: float) -> bool:
+	var shape: RectangleShape2D = body_collision.shape
+	var half_width: float = shape.size.x / 2.0
+	var feet_y: float = global_position.y + body_collision.position.y + shape.size.y / 2.0
+	var probe_x: float = global_position.x + direction * (half_width + 4.0)
+	var space_state := get_world_2d().direct_space_state
+	var query := PhysicsRayQueryParameters2D.create(
+		Vector2(probe_x, feet_y - 4.0),
+		Vector2(probe_x, feet_y + 16.0)
+	)
+	query.exclude = [get_rid()]
+	query.collide_with_areas = false
+	var result := space_state.intersect_ray(query)
+	return not result.is_empty()
 
 func _fire_projectile() -> void:
 	if is_defeated or action_lock > 0.0 or projectile_scene == null:
