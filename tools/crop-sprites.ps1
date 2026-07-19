@@ -23,6 +23,16 @@
 # leaving character colors alone (yellow/brown/red/green are all far enough
 # away in hue, and outline/highlight pixels have too-low saturation to match).
 
+param(
+    # Optional: process only these filenames (e.g. -Only l1_obstacle_small.png,l1_window_view.png)
+    # instead of every PNG in Assets/generated. Use this when re-running after a
+    # partial regeneration -- the corner-pixel chroma-key sampling assumes a magenta
+    # background, and running it against files this script already cropped (whose
+    # corners are now transparent, not magenta) misdetects the keyed color and
+    # destroys them.
+    [string[]]$Only
+)
+
 Add-Type -AssemblyName System.Drawing
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -72,6 +82,11 @@ function Test-IsBackgroundPixel([byte]$r, [byte]$g, [byte]$b, [double]$refHue) {
 }
 
 function Remove-MagentaBackground([byte[]]$bytes, [int]$w, [int]$h, [int]$stride, [double]$refHue) {
+    # Border flood-fill first: this is deliberately connectivity-limited, not
+    # a global hue match, because pink/purple/magenta-ish hues can appear as
+    # legitimate art content (e.g. a sunset's purple hill silhouette) and a
+    # global scan would eat those too. Only background actually reachable
+    # from the canvas edge is background.
     $visited = New-Object bool[] ($w * $h)
     $stack = New-Object System.Collections.Generic.Stack[int]
 
@@ -107,6 +122,14 @@ function Remove-MagentaBackground([byte[]]$bytes, [int]$w, [int]$h, [int]$stride
         if ($py -gt 0) { $n = $idx - $w; if (-not $visited[$n]) { $stack.Push($n) } }
         if ($py -lt $h - 1) { $n = $idx + $w; if (-not $visited[$n]) { $stack.Push($n) } }
     }
+    # NOTE: small background-hued pockets fully enclosed by outline pixels
+    # (e.g. the gap where three stacked jars meet) can survive this border
+    # flood-fill. Deliberately not auto-swept here: an experiment doing so
+    # also ate legitimate anti-aliased gradient art (a sunset's purple hills
+    # fracture into many tiny same-hued specks that look identical to a real
+    # leftover sliver). Fix confirmed one-off leftovers manually and verify
+    # visually before trusting the result -- see git history around 2026-07-19
+    # for the standalone pocket-sweep approach that was tried and reverted.
 }
 
 function Get-ConnectedComponents([byte[]]$bytes, [int]$w, [int]$h, [int]$stride) {
@@ -178,7 +201,7 @@ function Get-ComponentBoxes([int[]]$label, [int]$w, [int]$h, [System.Collections
     return $boxes
 }
 
-Get-ChildItem "$dir\*.png" | ForEach-Object {
+Get-ChildItem "$dir\*.png" | Where-Object { -not $Only -or $Only -contains $_.Name } | ForEach-Object {
     # Never reprocess this script's own prior output -- re-running the
     # single-prop "keep largest blob, crop tight" path on an already-sliced
     # frame silently destroys the uniform per-character canvas size that
