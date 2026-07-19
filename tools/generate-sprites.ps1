@@ -4,17 +4,29 @@
 #
 # Sprites are requested on a solid magenta (#FF00FF) background rather than
 # "transparent" -- diffusion image models can't natively output real alpha,
-# and asking for "transparent background" just gets you a picture of a
-# checkerboard baked into opaque pixels. Solid magenta gives crop-sprites.ps1
-# a reliable color to key out. None of the current cast uses magenta/pink,
-# so there's no risk of keying out part of a character.
+# so a transparency request just yields a checkerboard baked into opaque
+# pixels. Solid magenta gives crop-sprites.ps1 a reliable color to key out.
+# Drop shadows are explicitly forbidden in the prompt: a soft shadow blends
+# with the magenta rather than matching it exactly, so it survives simple
+# chroma-key thresholding as a dark smudge.
+#
+# Each character is requested as a single "*_grid.png" image containing an
+# 8-pose grid (4 columns x 2 rows), read left-to-right then top-to-bottom:
+#   1) idle                 2) idle variant (blink/weight shift)
+#   3) move, phase A        4) move, phase B
+#   5) signature action, phase A   6) signature action, phase B
+#   7) hit/dazed reaction    8) celebrate (Cornchip/Wrap) or defeated (enemies)
+# crop-sprites.ps1 slices each grid into 8 separate frame files.
+#
+# Non-character props (the salsa obstacle, the lettuce ingredient) stay as
+# single still images -- "8 poses" doesn't apply to a static splat or leaf.
 #
 # Output lands in Assets/generated/ as PNGs, meant to replace the placeholder
 # Polygon2D shapes currently in the Godot scenes.
 #
 # Usage:
 #   .\generate-sprites.ps1            # generate all sprites
-#   .\generate-sprites.ps1 -Only cornchip_idle   # generate just one, by Name
+#   .\generate-sprites.ps1 -Only cornchip_grid   # generate just one, by Name
 
 param(
     [string]$Only = $null
@@ -45,20 +57,49 @@ if (-not $apiKey -or $apiKey -eq "your-key-here") {
 $outDir = Join-Path $projectRoot "Assets\generated"
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
-$bgSuffix = "2D side-view platformer game sprite, flat vector illustration style, thick clean outlines, bright saturated colors, flat shading. Background must be solid flat magenta (#FF00FF), completely uniform with no gradient, no pattern, no checkerboard, no watermark, no logo, and no text anywhere in the image."
+$styleSuffix = "Flat vector illustration style, thick clean outlines, bright saturated colors, flat shading, no gradients. Background must be solid flat magenta (#FF00FF) throughout the entire image, completely uniform, no pattern, no checkerboard, no watermark, no logo, no text. Absolutely no drop shadows or shadow of any kind beneath or around any character or object."
+
+$gridSuffix = "Arrange as a clean 4-column by 2-row grid of the 8 poses listed above, left-to-right then top-to-bottom, with generous empty magenta space between every pose so no two poses touch or overlap. The character's design, colors, and proportions must stay exactly consistent across all 8 cells. $styleSuffix"
+
+function Grid-Prompt([string]$character, [string]$move, [string]$action, [string]$pose8) {
+    return "A 2D side-view platformer game character sprite sheet depicting: $character`n" +
+           "The 8 poses: 1) idle standing pose. 2) idle pose variant, a subtle blink or weight shift. 3) $move (phase A). 4) $move (phase B). 5) $action (phase A). 6) $action (phase B). 7) a dazed/hit reaction pose. 8) $pose8.`n" +
+           $gridSuffix
+}
 
 $sprites = @(
-    @{ Name = "cornchip_idle"; Prompt = "A cheerful cartoon video-game character standing in a neutral idle pose: a walking corn chip shaped like an upside-down triangle (wide at top, pointed at bottom), warm golden-yellow with subtle corn speckles, small comedic stick legs, big round friendly cartoon eyes, simple open smiling mouth. $bgSuffix" },
-    @{ Name = "cornchip_run"; Prompt = "The same cheerful corn chip character -- upside-down triangle shape, golden-yellow with corn speckles, comedic stick legs, big round friendly eyes, smiling mouth -- in a mid-run pose, one leg stretched forward and one leg back, body leaning slightly forward as if running. $bgSuffix" },
-    @{ Name = "cornchip_jump"; Prompt = "The same cheerful corn chip character -- upside-down triangle shape, golden-yellow with corn speckles, comedic stick legs, big round friendly eyes, smiling mouth -- in a mid-air jump pose, both legs tucked up beneath the body. $bgSuffix" },
-    @{ Name = "cornchip_hit"; Prompt = "The same corn chip character -- upside-down triangle shape, golden-yellow with corn speckles, comedic stick legs -- in a comedic dazed reaction pose, eyes squeezed shut or dazed, body slightly squashed and tilted as if stumbling. $bgSuffix" },
-    @{ Name = "wrap_idle"; Prompt = "A cartoon video-game character standing in a neutral idle pose: a round tubular burrito/wrap, tan-beige tortilla color with a visible fold seam, small comedic stick legs, big expressive round cartoon eyes, a stubborn/proud mouth expression. $bgSuffix" },
-    @{ Name = "salsa_obstacle"; Prompt = "A cartoon thrown food projectile: a small round blob of red salsa with a comedic wobbly splat shape, glossy highlight. $bgSuffix" },
-    @{ Name = "lettuce_ingredient"; Prompt = "A cute cartoon lettuce leaf collectible icon for a kids' video game, bright green with a glossy highlight, centered composition. $bgSuffix" },
-    @{ Name = "hot_sauce_boss_idle"; Prompt = "A cartoon video-game boss character standing in a neutral idle pose: a happy squeeze bottle of hot sauce whose cap is shaped like a sombrero, small comedic cartoon legs, an expressive face, glowing lava-like sauce visible at the nozzle. $bgSuffix" },
-    @{ Name = "avocado_boss_idle"; Prompt = "A cartoon video-game boss character: a dancing avocado with small comedic cartoon legs mid dance pose, an expressive happy face, glossy pit visible, a small puddle of guacamole near its feet. $bgSuffix" },
-    @{ Name = "cheese_enemy_idle"; Prompt = "A cartoon video-game enemy character standing in a neutral idle pose: a friendly-looking wedge of yellow cheese with small comedic cartoon legs and a sleepy, mischievous expression, small visible cheese holes. $bgSuffix" },
-    @{ Name = "salsa_bowl_boss_idle"; Prompt = "A cartoon video-game boss character: a rolling bowl full of red salsa, mounted on small corn-cob-shaped wheels, with big cartoon eyes and a mouth on the front of the bowl, appearing mid-roll. $bgSuffix" }
+    @{ Name = "cornchip_grid"; Prompt = (Grid-Prompt `
+        "a walking corn chip shaped like an upside-down triangle (wide at top, pointed at bottom), warm golden-yellow with subtle corn speckles, small comedic stick legs, big round friendly cartoon eyes, simple mouth." `
+        "running, one leg forward and one leg back, leaning slightly forward" `
+        "jumping, crouching down then airborne with legs tucked up" `
+        "celebrating happily, arms up, big smile") },
+    @{ Name = "wrap_grid"; Prompt = (Grid-Prompt `
+        "a round tubular burrito/wrap, tan-beige tortilla color with a visible fold seam, small comedic stick legs, big expressive round cartoon eyes, a stubborn/proud mouth expression." `
+        "walking with arms crossed stubbornly, alternating a slight lean left and right" `
+        "throwing a food obstacle, winding up then following through" `
+        "a warmer, softer smiling pose") },
+    @{ Name = "hot_sauce_boss_grid"; Prompt = (Grid-Prompt `
+        "a happy squeeze bottle of hot sauce whose cap is shaped like a sombrero, small comedic cartoon legs, an expressive face, glowing lava-like sauce visible at the nozzle." `
+        "shuffling side to side, leaning left then right" `
+        "firing sauce from the hat opening, sauce glowing brighter then spraying out" `
+        "a dizzy, defeated pose with the sombrero tilted and swirly eyes") },
+    @{ Name = "avocado_boss_grid"; Prompt = (Grid-Prompt `
+        "a dancing avocado with small comedic cartoon legs, an expressive happy face, glossy pit visible." `
+        "dancing, leaning left then right mid-dance" `
+        "jumping and dropping guacamole, airborne then landing with guacamole splattering below" `
+        "a dizzy, defeated pose, slightly squished") },
+    @{ Name = "cheese_enemy_grid"; Prompt = (Grid-Prompt `
+        "a friendly-looking wedge of yellow cheese with small comedic cartoon legs and a sleepy, mischievous expression, small visible cheese holes." `
+        "shuffling side to side sleepily, leaning left then right" `
+        "yawning widely, mouth opening then a full wide yawn with eyes closed" `
+        "a dizzy, defeated pose, slightly flattened") },
+    @{ Name = "salsa_bowl_boss_grid"; Prompt = (Grid-Prompt `
+        "a rolling bowl full of red salsa, mounted on small corn-cob-shaped wheels, with big cartoon eyes and a mouth on the front of the bowl." `
+        "rolling forward, corn wheels at two different rotation angles" `
+        "firing a tomato chunk, the chunk forming then flying out" `
+        "a dizzy, defeated pose, tipped over on its side") },
+    @{ Name = "salsa_obstacle"; Prompt = "A cartoon thrown food projectile: a small round blob of red salsa with a comedic wobbly splat shape, glossy highlight. $styleSuffix" },
+    @{ Name = "lettuce_ingredient"; Prompt = "A cute cartoon lettuce leaf collectible icon for a kids' video game, bright green with a glossy highlight, centered composition. $styleSuffix" }
 )
 
 if ($Only) {
