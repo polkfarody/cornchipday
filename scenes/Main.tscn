@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/Obstacle.tscn" id="2_obstacle"]
 [ext_resource type="PackedScene" path="res://scenes/Ingredient.tscn" id="3_ingredient"]
 [ext_resource type="Script" path="res://scripts/obstacle_trigger.gd" id="4_trigger"]
+[ext_resource type="PackedScene" path="res://scenes/HotSauceBoss.tscn" id="5_boss"]
+[ext_resource type="PackedScene" path="res://scenes/BossProjectile.tscn" id="6_boss_projectile"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(3000, 80)
@@ -45,5 +47,8 @@ spawn_position = Vector2(700, -100)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleTrigger"]
 shape = SubResource("RectangleShape2D_trigger")
 
-[node name="Ingredient" parent="." instance=ExtResource("3_ingredient")]
+[node name="HotSauceBoss" parent="." instance=ExtResource("5_boss")]
 position = Vector2(1200, 330)
+projectile_scene = ExtResource("6_boss_projectile")
+ingredient_scene = ExtResource("3_ingredient")
+ingredient_spawn_position = Vector2(1200, 330)
