@@ -31,8 +31,10 @@ The primary players are 5 and 8 years old. Every design decision should be filte
 - **Unlockable upgrades:** earned progressively across levels; each new ability is required to progress (i.e., gates level access rather than being purely optional), keeping a metroidvania-lite sense of growth without adding failure risk.
 
 ## Level & Narrative Structure
-- **7 levels total**, each tied to one ingredient for the ultimate crunch wrap.
-- Each level introduces or riffs on a food-based obstacle pun consistent with a "world of a walking corn chip," and ends with a boss battle against that ingredient's themed guardian (see `characters.txt` "Level Bosses" — Hot Sauce, Avocado, Cheese, and others still to be designed).
+- **7 levels total.** Levels 1–6 are each tied to one ingredient for the ultimate crunch wrap and end in a themed boss battle; Level 7 has no separate ingredient-boss and is instead built entirely around the Wrap confrontation (proposed resolution to the old "7 ingredients vs. Wrap as final boss" ambiguity — see `characters.txt` Bestiary by Level).
+- Proposed ingredient order (not yet confirmed): 1) Salsa (built), 2) Cheese, 3) Guacamole, 4) Tomato, 5) Sour Cream, 6) Crunchy Shell, 7) Wrap finale.
+- Each level introduces or riffs on a food-based obstacle pun consistent with a "world of a walking corn chip," ends with a boss battle against that ingredient's themed guardian, and introduces at least one brand-new enemy alongside any returning ones (which come back tougher or with a new trick, not unchanged) — see `characters.txt` "Bestiary by Level" for the full proposed roster.
+- **Level 1** is confirmed as a "fun Mexican restaurant" vibe specifically — the onboarding level, kept simple so the theme and controls land before anything harder.
 - Wrap is present narratively throughout and is the final boss, fought after all other levels' ingredients are collected.
 
 ## Art & Audio Direction
@@ -46,11 +48,11 @@ A single, fully polished vertical-slice level demonstrating: core run/jump movem
 - **2-player local co-op:** Cornchip's best friend Cheeto joins the quest as a second playable character. Explicitly out of scope for MVP; the codebase should avoid decisions that would make adding a second player unusually difficult later (see `instructions-ai.txt` extensibility principle).
 
 ## Open Questions
-- Full boss roster and per-level order across all 7 levels — Hot Sauce and Avocado are confirmed level bosses; Salsa Bowl's status as boss vs. regular enemy is still undecided; Cheese is resolved as a regular in-level enemy, not a boss (see `characters.txt`).
+- The Bestiary by Level plan in `characters.txt` is a proposal, not yet confirmed level by level — review its ingredient order, boss designs, and which enemies are "new" vs. "returning tougher."
 - Is the Wrap confrontation framed the same as other boss battles (combat-first), or does it shift tone toward a gentler final reconciliation moment, given the sibling-reunion story?
-- Should each level map to a specific real-world crunch wrap ingredient (lettuce, cheese, salsa, etc.), and if so, is there a preferred list/order?
 - Any preferred reference art/style touchstones for the sprite-generation pipeline?
 
 ## Resolved Questions (kept for history)
-- **Lettuce: token vs. ingredient?** Both — scattered lettuce tokens are a separate collectible layer (currently just counted, no on-screen tally yet) alongside the per-level boss-guarded ingredient, which is unchanged.
+- **Lettuce/beans: token vs. ingredient?** Beans (not lettuce) are the scattered collectible-currency layer, counted but with no on-screen tally yet; lettuce stays an ingredient-only concept, unattached to any specific level in the current proposed order.
 - **Lives vs. no-fail-state?** Resolved: 3 lives, level restarts from the beginning at 0 (see Design Philosophy above).
+- **Should each level map to a specific real ingredient?** Yes — see the proposed order in Level & Narrative Structure above and the full Bestiary by Level in `characters.txt`.

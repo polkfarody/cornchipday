@@ -42,9 +42,45 @@ Smaller, one-hit threats encountered within a level rather than guarding its ing
 - **Role:** Regular enemy (resolved from the earlier boss-vs-enemy open question). Design brief describes his touch putting Cornchip to sleep for 10 seconds; the current build simplifies this to the same stumble-and-respawn reaction as any other hit, rather than a distinct sleep/incapacitation status effect — a real gap from the original idea, flagged here rather than silently dropped. Building a proper "sleep" effect (temporarily disabling input for a duration) is a good candidate for later polish.
 - **Personality (draft — pending confirmation):** Not yet specified.
 
+## Bestiary by Level
+Resolves the long-standing open question of what each of the 7 levels is themed around, and answers the "the level feels repetitive" note: each level below introduces at least one brand-new enemy, and any returning enemy comes back tougher or with a new trick rather than just reappearing unchanged. Interaction variety matters as much as raw enemy count — see the mix of hit types called out per level.
+
+### Level 1 — Salsa Cantina (built)
+A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme and core controls land before anything harder shows up.
+- **Boss:** Hot Sauce (3-hit, fires a projectile)
+- **Enemies:** Cheese (1-hit, melee only), Salsa Bowl (2-hit, fires a projectile)
+
+### Level 2 — Nacho Kitchen
+- **Boss (new):** Queso Grande — a bubbling cheese-fondue pot. Attacks by dripping a cheese glob that sticks and briefly slows Cornchip rather than an instant hit, a new hazard *type* rather than another projectile.
+- **Enemies:** Cheese returns, but finally gets its originally-planned signature move here — the "asleep for 10 seconds" effect (`characters.txt` Regular Enemies / `feature.md` FB14) — instead of the generic stumble it uses today. New: Jalapeño, a hopping enemy that's otherwise a standard side-hit stun.
+- **Palette/setting:** tiled nacho bar, cheese-yellow.
+
+### Level 3 — Guac Stand
+- **Boss:** Avocado (already designed/generated)
+- **Enemies (new):** Lime — bounces around; its attack briefly reverses Cornchip's left/right controls instead of costing a life, a genuinely new interaction rather than another hit type. Onion — a stationary enemy whose nearby presence blurs/wobbles the screen briefly (a nuisance, not a hit).
+- **Palette/setting:** produce stand, greens.
+
+### Level 4 — Market Tomatoes
+- **Boss (new):** Big Red — a giant tomato that splits into two Cherry Tomato enemies partway through the fight, an evolving-fight-pattern boss rather than Hot Sauce's single-phase loop.
+- **Enemies:** Cherry Tomato (new — small, fast, 1-hit; also the thing Big Red spawns), Salsa Bowl returns tougher (faster fire rate).
+- **Palette/setting:** outdoor market stalls, reds.
+
+### Level 5 — Frosty Fridge (Sour Cream)
+- **Boss (new):** Sour Cream Sam — the arena floor turns icy/slippery for this fight, changing how Cornchip's movement feels rather than adding another attack type.
+- **Enemies (new):** Ice Cube — fast, low-health, slides back and forth. Chive Bit — tiny, appears in small swarms.
+- **Palette/setting:** walk-in fridge, cool blues.
+
+### Level 6 — Sizzling Griddle (Crunchy Shell)
+- **Boss (new):** Iron Skillet — the whole arena floor periodically heats up (can't stand still), an escalation of Sour Cream Sam's floor-changes-the-fight idea.
+- **Enemies:** Jalapeño and Onion return tougher (explicit callback, not brand new) alongside one new one: Grease Splatter — hazard-only, cannot be stomped, must be avoided entirely (a deliberately different interaction type from every stompable enemy so far).
+- **Palette/setting:** kitchen grill station, reds/oranges.
+
+### Level 7 — The Wrap (Finale)
+No separate ingredient-boss precedes this one — the level is built entirely around the Wrap confrontation. A short remix gauntlet of one enemy from each earlier level (no new assets needed) leads into Wrap himself as the true final boss. Tone (straight combat vs. a gentler reconciliation moment) is still an open question — see `game-brief.txt`.
+
 ## Open Items
 - Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
-- Confirm the full boss roster and level order across all 7 levels — Hot Sauce and Avocado are confirmed level bosses; Salsa Bowl's boss-vs-enemy status is still open; more bosses are likely needed for the remaining levels.
-- Confirm Cheese's visual silhouette, and whether to build the "10-second sleep" effect described in the brief instead of the current generic stumble reaction.
-- Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` F5) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening?
+- Review the Bestiary by Level plan above — it's a proposed roster/order to fix the "level feels repetitive" note, not yet confirmed level by level. Salsa Bowl is placed as a Level 1/4 regular enemy rather than a boss in this plan; flag if that's wrong.
+- Confirm Cheese's visual silhouette (currently unspecified/placeholder art).
+- Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` F5) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening? The Bestiary plan already assumes some bosses change the fight itself (Sour Cream Sam's icy floor, Iron Skillet's heating floor) rather than needing a unique defeat condition.
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.
