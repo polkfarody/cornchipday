@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_cactus.png" id="17_cactus"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_string_lights.png" id="18_string_lights"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
+[ext_resource type="Script" path="res://scripts/parallax_scroll.gd" id="20_parallax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(20, 400)
@@ -52,45 +53,28 @@ size = Vector2(22, 58)
 script = ExtResource("0_level_base")
 next_level_path = "res://scenes/Level2.tscn"
 
-[node name="SkyTop" type="ColorRect" parent="."]
-offset_left = -200.0
-offset_top = -600.0
-offset_right = 3900.0
-offset_bottom = -250.0
-color = Color(0.62, 0.28, 0.18, 1)
+[node name="WindowScroll" type="Node2D" parent="."]
+script = ExtResource("20_parallax")
+motion_scale = 0.4
 
-[node name="SkyMid" type="ColorRect" parent="."]
-offset_left = -200.0
-offset_top = -250.0
-offset_right = 3900.0
-offset_bottom = 50.0
-color = Color(0.75, 0.36, 0.22, 1)
-
-[node name="SkyHorizon" type="ColorRect" parent="."]
-offset_left = -200.0
-offset_top = 50.0
-offset_right = 3900.0
-offset_bottom = 400.0
-color = Color(0.85, 0.48, 0.3, 1)
-
-[node name="Window1" type="Sprite2D" parent="."]
-position = Vector2(300, -80)
-scale = Vector2(0.3385, 0.3385)
+[node name="Window1" type="Sprite2D" parent="WindowScroll"]
+position = Vector2(450, -20)
+scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window2" type="Sprite2D" parent="."]
-position = Vector2(1300, -80)
-scale = Vector2(0.3385, 0.3385)
+[node name="Window2" type="Sprite2D" parent="WindowScroll"]
+position = Vector2(1750, -20)
+scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window3" type="Sprite2D" parent="."]
-position = Vector2(2300, -80)
-scale = Vector2(0.3385, 0.3385)
+[node name="Window3" type="Sprite2D" parent="WindowScroll"]
+position = Vector2(3050, -20)
+scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
-[node name="Window4" type="Sprite2D" parent="."]
-position = Vector2(3300, -80)
-scale = Vector2(0.3385, 0.3385)
+[node name="Window4" type="Sprite2D" parent="WindowScroll"]
+position = Vector2(4350, -20)
+scale = Vector2(0.99, 0.99)
 texture = ExtResource("19_window_view")
 
 [node name="Cactus1" type="Sprite2D" parent="."]
