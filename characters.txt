@@ -38,8 +38,8 @@ Each level culminates in a boss battle guarding that level's ingredient; Wrap is
 Smaller, one-hit threats encountered within a level rather than guarding its ingredient. Unlike bosses, they don't patrol as far, don't attack at range, and go down in a single stomp.
 
 ### Cheese
-- **Silhouette:** Not yet specified — currently uses placeholder-generation art matching the general "food character with cartoon legs and a face" template.
-- **Role:** Regular enemy (resolved from the earlier boss-vs-enemy open question). Now built with its own signature effect: touch puts Cornchip to sleep for 10 seconds (input disabled, no life lost) rather than the generic hit stun -- see `feature.md` F6.
+- **Silhouette:** A friendly wedge of yellow cheese with cartoon legs, a sleepy/mischievous expression, and visible cheese holes -- real art generated (`cheese_enemy_frame1-8.png`), no longer a placeholder.
+- **Role:** Regular enemy (resolved from the earlier boss-vs-enemy open question). Now built with its own signature effect: touch puts Cornchip to sleep (input disabled, no life lost) rather than the generic hit stun -- see `feature.md` F6. Originally spec'd at 10 seconds; tuned down to 3 seconds after testing felt too punishing.
 - **Personality (draft — pending confirmation):** Not yet specified.
 
 ## Bestiary by Level
@@ -52,9 +52,9 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Boss:** Hot Sauce (3-hit, fires a projectile)
 - **Enemies:** Cheese (1-hit, melee only), Salsa Bowl (2-hit, fires a projectile)
 
-### Level 2 — Nacho Kitchen
-- **Boss:** Queso Grande — a bubbling cheese-fondue pot. Attacks by dripping a cheese glob that sticks and briefly slows Cornchip rather than an instant hit, a new hazard *type* rather than another projectile. Art already generated.
-- **Enemies:** Cheese returns, now with its "asleep for 10 seconds" effect (already built, see Regular Enemies above). Jalapeño, a hopping enemy that's otherwise a standard side-hit stun. Art already generated.
+### Level 2 — Nacho Kitchen (built)
+- **Boss:** Queso Grande — a bubbling cheese-fondue pot. Attacks by dripping a cheese glob that sticks and briefly slows Cornchip rather than an instant hit, a new hazard *type* rather than another projectile.
+- **Enemies:** Cheese returns, with its sleep effect (see Regular Enemies above). Jalapeño, a hopping enemy that's otherwise a standard side-hit stun.
 - **Palette/setting:** tiled nacho bar, cheese-yellow.
 
 ### Level 3 — Guac Stand

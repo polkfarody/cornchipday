@@ -28,7 +28,7 @@
 ### F6 — Little Enemies
 - Cheese and Salsa Bowl both appear as regular in-level enemies (resolved from the boss-vs-enemy open questions in `characters.txt`): same `boss.gd` script as bosses, but Cheese is configured with 1 hit point/no projectile/tighter patrol, and Salsa Bowl with 2 hit points and a projectile (reusing `BossProjectile.tscn`) for a slightly tougher, ranged encounter
 - Defeated the same way as any boss (stomp from above); a side touch or getting hit by Salsa Bowl's projectile costs a life like any obstacle
-- Cheese's "puts Cornchip to sleep for 10 seconds" effect (per the original brief) is now built: `boss.gd`'s `sleep_duration` export, and `player.gd`'s `put_to_sleep()` (input disabled, no life lost -- distinct from the generic hit stun). Cheese is configured with `sleep_duration = 10.0`; every other enemy/boss leaves it at the default 0 (normal hit stun).
+- Cheese's "puts Cornchip to sleep" effect (per the original brief, tuned down from the original 10s to 3s after testing) is now built: `boss.gd`'s `sleep_duration` export, and `player.gd`'s `put_to_sleep()` (input disabled, no life lost -- distinct from the generic hit stun). Cheese is configured with `sleep_duration = 3.0`; every other enemy/boss leaves it at the default 0 (normal hit stun).
 
 ### F7 — Scattered Bean Tokens
 - Multiple bean pickups placed throughout the level (`BeanToken.tscn`, reusing `ingredient.gd`'s generic pickup logic with new placeholder art, tagged with the `bean_token` group instead of ending the level)
@@ -55,9 +55,16 @@ Direct user request ("make Level 1 grander/more epic"), covering four things at 
 - **Pipeline hardening (post-Level-1):** generation requests now attach existing character art (Cornchip, Hot Sauce) as reference images alongside the text prompt, for style consistency on new characters rather than relying on prompt wording alone. The grid-slicer clusters rows by detecting Y-gaps instead of assuming a fixed 2-row layout, since the model doesn't reliably honor the requested 4x2 arrangement (Queso Grande came back as 2x4). Transparent pixels are now zeroed on RGB as well as alpha -- previously alpha=0 was correct but the color channels still had magenta baked in underneath, harmless in Godot but sloppy. The crop script was also fixed after it briefly reprocessed and corrupted every already-finalized frame by running its "crop to largest blob" pass against files it had already produced; it now refuses to touch its own prior output.
 - Queso Grande and Jalapeño (Level 2 boss/enemy) art generated and confirmed by the user -- clear to build into scenes.
 
+### F10 — Level 2 (Nacho Kitchen)
+- First level built from the confirmed Bestiary by Level plan. Boss: Queso Grande (3-hit, fires a cheese-glob that slows Cornchip instead of costing a life -- a new hazard type, see `scripts/slow_projectile.gd` and `player.gd`'s `apply_slow()`). Enemies: Jalapeño (new, 1-hit melee) and Cheese (returning, its sleep effect already live).
+- Its own ingredient: `CheeseIngredient.tscn` (new, distinct sprite from Level 1's lettuce), dropped by Queso Grande on defeat, same as Hot Sauce's pattern.
+- Ground has 2 real jump gaps, shorter overall than Level 1's "epic" length (that treatment was specific to Level 1 as the onboarding level).
+- Nacho-yellow layered background (gradient sky, tortilla-chip and cheese-drip decorations), same procedural-art approach as Level 1.
+- `next_level_path` points to `Level3.tscn`, which doesn't exist yet -- matches the same forward-declared pattern Level 1 used for Level 2 before it existed.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
-- **FB2** — Remaining 6 levels, each with its own ingredient and obstacle puns — see `characters.txt` Bestiary by Level for the confirmed roster/order (Nacho Kitchen, Guac Stand, Market Tomatoes, Frosty Fridge, Sizzling Griddle, then the Wrap finale).
+- ~~FB2 — Remaining 6 levels~~ — Level 2 (Nacho Kitchen) built, see F10. Guac Stand, Market Tomatoes, Frosty Fridge, Sizzling Griddle, and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
 - **FB3** — Wrap final-boss battle and end-game reconciliation scene (depends on FB9's boss-battle structure)
 - **FB4** — Full art pass across all characters/levels for visual consistency
 - **FB5** — Audio/music/SFX pass
@@ -67,9 +74,9 @@ Direct user request ("make Level 1 grander/more epic"), covering four things at 
 - ~~FB10 — Air Fryer collectible~~ — built, see F8.
 - **FB11** — Tomato collectible: temporary power-up letting Cornchip fire seeds at enemies from range for a short duration. Still not built.
 - ~~FB12 — Lettuce as the main collectible token~~ — superseded: the collectible is beans, not lettuce (additions.txt correction), built as F7. Lettuce stays an ingredient-only concept.
-- **FB13** — On-screen bean token counter (icon + count, no reading-heavy number if avoidable). `level1.gd` already tracks the count; only the display is missing.
+- **FB13** — On-screen bean token counter (icon + count, no reading-heavy number if avoidable). `level_base.gd` already tracks the count; only the display is missing.
 - ~~FB14 — Cheese's "sleep for 10 seconds" effect~~ — built, see F6.
-- **FB15** — Levels 2-6's new bosses and enemies from the confirmed Bestiary by Level plan: Queso Grande and Jalapeño have art (Level 2, building now); Lime, Onion, Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter still need art -- each generation batch gets confirmed with prompts first, per standing practice.
+- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. Remaining for Levels 3-6: Lime, Onion, Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter -- none have art or code yet; each generation batch gets confirmed with prompts first, per standing practice.
 
 ## Explicitly Out of Scope (MVP)
 - Touch/mobile input
