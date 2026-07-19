@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" path="res://scenes/CheeseEnemy.tscn" id="7_cheese"]
 [ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="8_airfryer"]
 [ext_resource type="Texture2D" path="res://Assets/generated/cornchip_frame1.png" id="9_life_icon"]
+[ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="10_bean"]
+[ext_resource type="PackedScene" path="res://scenes/SalsaBowlEnemy.tscn" id="11_salsabowl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(3000, 80)
@@ -66,17 +68,17 @@ texture = ExtResource("9_life_icon")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="LettuceToken1" parent="." instance=ExtResource("3_ingredient")]
+[node name="BeanToken1" parent="." instance=ExtResource("10_bean")]
 position = Vector2(300, 330)
-groups = ["lettuce_token"]
+groups = ["bean_token"]
 
-[node name="LettuceToken2" parent="." instance=ExtResource("3_ingredient")]
+[node name="BeanToken2" parent="." instance=ExtResource("10_bean")]
 position = Vector2(340, 330)
-groups = ["lettuce_token"]
+groups = ["bean_token"]
 
-[node name="LettuceToken3" parent="." instance=ExtResource("3_ingredient")]
+[node name="BeanToken3" parent="." instance=ExtResource("10_bean")]
 position = Vector2(380, 330)
-groups = ["lettuce_token"]
+groups = ["bean_token"]
 
 [node name="CheeseEnemy1" parent="." instance=ExtResource("7_cheese")]
 position = Vector2(550, 330)
@@ -90,17 +92,17 @@ spawn_position = Vector2(750, -100)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleTrigger"]
 shape = SubResource("RectangleShape2D_trigger")
 
-[node name="LettuceToken4" parent="." instance=ExtResource("3_ingredient")]
+[node name="BeanToken4" parent="." instance=ExtResource("10_bean")]
 position = Vector2(950, 330)
-groups = ["lettuce_token"]
+groups = ["bean_token"]
 
-[node name="LettuceToken5" parent="." instance=ExtResource("3_ingredient")]
+[node name="BeanToken5" parent="." instance=ExtResource("10_bean")]
 position = Vector2(990, 330)
-groups = ["lettuce_token"]
+groups = ["bean_token"]
 
-[node name="LettuceToken6" parent="." instance=ExtResource("3_ingredient")]
+[node name="BeanToken6" parent="." instance=ExtResource("10_bean")]
 position = Vector2(1030, 330)
-groups = ["lettuce_token"]
+groups = ["bean_token"]
 
 [node name="AirFryer" parent="." instance=ExtResource("8_airfryer")]
 position = Vector2(1150, 330)
@@ -108,8 +110,12 @@ position = Vector2(1150, 330)
 [node name="CheeseEnemy2" parent="." instance=ExtResource("7_cheese")]
 position = Vector2(1400, 330)
 
+[node name="SalsaBowlEnemy1" parent="." instance=ExtResource("11_salsabowl")]
+position = Vector2(1600, 330)
+projectile_scene = ExtResource("6_boss_projectile")
+
 [node name="HotSauceBoss" parent="." instance=ExtResource("5_boss")]
-position = Vector2(1800, 330)
+position = Vector2(1900, 330)
 projectile_scene = ExtResource("6_boss_projectile")
 ingredient_scene = ExtResource("3_ingredient")
-ingredient_spawn_position = Vector2(1800, 330)
+ingredient_spawn_position = Vector2(1900, 330)

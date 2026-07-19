@@ -1,9 +1,10 @@
 extends Area2D
 
-# The level's collectible ingredient. Also reused for the scattered lettuce
-# tokens (game-brief.txt "main token"); Level1 tells the two apart by group
-# membership, not by script. Pickup is a purely visual celebration -- no
-# text, per the no-reading-required design pillar.
+# Generic collectible pickup: a purely visual celebration on touch -- no
+# text, per the no-reading-required design pillar. Used by Ingredient.tscn
+# (the level's boss-dropped ingredient) and reused as-is by BeanToken.tscn
+# (the scattered collectible currency, see additions.txt -- beans, not
+# lettuce, are the main token; lettuce stays an ingredient only).
 signal collected
 
 func _ready() -> void:
