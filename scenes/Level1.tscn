@@ -73,29 +73,24 @@ offset_right = 3900.0
 offset_bottom = 400.0
 color = Color(0.85, 0.48, 0.3, 1)
 
-[node name="WindowParallax" type="ParallaxBackground" parent="."]
-
-[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
-motion_scale = Vector2(0.4, 0.4)
-
-[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="Window1" type="Sprite2D" parent="."]
 position = Vector2(300, -80)
-scale = Vector2(0.2865, 0.2865)
+scale = Vector2(0.3385, 0.3385)
 texture = ExtResource("19_window_view")
 
-[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="Window2" type="Sprite2D" parent="."]
 position = Vector2(1300, -80)
-scale = Vector2(0.2865, 0.2865)
+scale = Vector2(0.3385, 0.3385)
 texture = ExtResource("19_window_view")
 
-[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="Window3" type="Sprite2D" parent="."]
 position = Vector2(2300, -80)
-scale = Vector2(0.2865, 0.2865)
+scale = Vector2(0.3385, 0.3385)
 texture = ExtResource("19_window_view")
 
-[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+[node name="Window4" type="Sprite2D" parent="."]
 position = Vector2(3300, -80)
-scale = Vector2(0.2865, 0.2865)
+scale = Vector2(0.3385, 0.3385)
 texture = ExtResource("19_window_view")
 
 [node name="Cactus1" type="Sprite2D" parent="."]
