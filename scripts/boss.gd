@@ -24,6 +24,12 @@ extends CharacterBody2D
 @export var split_offset_x: float = 30.0
 @export var shared_defeat_group: String = ""  # when set, only drops the ingredient on death if no other member of this group is still alive -- set programmatically on split-spawned pieces, not meant to be hand-authored in a scene file
 @export var cannot_be_stomped: bool = false  # Grease Splatter: a jump-from-above contact hurts the player like any other touch instead of defeating it -- must be avoided entirely, not fought
+@export var vulnerable_only_during_attack: bool = false  # Hot Sauce / Avocado: a stomp only lands during (and briefly after) the attack beat -- mistimed, it's a harmless bounce, not a hit
+@export var attack_vulnerability_window: float = 1.0
+@export var spin_dash_only: bool = false  # Queso Grande: a plain stomp bounces off harmlessly -- only the Air Fryer spin-dash actually defeats him
+@export var defeated_by_slide_charge: bool = false  # Sour Cream Sam: not stomped at all -- charging into him at speed while sliding on his own ice is what defeats him
+@export var slide_charge_min_speed: float = 150.0
+@export var heat_zone_path: NodePath  # Iron Skillet: if set, stomping while this HeatZone is hot burns the player instead of hurting the boss -- only the cool phase is safe to land a hit
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var hurt_area: Area2D = $HurtArea
@@ -35,6 +41,8 @@ var start_x: float
 var patrol_direction := 1.0
 var is_defeated := false
 var action_lock := 0.0  # seconds remaining where patrol/animation pause for a one-off reaction
+var attack_vulnerable_remaining := 0.0
+var heat_zone: Node = null
 
 func _ready() -> void:
 	health = max_health
@@ -44,10 +52,15 @@ func _ready() -> void:
 	fire_timer.timeout.connect(_perform_attack)
 	fire_timer.start()
 	sprite.play("idle")
+	if heat_zone_path != NodePath():
+		heat_zone = get_node(heat_zone_path)
 
 func _physics_process(delta: float) -> void:
 	if is_defeated:
 		return
+
+	if attack_vulnerable_remaining > 0.0:
+		attack_vulnerable_remaining -= delta
 
 	if action_lock > 0.0:
 		action_lock -= delta
@@ -115,6 +128,8 @@ func _perform_attack() -> void:
 		return
 	sprite.play("attack")
 	action_lock = 0.5
+	if vulnerable_only_during_attack:
+		attack_vulnerable_remaining = attack_vulnerability_window
 	if projectile_scene:
 		var proj := projectile_scene.instantiate()
 		get_tree().current_scene.add_child(proj)
@@ -131,13 +146,35 @@ func _on_hurt_area_body_entered(body: Node) -> void:
 	if is_defeated or not body.is_in_group("player"):
 		return
 	# Air Fryer spin dash (feature.md FB7/FB10): any contact while spinning
-	# defeats the enemy instead of hurting the player, same as a stomp.
+	# defeats the enemy instead of hurting the player, same as a stomp --
+	# unconditionally, before any of the per-boss unique-defeat rules below.
 	if body.get("is_spinning") == true:
 		_take_stomp_hit(body)
 		return
+
+	if defeated_by_slide_charge:
+		# Sour Cream Sam: not stomped at all -- charging into him at speed
+		# while sliding on his own ice (see IceZone/player.gd is_on_ice) is
+		# what defeats him. A slow approach just hurts you like any touch.
+		if absf(body.velocity.x) >= slide_charge_min_speed:
+			_take_stomp_hit(body)
+		elif body.has_method("hit_by_obstacle"):
+			body.hit_by_obstacle()
+		return
+
 	var is_stomp: bool = not cannot_be_stomped and body.velocity.y > 0.0 and body.global_position.y < global_position.y - 10.0
 	if is_stomp:
-		_take_stomp_hit(body)
+		if heat_zone and heat_zone.is_hot:
+			# Iron Skillet: stomping during the hot phase burns you instead
+			# of hurting him -- only the cool phase is a safe opening.
+			if body.has_method("hit_by_obstacle"):
+				body.hit_by_obstacle()
+		elif spin_dash_only:
+			body.velocity.y = -380.0  # Queso Grande: a plain stomp bounces off harmlessly
+		elif vulnerable_only_during_attack and attack_vulnerable_remaining <= 0.0:
+			body.velocity.y = -380.0  # Hot Sauce / Avocado: wrong timing, bounces off harmlessly
+		else:
+			_take_stomp_hit(body)
 	elif sleep_duration > 0.0 and body.has_method("put_to_sleep"):
 		body.put_to_sleep(sleep_duration)
 	elif body.has_method("hit_by_obstacle"):

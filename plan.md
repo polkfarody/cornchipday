@@ -61,7 +61,16 @@ Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): b
 
 ### Phase 3 — Polish & Post-MVP Stretch
 - ~~Textures and style consistency pass~~ — scoped and detailed for Levels 1-2, see the Phase 1 item above and `feature.md` F11 (obstacles, hazard fills, ground tiles, scenery, parallax window depth).
-- [ ] **Environment-art pass for Levels 3-6** (equivalent to F11) -- all four still use procedural placeholder ground/obstacles/ingredient icons. Needs its own confirmed prompt batch before any paid generation runs.
+
+**Round of direct user feedback after the full MVP was played (2026-07-20):** "they are all a bit boring still... 3 jumps on them all is a bit lame... it would be good to have jumping challenges... generate all and more textures... the character should probably run slightly lower than the top of the floor." Broken into tracked items:
+- [x] **Real bug fix: rolling checkpoint respawn.** `player.gd`'s `spawn_position` was set once in `_ready()` and never updated, so *every* hit sent the player back to the level's true start regardless of progress -- contradicting the code's own comment ("respawn at the last place the player stood"), which was never actually implemented that way. Now updates continuously while safely grounded, so a non-fatal hit respawns nearby (a missed jump gap correctly checkpoints to the last solid ledge, since no floor contact happens mid-fall to update it). Only losing all 3 lives still returns to the true level start (`reload_current_scene()`, already correct). Verified via headless script.
+- [x] **Depth cue: Cornchip's sprite now sits a few px below the ground line** (`SPRITE_BASE_POSITION` in `player.gd`, purely visual, collision/physics untouched) rather than exactly on it, per direct request.
+- [x] **Unique boss defeat conditions for all 6 bosses** -- see `feature.md` F18 for full detail. Confirmed with the user before building (redesigning every boss fight is real new-content scope) and verified via isolated headless tests (which caught and led to fixing two test-script bugs, not code bugs, before the mechanics were trusted).
+- [ ] Extra-life pickup, capped at the existing 3-life max (confirmed) -- not yet built.
+- [ ] Jump-challenge bonus routes per level, rewarding extra beans/lives/secret areas -- not yet built.
+- [ ] Wire already-generated-but-unused Cornchip/Wrap frames for more animation variety (free, no new generation) -- not yet built.
+- [ ] **Environment-art pass for Levels 3-6 only** (equivalent to F11, confirmed scope -- not extending to a full L1/L2 redo) -- all four still use procedural placeholder ground/obstacles/ingredient icons. Needs its own confirmed prompt batch before any paid generation runs.
+
 - [ ] **Full interactive playtest of the complete 7-level game, start to finish** -- every level has been individually playtested and fixed as it was built, but the whole game hasn't been run through end to end in one sitting yet.
 - [ ] Full AI-art pass across all levels/characters for visual consistency (FB4)
 - [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)

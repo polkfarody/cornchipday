@@ -69,7 +69,7 @@ position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=350418654]
-position = Vector2(0, 2)
+position = Vector2(0, 8)
 scale = Vector2(0.22, 0.22)
 sprite_frames = SubResource("SpriteFrames_cornchip")
 animation = &"idle"

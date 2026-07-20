@@ -75,6 +75,7 @@ move_speed = 40.0
 patrol_half_width = 60.0
 fire_interval = 3.0
 projectile_speed = 160.0
+vulnerable_only_during_attack = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)

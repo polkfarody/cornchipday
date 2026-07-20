@@ -74,6 +74,7 @@ max_health = 3
 move_speed = 35.0
 patrol_half_width = 60.0
 fire_interval = 3.2
+vulnerable_only_during_attack = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)

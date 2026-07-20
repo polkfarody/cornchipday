@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cct5qcgweoy6j" path="res://Assets/generated/environment/level2/l2_chip.png" id="14_chip"]
 [ext_resource type="Texture2D" uid="uid://cimqxbx5i60t8" path="res://Assets/generated/environment/level2/l2_cheese_drip.png" id="15_cheese_drip"]
 [ext_resource type="Texture2D" uid="uid://dchmvgp0pmh53" path="res://Assets/generated/environment/level2/l2_window_view.png" id="16_window_view"]
+[ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="17_airfryer"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -267,6 +268,9 @@ position = Vector2(1450, 330)
 
 [node name="BeanToken10" parent="." unique_id=1913847732 instance=ExtResource("8_bean")]
 position = Vector2(1490, 330)
+
+[node name="AirFryer" parent="." instance=ExtResource("17_airfryer")]
+position = Vector2(1560, 330)
 
 [node name="QuesoGrandeBoss" parent="." unique_id=442270635 instance=ExtResource("3_boss")]
 position = Vector2(1795, 330)

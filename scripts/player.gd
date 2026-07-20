@@ -4,7 +4,7 @@ const SPEED := 220.0
 const JUMP_VELOCITY := -420.0
 const GRAVITY := 1200.0
 const SPRITE_SCALE := Vector2(0.22, 0.22)
-const SPRITE_BASE_POSITION := Vector2(0, 2)
+const SPRITE_BASE_POSITION := Vector2(0, 8)  # a few px below the collision box's own resting point, so Cornchip's feet sit slightly into the ground line rather than exactly on its top edge -- a cheap depth cue, purely visual (collision/physics untouched)
 const RUN_BOB_AMPLITUDE := 4.0
 const RUN_BOB_SPEED := 14.0
 const RUN_TILT_DEGREES := 6.0
@@ -56,6 +56,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
+
+	# Rolling checkpoint: a hit respawns Cornchip near where he actually was,
+	# not back at the level's start -- only running out of all 3 lives does
+	# that (level_base.gd's reload_current_scene()). Updated continuously
+	# while safely grounded, so a missed jump gap naturally checkpoints back
+	# to the last solid ledge (no floor contact happens mid-fall to update
+	# it), not wherever the fall started.
+	if is_on_floor() and not is_stunned and not is_asleep:
+		spawn_position = global_position
 
 	if global_position.y > FALL_RESPAWN_Y:
 		hit_by_obstacle()
