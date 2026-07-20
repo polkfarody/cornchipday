@@ -86,7 +86,7 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 **Level pacing & challenge design** (raw points 4-7):
 - [x] **Real placement issue in F19, fixed 2026-07-20:** all 7 levels' bonus jump-challenge platforms sat near the level start (all at the template's shared x=935/945, right after the first gap). Relocated deeper into each route -- see `feature.md` F21 for exact positions and rationale per level.
 - [ ] Levels judged "a bit short" across the board — addressed structurally via the maze rework below rather than just padding existing routes.
-- [ ] Level 7 needs new content beyond the existing remix gauntlet + delivery ritual. **Confirmed direction: a blend of all three brainstormed flavors** — (a) environmental-gimmick remixes reusing L1-6's own hazard mechanics (ice, heat, guac) in new combinations, (b) a timing/chase-style segment (new to the game, no combat), (c) hidden/optional detours (extra beans/lives tucked behind new maze branching). Concrete design still to be drafted and confirmed before building.
+- [x] **Built 2026-07-20** — see `feature.md` F24. Level 7 now has a new segment between the remix gauntlet and the delivery arena, blending all three confirmed flavors: (a) an ice patch immediately followed by a guac (sticky-footing) patch, (b) a non-combat rolling-hazard chase corridor, (c) a hidden single-jump detour holding 2 bonus beans. Delivery arena + Wrap shifted further out (x=2900-3820) to make room; the ground floor was extended to match.
 
 **Two-tier maze-style paths** (raw point 8):
 - [x] **Built 2026-07-20 for Levels 3-6** — see `feature.md` F22. Confirmed scope: two-tier, reconverging (see `instructions-ai.txt`) — a raised platform route runs above the ground route for most of each level, rejoining before the boss arena; camera unchanged (horizontal-follow, no vertical scroll).
@@ -105,7 +105,7 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 
 Then (not a Phase 4 group, but the next milestone once Phase 4 lands): resume the deferred L3-6 environment-art generation pass against the final redesigned layouts.
 
-**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Group 2 (L3-6 two-tier maze redesign) complete 2026-07-20** -- see F22. **Group 3a (Wrap delivery ritual rework) complete 2026-07-20** -- see F23. **Still open in group 3: L7 new content** (environmental remixes / timing-chase segment / hidden detours) -- not yet started.
+**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Group 2 (L3-6 two-tier maze redesign) complete 2026-07-20** -- see F22. **Group 3 (Wrap delivery ritual rework + L7 new content) complete 2026-07-20** -- see F23/F24. **Next: group 4, title screen + world map -- the last Phase 4 group.**
 
 ## Definition of Done — Full 7-Level MVP
 Superseded from the original single-level vertical-slice definition now that the complete game is built (2026-07-20):

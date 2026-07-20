@@ -159,6 +159,12 @@ func win_celebration() -> void:
 func set_on_ice(value: bool) -> void:
 	is_on_ice = value
 
+# Level 7's guac patch (Phase 4 remix flavor): sticky footing, the traction
+# opposite of ice -- a plain toggled slowdown rather than a timed effect like
+# apply_slow(), so it can't wear off mid-patch if the player lingers.
+func set_on_guac(value: bool) -> void:
+	speed_multiplier = 0.45 if value else 1.0
+
 func _start_spin() -> void:
 	is_spinning = true
 	spin_time_remaining = SPIN_DURATION
