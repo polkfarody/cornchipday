@@ -58,8 +58,7 @@ animations = [{
 [node name="GreaseSplatterEnemy" type="CharacterBody2D"]
 script = ExtResource("1_boss")
 max_health = 1
-move_speed = 25.0
-patrol_half_width = 40.0
+move_speed = 0.0
 cannot_be_stomped = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
