@@ -41,6 +41,14 @@ var has_spin_dash := false
 var is_spinning := false
 var spin_time_remaining := 0.0
 
+# Double jump (characters.txt Bestiary by Level, Level 6): granted permanently
+# starting Level 6 (level_base.gd's grants_double_jump), not a pickup -- Air
+# Fryer taught us abilities don't survive the scene reload between levels, so
+# this is re-granted fresh by whichever level should have it rather than
+# trying to persist state across that boundary.
+var has_double_jump := false
+var air_jumps_used := 0
+
 func _ready() -> void:
 	spawn_position = global_position
 	camera_base_offset = camera.offset
@@ -66,8 +74,15 @@ func _physics_process(delta: float) -> void:
 	if direction != 0.0:
 		sprite.flip_h = direction < 0.0
 
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if is_on_floor():
+		air_jumps_used = 0
+
+	if Input.is_action_just_pressed("ui_accept"):
+		if is_on_floor():
+			velocity.y = JUMP_VELOCITY
+		elif has_double_jump and air_jumps_used < 1:
+			velocity.y = JUMP_VELOCITY
+			air_jumps_used += 1
 
 	if has_spin_dash and not is_spinning and Input.is_action_just_pressed("ui_up"):
 		_start_spin()
@@ -82,6 +97,9 @@ func _physics_process(delta: float) -> void:
 
 func grant_spin_dash() -> void:
 	has_spin_dash = true
+
+func grant_double_jump() -> void:
+	has_double_jump = true
 
 # Sour Cream Sam's arena (characters.txt Bestiary by Level, Level 5): the
 # challenge is the icy floor itself, not a separate attack -- toggled by

@@ -19,6 +19,7 @@ const RESTART_DELAY := 0.6
 const LEVEL_COMPLETE_DELAY := 1.2
 
 @export var next_level_path: String = ""
+@export var grants_double_jump: bool = false  # Level 6+ (characters.txt Bestiary by Level) -- re-granted per level rather than persisted, see player.gd's has_double_jump comment
 
 @onready var player: CharacterBody2D = $Player
 @onready var life_icons: Array = [$HUD/Life1, $HUD/Life2, $HUD/Life3]
@@ -29,6 +30,8 @@ var level_complete := false
 
 func _ready() -> void:
 	player.player_hit.connect(_on_player_hit)
+	if grants_double_jump:
+		player.grant_double_jump()
 	for token in get_tree().get_nodes_in_group("bean_token"):
 		token.collected.connect(_on_bean_token_collected)
 
