@@ -188,7 +188,7 @@ position = Vector2(1485, 330)
 position = Vector2(1600, 330)
 
 [node name="AvocadoBoss" parent="." instance=ExtResource("3_boss")]
-position = Vector2(1795, 330)
+position = Vector2(2050, 330)
 hazard_scene = ExtResource("4_hazard")
 ingredient_scene = ExtResource("2_ingredient")
-ingredient_spawn_position = Vector2(1795, 330)
+ingredient_spawn_position = Vector2(2050, 330)
