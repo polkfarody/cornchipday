@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dg8lgmuhpoumd" path="res://Assets/generated/environment/level1/l1_string_lights.png" id="18_string_lights"]
 [ext_resource type="Texture2D" uid="uid://btsioems04pvs" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
 [ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="20_life_pickup"]
+[ext_resource type="PackedScene" path="res://scenes/HotSauceProjectile.tscn" id="21_hotsauce_projectile"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(978, 80)
@@ -553,7 +554,7 @@ position = Vector2(2840, 330)
 
 [node name="HotSauceBoss" parent="." unique_id=2055478076 instance=ExtResource("5_boss")]
 position = Vector2(3400, 330)
-projectile_scene = ExtResource("6_boss_projectile")
+projectile_scene = ExtResource("21_hotsauce_projectile")
 ingredient_scene = ExtResource("3_ingredient")
 ingredient_spawn_position = Vector2(3400, 330)
 

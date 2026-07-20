@@ -12,7 +12,7 @@ extends Area2D
 @export var warning_duration: float = 0.8
 @export var hot_duration: float = 2.0
 
-@onready var visual: ColorRect = $Visual
+@onready var visual: Polygon2D = $Visual
 
 var is_hot := false
 var already_hit_this_cycle := false

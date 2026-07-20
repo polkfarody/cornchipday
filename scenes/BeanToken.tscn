@@ -5,7 +5,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_bean"]
 radius = 14
 
-[node name="BeanToken" type="Area2D"]
+[node name="BeanToken" type="Area2D" groups=["bean_token"]]
 script = ExtResource("1_ingredient")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

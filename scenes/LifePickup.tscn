@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_life"]
 radius = 16
 
-[node name="LifePickup" type="Area2D"]
+[node name="LifePickup" type="Area2D" groups=["life_pickup"]]
 script = ExtResource("1_ingredient")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

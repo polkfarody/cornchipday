@@ -233,7 +233,7 @@ color = Color(0.75, 0.2, 0.15, 1)
 polygon = PackedVector2Array(-25, 30, 25, 30, 25, -30, -25, -30)
 
 [node name="ChaseTrigger" type="Area2D" parent="."]
-position = Vector2(2400, 330)
+position = Vector2(2530, 330)
 script = ExtResource("22_chase_trigger")
 hazard_path = NodePath("../RollingHazard")
 

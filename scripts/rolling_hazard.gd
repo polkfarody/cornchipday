@@ -32,5 +32,11 @@ func _physics_process(delta: float) -> void:
 		is_active = false
 
 func _on_body_entered(body: Node) -> void:
+	# Once it's traveled its full travel_limit and given up the chase, it's
+	# no longer a threat -- without this, it silently kept hurting the player
+	# forever wherever it happened to stop, turning into an invisible
+	# landmine sitting in the corridor rather than an honest chase that ends.
+	if not is_active:
+		return
 	if body.has_method("hit_by_obstacle"):
 		body.hit_by_obstacle()
