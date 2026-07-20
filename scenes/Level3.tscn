@@ -33,6 +33,21 @@ size = Vector2(60, 60)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
 size = Vector2(22, 58)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upper_access"]
+size = Vector2(50, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tier1"]
+size = Vector2(200, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tier2"]
+size = Vector2(320, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tier3"]
+size = Vector2(340, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tier4"]
+size = Vector2(290, 20)
+
 [node name="Level3" type="Node2D"]
 script = ExtResource("0_level_base")
 next_level_path = "res://scenes/Level4.tscn"
@@ -114,6 +129,56 @@ shape = SubResource("RectangleShape2D_obstacle_large")
 [node name="Crate" type="Polygon2D" parent="JumpObstacleLarge1"]
 color = Color(0.55, 0.35, 0.18, 1)
 polygon = PackedVector2Array(-11, 29, 11, 29, 11, -29, -11, -29)
+
+[node name="UpperAccess1" type="StaticBody2D" parent="."]
+position = Vector2(115, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperAccess1"]
+shape = SubResource("RectangleShape2D_upper_access")
+
+[node name="Step" type="Polygon2D" parent="UpperAccess1"]
+color = Color(0.65, 0.65, 0.7, 1)
+polygon = PackedVector2Array(-25, 30, 25, 30, 25, -30, -25, -30)
+
+[node name="UpperTier1" type="StaticBody2D" parent="."]
+position = Vector2(235, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier1"]
+shape = SubResource("RectangleShape2D_tier1")
+
+[node name="Walkway" type="Polygon2D" parent="UpperTier1"]
+color = Color(0.65, 0.65, 0.7, 1)
+polygon = PackedVector2Array(-100, 10, 100, 10, 100, -10, -100, -10)
+
+[node name="UpperTier2" type="StaticBody2D" parent="."]
+position = Vector2(595, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier2"]
+shape = SubResource("RectangleShape2D_tier2")
+
+[node name="Walkway" type="Polygon2D" parent="UpperTier2"]
+color = Color(0.65, 0.65, 0.7, 1)
+polygon = PackedVector2Array(-160, 10, 160, 10, 160, -10, -160, -10)
+
+[node name="UpperTier3" type="StaticBody2D" parent="."]
+position = Vector2(1035, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier3"]
+shape = SubResource("RectangleShape2D_tier3")
+
+[node name="Walkway" type="Polygon2D" parent="UpperTier3"]
+color = Color(0.65, 0.65, 0.7, 1)
+polygon = PackedVector2Array(-170, 10, 170, 10, 170, -10, -170, -10)
+
+[node name="UpperTier4" type="StaticBody2D" parent="."]
+position = Vector2(1460, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier4"]
+shape = SubResource("RectangleShape2D_tier4")
+
+[node name="Walkway" type="Polygon2D" parent="UpperTier4"]
+color = Color(0.65, 0.65, 0.7, 1)
+polygon = PackedVector2Array(-145, 10, 145, 10, 145, -10, -145, -10)
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(75, 317)

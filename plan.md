@@ -89,7 +89,7 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 - [ ] Level 7 needs new content beyond the existing remix gauntlet + delivery ritual. **Confirmed direction: a blend of all three brainstormed flavors** — (a) environmental-gimmick remixes reusing L1-6's own hazard mechanics (ice, heat, guac) in new combinations, (b) a timing/chase-style segment (new to the game, no combat), (c) hidden/optional detours (extra beans/lives tucked behind new maze branching). Concrete design still to be drafted and confirmed before building.
 
 **Two-tier maze-style paths** (raw point 8):
-- [ ] **Confirmed scope: two-tier, reconverging** (see `instructions-ai.txt`) — most sections offer a raised platform route or the ground route, rejoining periodically before the boss arena; camera stays horizontal-follow with a taller deadzone, no new vertical-scroll camera system.
+- [x] **Built 2026-07-20 for Levels 3-6** — see `feature.md` F22. Confirmed scope: two-tier, reconverging (see `instructions-ai.txt`) — a raised platform route runs above the ground route for most of each level, rejoining before the boss arena; camera unchanged (horizontal-follow, no vertical scroll).
 - [ ] **Sequencing decision:** Levels 3-6 are still on procedural placeholder art (see the resequenced item above), while Levels 1-2 already have real generated art wired to specific ground positions — redesign L3-6's layout into two-tier form *first*, then run the deferred environment-art pass against the final layout. **Confirmed 2026-07-20: Levels 1-2 stay as-is, not retrofitted.** They're the deliberately-simpler onboarding levels per `game-brief.txt` and already have real generated art wired to current ground positions — reworking that art for no gameplay gain wasn't worth it. Maze treatment is L3-6 only.
 
 **Title screen & world map** (raw points 9-10):
@@ -105,7 +105,7 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 
 Then (not a Phase 4 group, but the next milestone once Phase 4 lands): resume the deferred L3-6 environment-art generation pass against the final redesigned layouts.
 
-**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Starting next: group 2, L3-6 two-tier maze redesign.**
+**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Group 2 (L3-6 two-tier maze redesign) complete 2026-07-20** -- see F22. **Starting next: group 3, Wrap delivery ritual rework + L7 new content.**
 
 ## Definition of Done — Full 7-Level MVP
 Superseded from the original single-level vertical-slice definition now that the complete game is built (2026-07-20):
