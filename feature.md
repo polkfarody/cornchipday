@@ -114,9 +114,17 @@ User-requested: levels should have jump-over obstacles (not just gaps to jump ac
 - Ground has 2 real jump gaps, same overall scale as Level 2 (this level doesn't get Level 1's "epic" treatment either).
 - `next_level_path` points to `Level4.tscn`, which doesn't exist yet -- same forward-declared pattern as every prior level.
 
+### F13 — Level 4 (Market Tomatoes)
+- Boss: Big Red, a genuinely new fight structure -- an "evolving-fight-pattern boss" per `characters.txt`, confirmed with the user before building since nothing else in the game changes mid-fight like this. `boss.gd` gained three exports for it: `split_into_scene`/`split_count`/`split_offset_x` (on the killing blow, spawn N copies of another scene at itself instead of the normal death) and `shared_defeat_group` (a piece only drops the ingredient on death if no other member of a named group is still alive). Both spawned Cherry Tomato pieces inherit Big Red's own `ingredient_scene`/`ingredient_spawn_position` and a group name unique to that split event (`"split_%d" % get_instance_id()`), generated at spawn time rather than hand-authored in a scene file.
+- **Real bug caught by headless verification before shipping:** the first version of `shared_defeat_group`'s check (`get_nodes_in_group(...).size() > 1`) was racy -- `queue_free()` doesn't remove a node from its groups until the deferred free actually runs a moment later, so if both Cherry Tomato pieces are stomped in the same frame, each one's death-check still sees the other as "still alive" (neither had left the group yet) and *both* skip the ingredient drop, softlocking the level. Fixed by having each piece call `remove_from_group()` immediately/synchronously as the first step of its own death, before checking whether anyone else remains -- confirmed via a headless script that kills both pieces back-to-back and asserts exactly one ingredient spawns (was 0 before the fix, 1 after).
+- Enemies: Cherry Tomato (new, 1-hit, fast, melee-only -- no attack animation wired, same pattern as Cheese/Jalapeno since it never fires anything) appears both standalone and as Big Red's split result. Salsa Bowl returns with a lower `fire_interval` (2.5 vs. the default 4.0) for a faster-firing "tougher" version, entirely via instance override -- no script changes needed.
+- Cherry Tomato's art needed two generation passes: the default model baked visible text labels into every pose (violates the no-reading-required pillar outright), fixed by regenerating with `gemini-3-pro-image`, the same fix that worked for the L1/L2 text-defect batch in F11.
+- Its own ingredient: `TomatoIngredient.tscn`, another procedural placeholder like Level 3's -- Level 4 environment art is deferred the same way, not yet scheduled.
+- `next_level_path` points to `Level5.tscn`, not yet built.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
-- ~~FB2 — Remaining 6 levels~~ — Level 2 (Nacho Kitchen) and Level 3 (Guac Stand) built, see F10/F12. Market Tomatoes, Frosty Fridge, Sizzling Griddle, and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
+- ~~FB2 — Remaining 6 levels~~ — Level 2 (Nacho Kitchen), Level 3 (Guac Stand), and Level 4 (Market Tomatoes) built, see F10/F12/F13. Frosty Fridge, Sizzling Griddle, and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
 - **FB3** — Wrap final-boss battle and end-game reconciliation scene (depends on FB9's boss-battle structure)
 - **FB4** — Full art pass across all characters/levels for visual consistency
 - **FB5** — Audio/music/SFX pass
@@ -128,7 +136,7 @@ User-requested: levels should have jump-over obstacles (not just gaps to jump ac
 - ~~FB12 — Lettuce as the main collectible token~~ — superseded: the collectible is beans, not lettuce (additions.txt correction), built as F7. Lettuce stays an ingredient-only concept.
 - **FB13** — On-screen bean token counter (icon + count, no reading-heavy number if avoidable). `level_base.gd` already tracks the count; only the display is missing.
 - ~~FB14 — Cheese's "sleep for 10 seconds" effect~~ — built, see F6.
-- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. ~~Lime and Onion~~ — built, see F12. Remaining for Levels 4-6: Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter -- none have art or code yet; each generation batch gets confirmed with prompts first, per standing practice.
+- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. ~~Lime and Onion~~ — built, see F12. ~~Big Red and Cherry Tomato~~ — built, see F13. Remaining for Levels 5-6: Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter -- none have art or code yet; each generation batch gets confirmed with prompts first, per standing practice.
 
 ## Explicitly Out of Scope (MVP)
 - Touch/mobile input

@@ -19,6 +19,10 @@ extends CharacterBody2D
 @export var sleep_duration: float = 0.0  # > 0: a side touch puts the player to sleep instead of the normal hit stun (Cheese)
 @export var hazard_scene: PackedScene  # set instead of projectile_scene: dropped at the boss's own feet on the attack beat rather than fired at the player (Avocado's guac puddle)
 @export var wobble_radius: float = 0.0  # > 0: player proximity (not touch) briefly wobbles the screen instead of a hit, checked every physics frame (Onion)
+@export var split_into_scene: PackedScene  # set instead of a normal defeat: on the killing blow, spawns split_count copies of this in its place instead of dropping the ingredient itself (Big Red -> two Cherry Tomatoes)
+@export var split_count: int = 2
+@export var split_offset_x: float = 30.0
+@export var shared_defeat_group: String = ""  # when set, only drops the ingredient on death if no other member of this group is still alive -- set programmatically on split-spawned pieces, not meant to be hand-authored in a scene file
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var hurt_area: Area2D = $HurtArea
@@ -152,6 +156,41 @@ func _die() -> void:
 	fire_timer.stop()
 	hurt_area.set_deferred("monitoring", false)
 	sprite.play("defeated")
+
+	if split_into_scene:
+		# Big Red's split (characters.txt Bestiary by Level, Level 4): the
+		# killing blow doesn't drop the ingredient itself -- it spawns the
+		# split pieces, hands each one this boss's own ingredient config
+		# plus a group name unique to this split event, and the ingredient
+		# only actually drops once the last piece in that group falls (see
+		# the shared_defeat_group check below).
+		var level := get_tree().current_scene
+		var group_name := "split_%d" % get_instance_id()
+		for i in split_count:
+			var piece := split_into_scene.instantiate()
+			level.add_child(piece)
+			piece.global_position = global_position + Vector2((i - (split_count - 1) / 2.0) * split_offset_x, 0)
+			piece.add_to_group(group_name)
+			piece.shared_defeat_group = group_name
+			piece.ingredient_scene = ingredient_scene
+			piece.ingredient_spawn_position = ingredient_spawn_position
+		await get_tree().create_timer(1.0).timeout
+		queue_free()
+		return
+
+	if shared_defeat_group != "":
+		# Leave the group immediately (not deferred to queue_free(), which
+		# only actually happens after the timeout below) -- two group-mates
+		# defeated in the same frame must each see the other's *current*
+		# alive-ness, not a stale membership list neither has left yet.
+		remove_from_group(shared_defeat_group)
+		if not get_tree().get_nodes_in_group(shared_defeat_group).is_empty():
+			# Still-living group-mates (e.g. the other Cherry Tomato) -- this
+			# piece falls but the encounter isn't over yet, so no ingredient.
+			await get_tree().create_timer(1.0).timeout
+			queue_free()
+			return
+
 	if ingredient_scene:
 		var ingredient := ingredient_scene.instantiate()
 		var level := get_tree().current_scene

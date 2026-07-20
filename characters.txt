@@ -63,10 +63,11 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Palette/setting:** produce stand, greens.
 - **Onion's missing fume-line decoration** (2 of 8 generated frames, see `plan.md` Phase 1): user confirmed ship as-is rather than attempt a crop-script recovery or pay to regenerate.
 
-### Level 4 — Market Tomatoes
-- **Boss:** Big Red — a giant tomato that splits into two Cherry Tomato enemies partway through the fight, an evolving-fight-pattern boss rather than Hot Sauce's single-phase loop.
-- **Enemies:** Cherry Tomato (small, fast, 1-hit; also the thing Big Red spawns), Salsa Bowl returns tougher (faster fire rate).
+### Level 4 — Market Tomatoes (built)
+- **Boss:** Big Red — 3 stomps crack him apart into two Cherry Tomato enemies (`boss.gd`'s new `split_into_scene`/`split_count`/`split_offset_x` exports) rather than dying normally; the ingredient only drops once both pieces are defeated (`shared_defeat_group` export -- a piece leaves the group immediately on defeat and drops the ingredient only if no group-mate remains). Confirmed by the user before building.
+- **Enemies:** Cherry Tomato (small, fast, 1-hit, melee-only -- appears both as a standalone enemy and as what Big Red spawns), Salsa Bowl returns tougher (`fire_interval` lowered from 4.0 to 2.5 on the existing scene, no new code).
 - **Palette/setting:** outdoor market stalls, reds.
+- **Art note:** Cherry Tomato's first generation batch came back with readable text labels baked into every pose (a real defect, not shipped) -- regenerated clean with `gemini-3-pro-image`, same fix as the earlier F11 text-defect batch. Big Red's grid had the same "extra pose" anomaly as Lime's (10 frames instead of 8, from the crack-apart sequence rendering as disconnected blobs) -- used frames 1,2,3,4 (idle/move) plus 7 (dizzy, as the normal hit reaction) and 8 (fully-cracked, used as the split moment), skipped the redundant 5/6/9/10.
 
 ### Level 5 — Frosty Fridge (Sour Cream)
 - **Boss:** Sour Cream Sam — the arena floor turns icy/slippery for this fight, changing how Cornchip's movement feels rather than adding another attack type.

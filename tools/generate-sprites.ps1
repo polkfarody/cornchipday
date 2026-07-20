@@ -170,6 +170,16 @@ $sprites = @(
         "swaying gently side to side, alternating a slight lean left and right" `
         "releasing wavy stink-fume lines from the top, fumes appearing then wafting upward" `
         "a dizzy, defeated pose, wilted, peeling apart at the edges") },
+    @{ Name = "big_red_grid"; Prompt = (Grid-Prompt `
+        "a giant round tomato character, shiny deep-red skin, a small green leafy stem-cap on top, small comedic cartoon legs, a big blustery determined face." `
+        "shuffling/waddling side to side with a heavy stomp, leaning left then right" `
+        "cracking apart down the middle, a glowing crack appearing then widening, about to split in two" `
+        "fully split into two round halves flying apart from each other, mid-split") },
+    @{ Name = "cherry_tomato_grid"; Prompt = (Grid-Prompt `
+        "a small round cherry tomato character, glossy bright-red skin, a tiny green stem, small comedic stick legs, big round energetic cartoon eyes, a playful grin." `
+        "darting quickly side to side, an energetic fast hop, alternating a slight lean left and right" `
+        "a quick playful pouncing lunge toward the viewer, crouching low then springing forward" `
+        "a dizzy, defeated pose, slightly squished"); Model = "gemini-3-pro-image" },
 
     # Level 1/2 environment art pass (feature.md F11) -- obstacles, scenery,
     # and window/parallax views are icon-on-magenta like everything above;

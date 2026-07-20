@@ -1,0 +1,189 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/TomatoIngredient.tscn" id="2_ingredient"]
+[ext_resource type="PackedScene" path="res://scenes/BigRedBoss.tscn" id="3_boss"]
+[ext_resource type="PackedScene" path="res://scenes/CherryTomatoEnemy.tscn" id="4_cherry_tomato"]
+[ext_resource type="PackedScene" path="res://scenes/SalsaBowlEnemy.tscn" id="5_salsabowl"]
+[ext_resource type="PackedScene" path="res://scenes/BossProjectile.tscn" id="6_salsabowl_projectile"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="7_life_icon"]
+[ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="8_bean"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
+size = Vector2(1036, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundB"]
+size = Vector2(710, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundC"]
+size = Vector2(1337, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_small"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_medium"]
+size = Vector2(42, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
+size = Vector2(22, 58)
+
+[node name="Level4" type="Node2D"]
+script = ExtResource("0_level_base")
+next_level_path = "res://scenes/Level5.tscn"
+
+[node name="Backdrop" type="ColorRect" parent="."]
+offset_left = -700.0
+offset_top = -600.0
+offset_right = 2800.0
+offset_bottom = 500.0
+color = Color(0.95, 0.78, 0.55, 1)
+
+[node name="GroundA" type="StaticBody2D" parent="."]
+position = Vector2(200, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+position = Vector2(-218, 0)
+shape = SubResource("RectangleShape2D_groundA")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+offset_left = -742.0
+offset_top = -40.0
+offset_right = 300.0
+offset_bottom = 200.0
+color = Color(0.55, 0.32, 0.15, 1)
+
+[node name="GroundB" type="StaticBody2D" parent="."]
+position = Vector2(945, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
+shape = SubResource("RectangleShape2D_groundB")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+offset_left = -355.0
+offset_top = -40.0
+offset_right = 355.0
+offset_bottom = 200.0
+color = Color(0.55, 0.32, 0.15, 1)
+
+[node name="GroundC" type="StaticBody2D" parent="."]
+position = Vector2(1795, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
+position = Vector2(263.5, 0)
+shape = SubResource("RectangleShape2D_groundC")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+offset_left = -405.0
+offset_top = -40.0
+offset_right = 966.0
+offset_bottom = 200.0
+color = Color(0.42, 0.22, 0.1, 1)
+
+[node name="JumpObstacleSmall1" type="StaticBody2D" parent="."]
+position = Vector2(300, 344)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
+shape = SubResource("RectangleShape2D_obstacle_small")
+
+[node name="Crate" type="Polygon2D" parent="JumpObstacleSmall1"]
+color = Color(0.7, 0.45, 0.2, 1)
+polygon = PackedVector2Array(-8, 16, 8, 16, 8, -16, -8, -16)
+
+[node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
+position = Vector2(900, 337)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
+shape = SubResource("RectangleShape2D_obstacle_medium")
+
+[node name="Crate" type="Polygon2D" parent="JumpObstacleMedium1"]
+color = Color(0.7, 0.45, 0.2, 1)
+polygon = PackedVector2Array(-21, 23, 21, 23, 21, -23, -21, -23)
+
+[node name="JumpObstacleLarge1" type="StaticBody2D" parent="."]
+position = Vector2(1700, 331)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1"]
+shape = SubResource("RectangleShape2D_obstacle_large")
+
+[node name="Crate" type="Polygon2D" parent="JumpObstacleLarge1"]
+color = Color(0.7, 0.45, 0.2, 1)
+polygon = PackedVector2Array(-11, 29, 11, 29, 11, -29, -11, -29)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(75, 317)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Life1" type="TextureRect" parent="HUD"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 56.0
+offset_bottom = 56.0
+texture = ExtResource("7_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life2" type="TextureRect" parent="HUD"]
+offset_left = 64.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 56.0
+texture = ExtResource("7_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life3" type="TextureRect" parent="HUD"]
+offset_left = 108.0
+offset_top = 20.0
+offset_right = 144.0
+offset_bottom = 56.0
+texture = ExtResource("7_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BeanToken1" parent="." instance=ExtResource("8_bean")]
+position = Vector2(150, 330)
+
+[node name="BeanToken2" parent="." instance=ExtResource("8_bean")]
+position = Vector2(185, 330)
+
+[node name="BeanToken3" parent="." instance=ExtResource("8_bean")]
+position = Vector2(220, 330)
+
+[node name="CherryTomatoEnemy1" parent="." instance=ExtResource("4_cherry_tomato")]
+position = Vector2(420, 330)
+
+[node name="BeanToken4" parent="." instance=ExtResource("8_bean")]
+position = Vector2(460, 330)
+
+[node name="BeanToken5" parent="." instance=ExtResource("8_bean")]
+position = Vector2(620, 330)
+
+[node name="BeanToken6" parent="." instance=ExtResource("8_bean")]
+position = Vector2(655, 330)
+
+[node name="SalsaBowlEnemy1" parent="." instance=ExtResource("5_salsabowl")]
+position = Vector2(750, 330)
+fire_interval = 2.5
+projectile_scene = ExtResource("6_salsabowl_projectile")
+
+[node name="BeanToken7" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1050, 330)
+
+[node name="BeanToken8" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1085, 330)
+
+[node name="CherryTomatoEnemy2" parent="." instance=ExtResource("4_cherry_tomato")]
+position = Vector2(1200, 330)
+
+[node name="BeanToken9" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1450, 330)
+
+[node name="BeanToken10" parent="." instance=ExtResource("8_bean")]
+position = Vector2(1485, 330)
+
+[node name="BigRedBoss" parent="." instance=ExtResource("3_boss")]
+position = Vector2(2050, 330)
+ingredient_scene = ExtResource("2_ingredient")
+ingredient_spawn_position = Vector2(2050, 330)
