@@ -1,7 +1,7 @@
 # Cornchip Day — Development Plan
 
-## Current Phase: Full 7-Level MVP Complete
-As of 2026-07-20, all 7 levels are built and playable start to finish (see Phase 2 below), per the direct user mandate in `instructions-ai.txt` to build the complete game rather than stop at the original single-level vertical slice. Current focus is Phase 3 polish: the Levels 3-6 environment-art pass and a full interactive playtest of the whole game.
+## Current Phase: Phase 4 Complete -- Playtest Needed Next
+As of 2026-07-20, all 7 levels are built and playable start to finish (Phase 2), and Phase 4's full level-redesign/meta-progression pass is also complete (all 5 groups: bonus-platform relocation, L3-6 two-tier maze paths, Wrap delivery ritual, new L7 content, title screen + world map). Everything in Phase 4 is headless-verified for correctness only, not feel. Immediate next step: a real interactive playtest of the whole game start to finish (title screen -> map -> all 7 levels), then the Levels 3-6 environment-art pass against the now-final maze layouts.
 
 ## Roadmap
 
@@ -93,9 +93,9 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 - [ ] **Sequencing decision:** Levels 3-6 are still on procedural placeholder art (see the resequenced item above), while Levels 1-2 already have real generated art wired to specific ground positions — redesign L3-6's layout into two-tier form *first*, then run the deferred environment-art pass against the final layout. **Confirmed 2026-07-20: Levels 1-2 stay as-is, not retrofitted.** They're the deliberately-simpler onboarding levels per `game-brief.txt` and already have real generated art wired to current ground positions — reworking that art for no gameplay gain wasn't worth it. Maze treatment is L3-6 only.
 
 **Title screen & world map** (raw points 9-10):
-- [ ] New `TitleScreen.tscn` — the game's actual entry point (currently boots straight into `Level1.tscn`), reading "Corn Chip Day." The title text itself is exempt from the no-reading-required pillar (it's the game's name, same as a box cover), but everything else on the screen should stay icon/animation-driven.
-- [ ] New `WorldMap.tscn` shown between levels (SMB3-style). **Confirmed: one connected path**, not true branching (see `instructions-ai.txt`) — Cornchip avatar walks node-to-node in 4 directions along a curving route. Walking forward advances to the next unlocked level; walking back replays any already-unlocked level (e.g. for more beans).
-- [ ] Needs new persistent "which levels are unlocked" state that survives scene changes — genuinely new territory, since nothing today persists across a level load except in-memory ability flags (`has_double_jump`/`has_spin_dash`), which explicitly *don't* survive `change_scene_to_file()`. Unlock progress needs to, so this likely wants an autoload/singleton — nothing built so far uses one.
+- [x] **Built 2026-07-20** — see `feature.md` F25. `TitleScreen.tscn` is now the actual entry point (`project.godot`'s `run/main_scene`), reading "Corn Chip Day" (the one text exemption) plus an animated Cornchip and a bouncing icon prompt — press to continue to the map.
+- [x] `WorldMap.tscn` built — one connected path (7 nodes, axis-aligned zigzag segments), Cornchip avatar walks node-to-node, forward blocked past the unlock frontier, backward always allowed (replay for more beans).
+- [x] New `GameProgress` autoload (`scripts/game_progress.gd`) — the project's first singleton, tracking `highest_unlocked_level`/`last_played_level` in memory (survives scene changes, not app restarts — matches the confirmed scope, no save file added). Every level now returns to the world map on completion (`level_base.gd`) instead of chaining straight to the next level scene.
 
 **Confirmed 2026-07-20: build order across the five groups**, proposed and confirmed with the user before any code changes:
 1. Jump-challenge platform relocation (all 7 levels) — smallest, fully-specified, no open design questions.
@@ -105,7 +105,7 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 
 Then (not a Phase 4 group, but the next milestone once Phase 4 lands): resume the deferred L3-6 environment-art generation pass against the final redesigned layouts.
 
-**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Group 2 (L3-6 two-tier maze redesign) complete 2026-07-20** -- see F22. **Group 3 (Wrap delivery ritual rework + L7 new content) complete 2026-07-20** -- see F23/F24. **Next: group 4, title screen + world map -- the last Phase 4 group.**
+**All five Phase 4 groups complete 2026-07-20:** group 1 (jump-challenge relocation, F21), group 2 (L3-6 two-tier maze, F22), group 3 (Wrap delivery ritual + L7 content, F23/F24), group 4 (title screen + world map, F25). **Phase 4 is done.** Everything built so far is headless-verified for correctness only -- a real interactive playtest of the whole game, start to finish through the new title screen and map, is the next real milestone (see Open Questions).
 
 ## Definition of Done — Full 7-Level MVP
 Superseded from the original single-level vertical-slice definition now that the complete game is built (2026-07-20):
@@ -120,6 +120,7 @@ Superseded from the original single-level vertical-slice definition now that the
 Canonical list of confirmed product decisions lives in `instructions-ai.txt` under "Confirmed Product Decisions." Update both files together when a decision changes.
 
 ## Open Questions / Risks
+- **The entire new title screen -> world map -> level -> back-to-map loop has never been played interactively**, only headless-verified for logic correctness (see F25). This is now the single most important thing to playtest -- it's the actual game boot flow, so a bug here blocks playing anything.
 - ~~Onion's fume-line decoration is missing from 2 of its 8 frames~~ -- resolved: user confirmed ship as-is.
 - **Levels 3-6 need their own environment-art pass, now sequenced after the Phase 4 maze redesign** (obstacles, ground tile, hazard fill, background/parallax, and real ingredient icons -- equivalent to F11 for Levels 1-2). Currently all procedural placeholders. Prompt batch still needs to be drafted and confirmed once the new two-tier layout for each level is finalized.
 - **Level 5's `move_toward`-based ice-sliding feel, and Level 6's heat-cycle feel/fairness, haven't been verified interactively** -- both are confirmed correct mechanically via headless scripts, but the actual in-game *feel* (timing, difficulty, whether the warning flash gives enough reaction time for a young player) needs a real playtest. This now also covers the relocated bonus platforms in both levels (see F21), which deliberately land inside the ice/heat zone -- confirm landing on the pedestal mid-slide/mid-heat-cycle feels fair, not cheap.

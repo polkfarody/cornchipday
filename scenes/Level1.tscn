@@ -54,7 +54,7 @@ size = Vector2(60, 60)
 
 [node name="Level1" type="Node2D" unique_id=1358928885]
 script = ExtResource("0_level_base")
-next_level_path = "res://scenes/Level2.tscn"
+level_number = 1
 
 [node name="Backdrop" type="ColorRect" parent="." unique_id=1458772826]
 offset_left = -1377.0

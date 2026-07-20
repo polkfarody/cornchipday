@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Cornchip Day"
-run/main_scene="res://scenes/Level1.tscn"
+run/main_scene="res://scenes/TitleScreen.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/stretch_mode=4
+
+[autoload]
+
+GameProgress="*res://scripts/game_progress.gd"
 
 [display]
 

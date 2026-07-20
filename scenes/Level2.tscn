@@ -43,7 +43,7 @@ size = Vector2(58, 58)
 
 [node name="Level2" type="Node2D" unique_id=209566101]
 script = ExtResource("0_level_base")
-next_level_path = "res://scenes/Level3.tscn"
+level_number = 2
 
 [node name="WindowParallax" type="ParallaxBackground" parent="." unique_id=983599640]
 

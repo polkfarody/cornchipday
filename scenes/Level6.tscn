@@ -50,7 +50,7 @@ size = Vector2(290, 20)
 
 [node name="Level6" type="Node2D"]
 script = ExtResource("0_level_base")
-next_level_path = "res://scenes/Level7.tscn"
+level_number = 6
 grants_double_jump = true
 
 [node name="Backdrop" type="ColorRect" parent="."]
