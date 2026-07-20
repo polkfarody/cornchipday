@@ -1,7 +1,7 @@
 # Cornchip Day — Development Plan
 
-## Current Phase: Phase 4 + L3-6 Art Pass Complete -- Playtest Needed Next
-As of 2026-07-20, all 7 levels are built and playable start to finish (Phase 2), Phase 4's full level-redesign/meta-progression pass is complete (all 5 groups: bonus-platform relocation, L3-6 two-tier maze paths, Wrap delivery ritual, new L7 content, title screen + world map), and the deferred Levels 3-6 environment-art pass is now done too (see `feature.md` F26) -- every level has real generated art, closing the last open item in the Full 7-Level MVP's Definition of Done. Everything is headless- and screenshot-verified for correctness/rendering, not feel. Immediate next step: a real interactive playtest of the whole game start to finish (title screen -> map -> all 7 levels).
+## Current Phase: Phase 5 -- Full Playtest Feedback Triage
+As of 2026-07-20, all 7 levels are built and playable start to finish (Phase 2), Phase 4's full level-redesign/meta-progression pass is complete (all 5 groups), and the deferred Levels 3-6 environment-art pass is done too (see `feature.md` F26). The first full interactive playtest has now happened, closing the long-open "needs a real playtest" item -- feedback is in and triaged into Phase 5 below. It's a large batch spanning real bugs, art gaps (including some the AI's own visual QA had signed off on), and several bigger feature requests. Nothing in Phase 5 is built yet -- it's tracked scope pending prioritization/go-ahead, per Operating Principle 4.
 
 ## Roadmap
 
@@ -70,7 +70,7 @@ Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): b
 - [x] Wire already-generated-but-unused Cornchip/Wrap frames for more animation variety (free, no new generation) -- built, see `feature.md` F20.
 - [ ] ~~Environment-art pass for Levels 3-6 only~~ -- **resequenced into Phase 4 below.** Generating art for L3-6's current layout was paused after a fresh round of user feedback (`user-input.txt`) turned out to include level-geometry changes (maze-style paths, longer levels) that would target those same four levels -- doing the art pass first risked spending on layouts about to change.
 
-- [ ] **Full interactive playtest of the complete 7-level game, start to finish** -- every level has been individually playtested and fixed as it was built, but the whole game hasn't been run through end to end in one sitting yet.
+- [x] **Full interactive playtest of the complete 7-level game, start to finish** -- done 2026-07-20, see Phase 5 below for the feedback it produced.
 - [ ] Full AI-art pass across all levels/characters for visual consistency (FB4)
 - [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)
 - [ ] 2-player local co-op investigation (Cheeto)
@@ -105,7 +105,54 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 
 Then (not a Phase 4 group, but the next milestone once Phase 4 lands): resume the deferred L3-6 environment-art generation pass against the final redesigned layouts.
 
-**All five Phase 4 groups complete 2026-07-20:** group 1 (jump-challenge relocation, F21), group 2 (L3-6 two-tier maze, F22), group 3 (Wrap delivery ritual + L7 content, F23/F24), group 4 (title screen + world map, F25). **Phase 4 is done.** Everything built so far is headless-verified for correctness only -- a real interactive playtest of the whole game, start to finish through the new title screen and map, is the next real milestone (see Open Questions).
+**All five Phase 4 groups complete 2026-07-20:** group 1 (jump-challenge relocation, F21), group 2 (L3-6 two-tier maze, F22), group 3 (Wrap delivery ritual + L7 content, F23/F24), group 4 (title screen + world map, F25). **Phase 4 is done.**
+
+### Phase 5 — Full Playtest Feedback (2026-07-20)
+The first full start-to-finish interactive playtest happened, closing the long-open "needs a real playtest" item from Phase 3/the Definition of Done. Feedback landed in `full-run-feedback.txt` — folded in here per the Additions Log Workflow in `instructions-ai.txt` (same triage pattern already used for `user-input.txt`; the scratchpad file itself is left untouched). The user's own note at the top of that file: several points are written up once but were observed across multiple/all levels — carried through below rather than repeated per level. **Nothing in this phase is built yet** — folding it in here tracks it, it doesn't authorize spending real effort on any of it (Operating Principle 4); scope and priority still need to be confirmed before building.
+
+**Real bugs (not scope questions — things that are just broken):**
+- [ ] Extra-life pickups don't actually add a life in live play, even below the 3-life cap — contradicts F19's own headless verification, so this needs root-causing under real play rather than re-trusting that existing test.
+- [ ] Hot Sauce boss's fire attack has no visible effect — nothing happens when he "fires." Direct fix suggested by the user: reuse the salsa-obstacle sprite as the fired projectile's visual.
+- [ ] Level 6 `HeatZone`: sometimes impossible to escape once caught in the hot phase.
+- [ ] Level 7: the chase-corridor hazard (`rolling_hazard.gd`, from F24) becomes lethal and inescapable once triggered — repeated deaths, and the level currently can't be completed as a result. A blocking bug, not a difficulty complaint.
+- [ ] Avocado boss's guac-puddle hazard (`GuacPuddle.tscn`) renders floating above the floor instead of looking dropped onto it.
+
+**Texture/art gaps, called out once by the user but flagged as applying to every level:**
+- [ ] Bean tokens still have no real sprite (plain brown ovals) — never actually covered by any art pass so far (F11/F26 covered obstacles/hazards/ground/scenery/window/ingredients, not beans).
+- [ ] The Air Fryer pickup has no real sprite either.
+- [ ] The F22 maze walkways (`UpperTier1-4`/`UpperAccess1`) and the F19/F21 bonus-platform pedestals — deliberately left untextured in F26 as out of scope — are now called out directly ("all square block sprites should be changed for actual textured images"), reopening that scope decision.
+- [ ] `IceZone`/`HeatZone`'s plain colored-rectangle visuals ("see-through blue/green rectangle... looks tacky") should use each level's own floor texture instead of a flat color fill.
+- [ ] Hazard-fill textures should visually animate (movement/flow, like real bubbling lava/cheese/etc.), not sit static.
+
+**Per-level notes:**
+- [ ] **L3:** the window-view background reads as "a broken mess," not a window — a direct critique overriding this session's own visual sign-off on `l3_window_view`, worth a fresh look or regen. Separately: the maze tier + ground layout make some enemies impossible to get past before double jump unlocks (Level 6+) — a potential real balance conflict worth checking, not just a texture ask. Each level's maze-tier design should look visually distinct per level rather than reusing the same gray blocks.
+- [ ] **L4:** background needs to change and expand, brought down to ground level rather than floating as a distant backdrop — the user would rather replace it than patch it.
+- [ ] **L5:** background "not right," but could be fixed by enlarging + repositioning to ground level rather than a full replace.
+- [ ] **L6:** backgrounds are fine individually but the 4 tiled window copies all visibly show the same kitchen scene — wants more separation/variety between instances.
+- [ ] **L7:** no environment art at all yet — was never scoped in any F-numbered art pass (F26 covered L3-6 only, L7 was never included). Also: should be the longest/hardest level; the delivery ingredients should sit on suspended blocks requiring platforming to reach rather than sitting on the ground; the new F24 content (ice/guac/chase/hidden detour) reads as too cramped/back-to-back ("bam bam bam") and needs spreading out more.
+
+**New systems / bigger feature requests (need a direct go-ahead before real build effort, per Operating Principle 4) — tracked in `feature.md`'s Backlog as FB16-FB21:**
+- [ ] World map redesign (FB16): a real map texture/background, per-level icons that appear locked and reveal name+art as unlocked, "Corn Chip Day" title visible on this screen too, and a bean/power-up count display.
+- [ ] Bean system expansion (FB13, broadened): a running bean tally in the HUD, sparkle-and-collect feedback, and beans feeding an actual high-score system (implies persistence beyond the current in-memory `GameProgress`).
+- [ ] Ingredient delivery "shopping basket" UI (FB17): collecting a level's ingredient should have more fanfare and fly into a persistent basket-style display showing collected vs. still-needed ingredients.
+- [ ] Air Fryer onboarding (FB18): fly-to-HUD pickup feedback with an ability icon, plus a first-time paused explainer of what it does and how to trigger it (currently just "press Up," which the user found unintuitive with zero feedback that the ability is even active).
+- [ ] Spin-dash cooldown (FB19): currently spammable, wants a cooldown for real challenge (L2 note). Directly relevant to the spin-pose animation work already in progress this session — worth doing together.
+- [ ] Enemy AI free-roam rework (FB20): more free-roaming movement instead of fixed back-and-forth patrol ("like Mario Bros"), while still never walking into a hazard gap.
+- [ ] Camera pit-fall limit: currently follows the player too far down before the fall-death/respawn triggers; should only drop a short distance first.
+- [ ] Level boundary walls: retaining walls at each level's start/end so the player can't run off either edge.
+- [ ] Life-pickup scarcity: should be harder to find, or specifically only spawn once the player is down to 1 life.
+- [ ] L2 climbing section: a bonus/free-life climbing segment "we already have the sprites for" — needs clarifying which sprites, since no climbing-specific Cornchip pose currently exists in the generated art (worth a direct question rather than guessing).
+- [ ] Title screen polish: blinking currently reads as too frequent/nervous — wants an additional plain standing pose so idle mostly holds still, blinking only occasionally after being idle a while. Directly overlaps the Cornchip animation work already underway this session. Also: the bouncing prompt arrow points down, which doesn't match the actual "press enter/space" input — needs a redesign or different motion.
+- [ ] Ending screen (FB21): wants a real ending screen showing Cornchip having saved the day / made the wrap — explicitly flagged by the user as "let's discuss when we get to this," not a spec to build from yet.
+
+**Overlap with in-progress work:** the title-screen blink/idle-variety ask and the spin-dash-cooldown ask both intersect with the Cornchip animation work below. Worth sequencing together rather than as a separate pass.
+
+### Cornchip/Wrap Animation Pass (2026-07-20)
+A separate direct user request ("give all the characters more animations... spin slide etc"), scoped to Cornchip + Wrap after clarifying — see `feature.md` F27 for full detail. Built and screenshot-verified:
+- [x] Cornchip: a real spin-dash pose (rotated continuously in code, not a multi-frame animation), a real ice-slide pose, and 2 new run frames for a smoother 4-frame gait cycle.
+- [x] Wrap: visibly fills out with ingredient bulges as deliveries land (`filling1`/`filling2` at 1/3 and 2/3 of deliveries), and the final "lit up" pose now shows him fully stuffed *and* smiling rather than just smiling.
+- [x] Pipeline hardening: `generate-sprites.ps1`/`crop-sprites.ps1` can now generate new poses for an *already-established* character without it visibly resizing when the game switches to one — normalizes onto that character's existing frame canvas rather than the new grid's own size.
+- [ ] **Not done yet:** the spin-dash cooldown from Phase 5 (FB19) touches this same code and is worth a follow-up pass rather than being folded in here.
 
 ## Definition of Done — Full 7-Level MVP
 Superseded from the original single-level vertical-slice definition now that the complete game is built (2026-07-20):
@@ -113,17 +160,18 @@ Superseded from the original single-level vertical-slice definition now that the
 - [x] No game-over screen; running out of lives restarts the current level rather than ending the game
 - [x] No text required to understand any mechanic
 - [x] Ingredient-collection loop functions with clear visual feedback, culminating in the Wrap finale's delivery-and-jump-in ending
-- [ ] Full interactive playtest of the whole game start to finish (see Phase 3)
+- [x] Full interactive playtest of the whole game start to finish -- done 2026-07-20, see Phase 5
 - [x] Environment art for Levels 3-6 (see `feature.md` F26) -- real generated art wired into all four levels, replacing the procedural placeholders
 
 ## Decision Log
 Canonical list of confirmed product decisions lives in `instructions-ai.txt` under "Confirmed Product Decisions." Update both files together when a decision changes.
 
 ## Open Questions / Risks
-- **The entire new title screen -> world map -> level -> back-to-map loop has never been played interactively**, only headless-verified for logic correctness (see F25). This is now the single most important thing to playtest -- it's the actual game boot flow, so a bug here blocks playing anything.
+- ~~The entire new title screen -> world map -> level -> back-to-map loop has never been played interactively~~ -- resolved 2026-07-20: the full playtest happened (see Phase 5). The loop itself works; feedback was about polish/content (map screen, title idle animation), not the boot flow being broken.
 - ~~Onion's fume-line decoration is missing from 2 of its 8 frames~~ -- resolved: user confirmed ship as-is.
-- ~~Levels 3-6 need their own environment-art pass~~ -- resolved 2026-07-20, see `feature.md` F26: all 36 assets generated, verified, and wired into all four levels. Two real bugs caught and fixed along the way (character bleed on 2 assets, and a parallax-backdrop screen-space sizing bug only visible via an actual rendered screenshot, not headless instantiation). Scenery-decoration placement was a judgment call worth a look during the eventual full playtest, and the F22 maze walkways / F19 bonus pedestals deliberately stayed untextured (out of the confirmed asset scope).
-- **Level 5's `move_toward`-based ice-sliding feel, and Level 6's heat-cycle feel/fairness, haven't been verified interactively** -- both are confirmed correct mechanically via headless scripts, but the actual in-game *feel* (timing, difficulty, whether the warning flash gives enough reaction time for a young player) needs a real playtest. This now also covers the relocated bonus platforms in both levels (see F21), which deliberately land inside the ice/heat zone -- confirm landing on the pedestal mid-slide/mid-heat-cycle feels fair, not cheap.
+- ~~Levels 3-6 need their own environment-art pass~~ -- resolved 2026-07-20, see `feature.md` F26: all 36 assets generated, verified, and wired into all four levels. **Partially reopened by the full playtest (Phase 5):** L3's window view reads as "a broken mess" in the user's own words despite passing this session's visual QA, and L4/L5's backgrounds are also called out as "not right" -- worth a fresh look, not treated as settled just because it was screenshot-verified once.
+- ~~Level 5's `move_toward`-based ice-sliding feel, and Level 6's heat-cycle feel/fairness, haven't been verified interactively~~ -- now verified via the full playtest (Phase 5), and real problems surfaced: Level 6's `HeatZone` can trap the player with no escape, and both zones' plain colored-rectangle visuals read as tacky and should use real floor textures instead.
+- **New from the full playtest (Phase 5): Level 7 currently cannot be completed** -- the chase-corridor hazard becomes inescapable once triggered. This blocks verifying anything past that point (the delivery arena, Wrap's fullness stages, the win condition) via live play, not just headless scripts.
 - ~~Whether the Wrap final battle plays as straight combat like other bosses, or shifts tone for the reconciliation moment~~ -- resolved twice now: not combat (F17), and the Phase 4 delivery-ritual rework keeps it that way (carrying is safe, not another combat/hit-point risk).
 - Reference art/style direction still needed for the sprite-generation pipeline.
 - ~~Phase 4 build order not yet decided~~ -- resolved 2026-07-20: order confirmed (jump-challenge relocation -> L3-6 maze redesign -> Wrap ritual + L7 content -> title screen/world map), and L1/L2 confirmed out of scope for the maze retrofit. See Phase 4 in the Roadmap above.

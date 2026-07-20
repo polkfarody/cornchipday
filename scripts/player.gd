@@ -10,6 +10,7 @@ const RUN_BOB_SPEED := 14.0
 const RUN_TILT_DEGREES := 6.0
 const SPIN_DURATION := 1.0
 const SPIN_TINT := Color(1.3, 1.3, 0.6)
+const SPIN_ROTATE_SPEED := 900.0  # deg/sec -- the "spin" pose is a single coiled sprite; the actual spin motion comes from rotating it in code rather than needing multiple animation frames
 const SLEEP_TINT := Color(0.55, 0.55, 0.9)
 const FALL_RESPAWN_Y := 650.0  # missed a jump gap -- same consequence as any other hit
 const SLOW_TINT := Color(1.0, 0.85, 0.3)
@@ -173,10 +174,15 @@ func _start_spin() -> void:
 func _end_spin() -> void:
 	is_spinning = false
 	sprite.modulate = Color.WHITE
+	sprite.rotation_degrees = 0.0
 
 func _update_animation(delta: float) -> void:
 	var target := "idle"
-	if not is_on_floor():
+	if is_spinning:
+		target = "spin"
+	elif is_on_ice and absf(velocity.x) > 1.0:
+		target = "slide"
+	elif not is_on_floor():
 		target = "jump"
 	elif absf(velocity.x) > 1.0:
 		target = "run"
@@ -189,6 +195,12 @@ func _update_animation(delta: float) -> void:
 		run_cycle_time += delta * RUN_BOB_SPEED
 		sprite.position = SPRITE_BASE_POSITION + Vector2(0, sin(run_cycle_time) * RUN_BOB_AMPLITUDE)
 		sprite.rotation_degrees = sin(run_cycle_time) * RUN_TILT_DEGREES
+	elif target == "spin":
+		# The spin pose is a single coiled sprite -- the actual spin motion
+		# is this continuous rotation, not frame-swapping.
+		run_cycle_time = 0.0
+		sprite.position = SPRITE_BASE_POSITION
+		sprite.rotation_degrees = wrapf(sprite.rotation_degrees + SPIN_ROTATE_SPEED * delta, 0.0, 360.0)
 	else:
 		run_cycle_time = 0.0
 		sprite.position = SPRITE_BASE_POSITION

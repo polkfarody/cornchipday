@@ -41,6 +41,17 @@ Add-Type -AssemblyName System.Drawing
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectRoot = Split-Path -Parent $scriptDir
 $dir = Join-Path $projectRoot "Assets\generated"
+# Supplementary pose sheets (e.g. cornchip_extras_grid) add new poses to an
+# *already-established* character rather than introducing a new one -- their
+# frames must land on that character's existing canvas size exactly, or the
+# character visibly resizes when the game switches to one of the new poses.
+# Keyed by grid basename (filename minus "_grid.png"), matched against the
+# actual pixel size of that character's existing frame1.png.
+$targetCanvasOverrides = @{
+    "cornchip_extras" = "Assets\generated\characters\cornchip\cornchip_frame1.png"
+    "wrap_extras"      = "Assets\generated\characters\wrap\wrap_frame1.png"
+}
+
 $padding = 10
 $hueTolerance = 30       # degrees
 $minSaturation = 0.35    # below this, treat as not-background regardless of hue (whites/blacks/outlines)
@@ -359,18 +370,41 @@ Get-ChildItem -Path $dir -Filter "*.png" -Recurse | Where-Object { -not $Only -o
 
     # Normalize all frames for this character onto a shared canvas, anchored
     # bottom-center, so switching frames doesn't shift the character's feet.
+    $baseName = $_.Name -replace '_grid\.png$', ''
     $maxW = ($frames | ForEach-Object { $_.Width } | Measure-Object -Maximum).Maximum
     $maxH = ($frames | ForEach-Object { $_.Height } | Measure-Object -Maximum).Maximum
-    $baseName = $_.Name -replace '_grid\.png$', ''
+    if ($targetCanvasOverrides.ContainsKey($baseName)) {
+        $refPath = Join-Path $projectRoot $targetCanvasOverrides[$baseName]
+        if (Test-Path $refPath) {
+            $refImg = [System.Drawing.Image]::FromFile($refPath)
+            $maxW = $refImg.Width
+            $maxH = $refImg.Height
+            $refImg.Dispose()
+        } else {
+            Write-Warning "$($_.Name): target canvas reference not found ($refPath), falling back to this grid's own max size"
+        }
+    }
 
     for ($i = 0; $i -lt $frames.Count; $i++) {
         $frame = $frames[$i]
+        # A frame larger than the target canvas (only possible with an
+        # override, since $maxW/$maxH otherwise come from these same frames)
+        # gets scaled down to fit, preserving aspect ratio, rather than
+        # clipped by the draw below.
+        $drawW = $frame.Width
+        $drawH = $frame.Height
+        if ($drawW -gt $maxW -or $drawH -gt $maxH) {
+            $fitScale = [Math]::Min($maxW / $drawW, $maxH / $drawH)
+            $drawW = [Math]::Floor($drawW * $fitScale)
+            $drawH = [Math]::Floor($drawH * $fitScale)
+        }
         $canvas = New-Object System.Drawing.Bitmap $maxW, $maxH, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
         $gfx = [System.Drawing.Graphics]::FromImage($canvas)
         $gfx.Clear([System.Drawing.Color]::Transparent)
-        $destX = [Math]::Floor(($maxW - $frame.Width) / 2)
-        $destY = $maxH - $frame.Height
-        $gfx.DrawImage($frame, $destX, $destY, $frame.Width, $frame.Height)
+        $gfx.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+        $destX = [Math]::Floor(($maxW - $drawW) / 2)
+        $destY = $maxH - $drawH
+        $gfx.DrawImage($frame, $destX, $destY, $drawW, $drawH)
         $gfx.Dispose()
         $frame.Dispose()
 

@@ -5,7 +5,9 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame2.png" id="tex_idle2"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame3.png" id="tex_idle3"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame4.png" id="tex_idle4"]
-[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame8.png" id="tex_celebrate"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_extras_frame1.png" id="tex_filling1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_extras_frame2.png" id="tex_filling2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_extras_frame3.png" id="tex_celebrate"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_touch"]
 size = Vector2(50, 70)
@@ -35,6 +37,22 @@ animations = [{
 }],
 "loop": true,
 "name": &"celebrate",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_filling1")
+}],
+"loop": true,
+"name": &"filling1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_filling2")
+}],
+"loop": true,
+"name": &"filling2",
 "speed": 5.0
 }]
 

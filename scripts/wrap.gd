@@ -67,6 +67,20 @@ func _on_touch_area_body_entered(body: Node) -> void:
 		_bounce()
 		if deliveries_received >= required_deliveries:
 			_light_up()
+		else:
+			_update_fullness_visual()
+
+# Wrap visibly fills out with ingredients as they're delivered (direct user
+# request, 2026-07-20) -- thresholds are proportional to required_deliveries
+# rather than hardcoded so they stay sensible if that export is ever retuned.
+func _update_fullness_visual() -> void:
+	var target := "idle"
+	if deliveries_received >= (required_deliveries * 2 / 3):
+		target = "filling2"
+	elif deliveries_received >= (required_deliveries / 3):
+		target = "filling1"
+	if sprite.animation != target:
+		sprite.play(target)
 
 # Purely cosmetic delivery-received feedback -- no new art needed.
 func _bounce() -> void:

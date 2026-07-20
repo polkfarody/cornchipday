@@ -67,6 +67,9 @@ New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 # This maps a sprite's Name to its subfolder so generation writes straight to
 # the right place instead of needing a manual sort afterward.
 function Get-AssetSubdir([string]$name) {
+    if ($name -match "^(.+)_extras_grid$") {
+        return "characters\$($Matches[1])"
+    }
     if ($name -like "*_grid") {
         $character = $name -replace "_grid$", ""
         return "characters\$character"
@@ -283,7 +286,25 @@ $sprites = @(
     @{ Name = "guac_ingredient"; Prompt = "A cute cartoon scoop of green guacamole in a small bowl, collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
     @{ Name = "tomato_ingredient"; Prompt = "A cartoon whole red tomato collectible icon for a kids' video game, glossy highlight, small green stem, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
     @{ Name = "sour_cream_ingredient"; Prompt = "A cartoon dollop of white sour cream collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
-    @{ Name = "crunchy_shell_ingredient"; Prompt = "A cartoon golden crunchy taco shell collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" }
+    @{ Name = "crunchy_shell_ingredient"; Prompt = "A cartoon golden crunchy taco shell collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
+
+    # Supplementary pose sheets for two already-established characters
+    # (Cornchip, Wrap) -- NOT the standard 8-pose Grid-Prompt template, since
+    # these add a handful of new poses to an existing character rather than
+    # introducing a new one. crop-sprites.ps1's grid-slicer normalizes these
+    # onto the SAME canvas size as that character's existing frames (see its
+    # $targetCanvasOverrides) so Cornchip/Wrap don't visibly resize when the
+    # game switches to one of these new animations.
+    @{ Name = "cornchip_extras_grid"; Prompt = (
+        "A 2D side-view platformer game character sprite sheet depicting 4 new poses for the same corn-chip character shown in the reference images (upside-down triangle shape, warm golden-yellow with subtle corn speckles, small comedic stick legs, big round friendly cartoon eyes).`n" +
+        "The 4 poses, arranged as a 2x2 grid in reading order (left-to-right, top-to-bottom): 1) crouched down tightly with knees pulled up to its chest and arms wrapped in, coiled like a spring about to launch into a spin -- still clearly the same upside-down-triangle-shaped character, not a circular or ball shape, with a couple of small motion-blur speed lines beside it hinting at rotation. 2) leaning back with legs skidding sideways on ice, arms out for balance, small motion lines trailing behind its feet. 3) running, right leg passing directly under the body, left leg trailing back -- an in-between stride position. 4) running, left leg passing directly under the body, right leg trailing back -- the mirrored in-between stride position.`n" +
+        "The character's design, colors, and proportions must stay exactly consistent with the reference images across all 4 cells, with generous empty magenta space between every pose so no two poses touch or overlap. $styleSuffix"
+    ); Model = "gemini-3-pro-image" },
+    @{ Name = "wrap_extras_grid"; Prompt = (
+        "A 2D side-view platformer game character sprite sheet depicting 3 new poses for the same round tubular burrito/wrap character shown in the reference images (tan-beige tortilla color with a visible fold seam, small comedic stick legs, big expressive round cartoon eyes).`n" +
+        "The 3 poses, arranged in a single horizontal row, left to right: 1) with 2-3 distinct round ingredient bulges poking out along its body, like a snake that swallowed a few eggs -- each bulge a separate clearly-defined rounded lump under the tortilla surface, not just a bumpy or scaly texture, tortilla stretched slightly around them, same neutral happy expression as the reference. 2) with 4-5 distinct round ingredient bulges poking out along its body, each a separate clearly-defined rounded lump, tortilla stretched further and looking pleasantly full, expression starting to look pleased and content. 3) completely packed with distinct round ingredient bulges along its whole body so it looks visibly plump and full, wearing a big warm satisfied smile, eyes happy and relaxed.`n" +
+        "The character's design, colors, and proportions must stay exactly consistent with the reference images across all 3 cells, with generous empty magenta space between every pose so no two poses touch or overlap. $styleSuffix"
+    ); ExtraRefs = @("characters\wrap\wrap_frame1.png"); Model = "gemini-3-pro-image" }
 )
 
 if ($Only) {
@@ -299,6 +320,26 @@ $maxRetries = 4
 foreach ($sprite in $sprites) {
     Write-Host "Generating $($sprite.Name)..."
     $refsForThis = if ($sprite.NoRefs) { @() } else { $referenceImageInputs }
+    # ExtraRefs: additional character-specific reference images (e.g. that
+    # character's own existing frame1) on top of the fixed cornchip/hot-sauce
+    # style refs above -- used when generating new poses for an *existing*
+    # character, so the model matches that character's specific design
+    # (colors, proportions) rather than just the general house style.
+    if ($sprite.ExtraRefs) {
+        foreach ($extraRefRel in $sprite.ExtraRefs) {
+            $extraRefPath = Join-Path $outDir $extraRefRel
+            if (Test-Path $extraRefPath) {
+                $extraBytes = [IO.File]::ReadAllBytes($extraRefPath)
+                $refsForThis += @{
+                    type      = "image"
+                    mime_type = "image/png"
+                    data      = [Convert]::ToBase64String($extraBytes)
+                }
+            } else {
+                Write-Warning "ExtraRef not found, skipping: $extraRefPath"
+            }
+        }
+    }
     $inputItems = @(@{ type = "text"; text = $sprite.Prompt }) + $refsForThis
     $modelForThis = if ($sprite.Model) { $sprite.Model } else { "gemini-3.1-flash-image" }
     $body = @{
