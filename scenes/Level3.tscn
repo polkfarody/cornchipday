@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level3/l3_lime_bunch.png" id="16_lime_bunch"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level3/l3_onion_braid.png" id="17_onion_braid"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level3/l3_window_view.png" id="18_window_view"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level3/l3_maze_tier.png" id="19_maze_tier"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -226,9 +227,14 @@ position = Vector2(115, 330)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperAccess1"]
 shape = SubResource("RectangleShape2D_upper_access")
 
-[node name="Step" type="Polygon2D" parent="UpperAccess1"]
-color = Color(0.65, 0.65, 0.7, 1)
-polygon = PackedVector2Array(-25, 30, 25, 30, 25, -30, -25, -30)
+[node name="Step" type="TextureRect" parent="UpperAccess1"]
+offset_left = -25.0
+offset_top = -30.0
+offset_right = 25.0
+offset_bottom = 30.0
+texture = ExtResource("19_maze_tier")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="UpperTier1" type="StaticBody2D" parent="."]
 position = Vector2(235, 250)
@@ -236,9 +242,14 @@ position = Vector2(235, 250)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier1"]
 shape = SubResource("RectangleShape2D_tier1")
 
-[node name="Walkway" type="Polygon2D" parent="UpperTier1"]
-color = Color(0.65, 0.65, 0.7, 1)
-polygon = PackedVector2Array(-100, 10, 100, 10, 100, -10, -100, -10)
+[node name="Walkway" type="TextureRect" parent="UpperTier1"]
+offset_left = -100.0
+offset_top = -10.0
+offset_right = 100.0
+offset_bottom = 10.0
+texture = ExtResource("19_maze_tier")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="UpperTier2" type="StaticBody2D" parent="."]
 position = Vector2(595, 250)
@@ -246,9 +257,14 @@ position = Vector2(595, 250)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier2"]
 shape = SubResource("RectangleShape2D_tier2")
 
-[node name="Walkway" type="Polygon2D" parent="UpperTier2"]
-color = Color(0.65, 0.65, 0.7, 1)
-polygon = PackedVector2Array(-160, 10, 160, 10, 160, -10, -160, -10)
+[node name="Walkway" type="TextureRect" parent="UpperTier2"]
+offset_left = -160.0
+offset_top = -10.0
+offset_right = 160.0
+offset_bottom = 10.0
+texture = ExtResource("19_maze_tier")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="UpperTier3" type="StaticBody2D" parent="."]
 position = Vector2(1035, 250)
@@ -256,9 +272,14 @@ position = Vector2(1035, 250)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier3"]
 shape = SubResource("RectangleShape2D_tier3")
 
-[node name="Walkway" type="Polygon2D" parent="UpperTier3"]
-color = Color(0.65, 0.65, 0.7, 1)
-polygon = PackedVector2Array(-170, 10, 170, 10, 170, -10, -170, -10)
+[node name="Walkway" type="TextureRect" parent="UpperTier3"]
+offset_left = -170.0
+offset_top = -10.0
+offset_right = 170.0
+offset_bottom = 10.0
+texture = ExtResource("19_maze_tier")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="UpperTier4" type="StaticBody2D" parent="."]
 position = Vector2(1460, 250)
@@ -266,9 +287,14 @@ position = Vector2(1460, 250)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperTier4"]
 shape = SubResource("RectangleShape2D_tier4")
 
-[node name="Walkway" type="Polygon2D" parent="UpperTier4"]
-color = Color(0.65, 0.65, 0.7, 1)
-polygon = PackedVector2Array(-145, 10, 145, 10, 145, -10, -145, -10)
+[node name="Walkway" type="TextureRect" parent="UpperTier4"]
+offset_left = -145.0
+offset_top = -10.0
+offset_right = 145.0
+offset_bottom = 10.0
+texture = ExtResource("19_maze_tier")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(75, 317)
@@ -358,9 +384,14 @@ position = Vector2(1800, 330)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BonusPlatform1"]
 shape = SubResource("RectangleShape2D_bonus_platform")
 
-[node name="Plank" type="Polygon2D" parent="BonusPlatform1"]
-color = Color(0.4, 0.6, 0.25, 1)
-polygon = PackedVector2Array(-30, 30, 30, 30, 30, -30, -30, -30)
+[node name="Plank" type="TextureRect" parent="BonusPlatform1"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("14_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="BonusLifePickup1" parent="." instance=ExtResource("10_life_pickup")]
 position = Vector2(1800, 275)

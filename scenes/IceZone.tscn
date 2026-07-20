@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/ice_zone.gd" id="1_ice_zone"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_ground_tile.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ice"]
 size = Vector2(1337, 300)
@@ -11,3 +12,14 @@ script = ExtResource("1_ice_zone")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -150)
 shape = SubResource("RectangleShape2D_ice")
+
+[node name="Visual" type="TextureRect" parent="."]
+offset_left = -668.5
+offset_top = -80.0
+offset_right = 668.5
+offset_bottom = 0.0
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0.55)
+texture = ExtResource("2_tex")
+expand_mode = 1
+stretch_mode = 6

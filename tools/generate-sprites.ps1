@@ -74,7 +74,7 @@ function Get-AssetSubdir([string]$name) {
         $character = $name -replace "_grid$", ""
         return "characters\$character"
     }
-    if ($name -in @("salsa_obstacle", "lettuce_ingredient", "cheese_ingredient", "guac_ingredient", "tomato_ingredient", "sour_cream_ingredient", "crunchy_shell_ingredient")) {
+    if ($name -in @("salsa_obstacle", "lettuce_ingredient", "cheese_ingredient", "guac_ingredient", "tomato_ingredient", "sour_cream_ingredient", "crunchy_shell_ingredient", "bean_ingredient", "air_fryer_icon")) {
         return "items"
     }
     if ($name -like "l1_*") {
@@ -287,6 +287,17 @@ $sprites = @(
     @{ Name = "tomato_ingredient"; Prompt = "A cartoon whole red tomato collectible icon for a kids' video game, glossy highlight, small green stem, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
     @{ Name = "sour_cream_ingredient"; Prompt = "A cartoon dollop of white sour cream collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
     @{ Name = "crunchy_shell_ingredient"; Prompt = "A cartoon golden crunchy taco shell collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
+
+    # Phase 5 full-playtest feedback: generic assets (beans, Air Fryer) that
+    # never got real art in any prior pass, plus per-level maze-tier walkway
+    # textures so L3-6's raised path (F22) looks distinct per level instead
+    # of reusing the same gray Polygon2D everywhere.
+    @{ Name = "bean_ingredient"; Prompt = "A cute cartoon pinto bean collectible icon for a kids' video game, warm brown with a glossy highlight and a subtle darker speckle pattern, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "air_fryer_icon"; Prompt = "A cartoon air fryer kitchen appliance power-up icon for a kids' video game, compact rounded body, warm silver and red color, a small glowing dial, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_maze_tier"; Prompt = "A texture of a raised wooden produce-crate walkway plank, rustic slatted wood matching a farmers-market produce stand, plain boards only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_maze_tier"; Prompt = "A texture of a raised wooden market-stall walkway plank, weathered wood matching an outdoor market stall, plain boards only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_maze_tier"; Prompt = "A texture of a raised frosted steel walkway plank, cool blue-gray metal with light frost patches matching a walk-in fridge, plain metal only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_maze_tier"; Prompt = "A texture of a raised dark griddle-metal walkway plank with a warm orange glow along its edges, matching a sizzling griddle kitchen, plain metal only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
 
     # Supplementary pose sheets for two already-established characters
     # (Cornchip, Wrap) -- NOT the standard 8-pose Grid-Prompt template, since

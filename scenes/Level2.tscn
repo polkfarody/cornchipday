@@ -288,9 +288,14 @@ position = Vector2(1650, 330)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BonusPlatform1"]
 shape = SubResource("RectangleShape2D_bonus_platform")
 
-[node name="Plank" type="Polygon2D" parent="BonusPlatform1"]
-color = Color(0.7, 0.55, 0.15, 1)
-polygon = PackedVector2Array(-30, 30, 30, 30, 30, -30, -30, -30)
+[node name="Plank" type="TextureRect" parent="BonusPlatform1"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("12_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="BonusLifePickup1" parent="." instance=ExtResource("18_life_pickup")]
 position = Vector2(1650, 275)

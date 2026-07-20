@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/ingredient.gd" id="1_ingredient"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/bean_ingredient.png" id="2_tex"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bean"]
 radius = 14
@@ -11,11 +12,6 @@ script = ExtResource("1_ingredient")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bean")
 
-[node name="Bean" type="Polygon2D" parent="."]
-color = Color(0.5, 0.32, 0.16, 1)
-polygon = PackedVector2Array(0, -16, 8, -12, 11, -4, 10, 4, 6, 12, 0, 16, -6, 12, -10, 4, -11, -4, -8, -12)
-
-[node name="Shine" type="Polygon2D" parent="Bean"]
-position = Vector2(-3, -6)
-color = Color(1, 0.9, 0.7, 0.4)
-polygon = PackedVector2Array(4, 0, 2.8, 2.8, 0, 4, -2.8, 2.8, -4, 0, -2.8, -2.8, 0, -4, 2.8, -2.8)
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.0512, 0.0512)
+texture = ExtResource("2_tex")

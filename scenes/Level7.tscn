@@ -23,6 +23,8 @@
 [ext_resource type="Script" path="res://scripts/guac_patch.gd" id="20_guac_patch"]
 [ext_resource type="Script" path="res://scripts/rolling_hazard.gd" id="21_rolling_hazard"]
 [ext_resource type="Script" path="res://scripts/chase_trigger.gd" id="22_chase_trigger"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_ground_tile.png" id="23_ice_tex"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level3/l3_hazard_fill.png" id="24_guac_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -181,13 +183,16 @@ script = ExtResource("19_ice_zone")
 position = Vector2(0, -150)
 shape = SubResource("RectangleShape2D_ice_patch")
 
-[node name="Visual" type="ColorRect" parent="IcePatch"]
+[node name="Visual" type="TextureRect" parent="IcePatch"]
 offset_left = -125.0
-offset_top = -250.0
+offset_top = -80.0
 offset_right = 125.0
-offset_bottom = 40.0
+offset_bottom = 0.0
 mouse_filter = 2
-color = Color(0.6, 0.85, 1, 0.25)
+modulate = Color(1, 1, 1, 0.6)
+texture = ExtResource("23_ice_tex")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="GuacPatch" type="Area2D" parent="."]
 position = Vector2(2075, 360)
@@ -197,13 +202,16 @@ script = ExtResource("20_guac_patch")
 position = Vector2(0, -150)
 shape = SubResource("RectangleShape2D_guac_patch")
 
-[node name="Visual" type="ColorRect" parent="GuacPatch"]
+[node name="Visual" type="TextureRect" parent="GuacPatch"]
 offset_left = -125.0
-offset_top = -250.0
+offset_top = -80.0
 offset_right = 125.0
-offset_bottom = 40.0
+offset_bottom = 0.0
 mouse_filter = 2
-color = Color(0.45, 0.62, 0.16, 0.35)
+modulate = Color(1, 1, 1, 0.7)
+texture = ExtResource("24_guac_tex")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="HiddenDetour" type="StaticBody2D" parent="."]
 position = Vector2(2260, 330)
