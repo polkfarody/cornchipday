@@ -78,10 +78,10 @@ Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): b
 ### Phase 4 — Level Redesign & Meta Progression
 A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20, post-full-MVP-playthrough) — folded in here per the Additions Log Workflow in `instructions-ai.txt` (the scratchpad file itself is left untouched, per that workflow). Ten raw points, grouped below; scope confirmed with the user before any building starts (Operating Principle 4 — folding an idea into this list is not the same as authorization to spend real effort on it).
 
-**Wrap finale delivery ritual rework** (raw points 1-3):
-- [ ] Replace L7's walk-over auto-collect for the 6 `wrap_delivery` pickups with a carry-one-at-a-time ritual: touch an ingredient to pick it up, walk it to Wrap, jump onto/at him to drop it in — repeat per ingredient.
-- [ ] Wrap moves/repositions within his arena once delivery begins, making the drop-off itself the challenge. **Confirmed: carrying is safe, not risky** (see `instructions-ai.txt` Confirmed Product Decisions) — Cornchip keeps full jump/stomp ability while carrying, and Wrap's movement never costs a life.
-- [ ] Wrap only reaches his final "warmer, softer smile" pose (already built in F17) once all 6 are delivered under the new ritual — rework the trigger condition, not the pose itself.
+**Wrap finale delivery ritual rework** (raw points 1-3) — built 2026-07-20, see `feature.md` F23:
+- [x] Replaced L7's walk-over auto-collect for the 6 `wrap_delivery` pickups with a carry-one-at-a-time ritual: touch an ingredient to pick it up, walk it to Wrap, jump onto/at him to drop it in — repeat per ingredient.
+- [x] Wrap drifts within his arena once the first delivery lands, making each drop-off jump a timed action. Carrying stays safe per the confirmed decision — full jump/stomp available while carrying, Wrap's movement never costs a life.
+- [x] Wrap only reaches his final "warmer, softer smile" pose (already built in F17) once all 6 are delivered under the new ritual.
 
 **Level pacing & challenge design** (raw points 4-7):
 - [x] **Real placement issue in F19, fixed 2026-07-20:** all 7 levels' bonus jump-challenge platforms sat near the level start (all at the template's shared x=935/945, right after the first gap). Relocated deeper into each route -- see `feature.md` F21 for exact positions and rationale per level.
@@ -105,7 +105,7 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 
 Then (not a Phase 4 group, but the next milestone once Phase 4 lands): resume the deferred L3-6 environment-art generation pass against the final redesigned layouts.
 
-**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Group 2 (L3-6 two-tier maze redesign) complete 2026-07-20** -- see F22. **Starting next: group 3, Wrap delivery ritual rework + L7 new content.**
+**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Group 2 (L3-6 two-tier maze redesign) complete 2026-07-20** -- see F22. **Group 3a (Wrap delivery ritual rework) complete 2026-07-20** -- see F23. **Still open in group 3: L7 new content** (environmental remixes / timing-chase segment / hidden detours) -- not yet started.
 
 ## Definition of Done — Full 7-Level MVP
 Superseded from the original single-level vertical-slice definition now that the complete game is built (2026-07-20):

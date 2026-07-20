@@ -157,25 +157,31 @@ position = Vector2(1600, 330)
 position = Vector2(1635, 330)
 
 [node name="LettuceDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("10_lettuce")]
-position = Vector2(1850, 330)
+position = Vector2(1680, 330)
+carry_to_wrap = true
 
 [node name="CheeseDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("11_cheese_ing")]
-position = Vector2(1920, 330)
+position = Vector2(1820, 330)
+carry_to_wrap = true
 
 [node name="GuacDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("12_guac_ing")]
-position = Vector2(1990, 330)
+position = Vector2(1960, 330)
+carry_to_wrap = true
 
 [node name="WrapBoss" parent="." instance=ExtResource("2_wrap")]
 position = Vector2(2050, 330)
 
 [node name="TomatoDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("13_tomato_ing")]
-position = Vector2(2110, 330)
+position = Vector2(2140, 330)
+carry_to_wrap = true
 
 [node name="SourCreamDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("14_sourcream_ing")]
-position = Vector2(2180, 330)
+position = Vector2(2320, 330)
+carry_to_wrap = true
 
 [node name="CrunchyShellDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("15_crunchyshell_ing")]
-position = Vector2(2250, 330)
+position = Vector2(2500, 330)
+carry_to_wrap = true
 
 [node name="BonusPlatform1" type="StaticBody2D" parent="."]
 position = Vector2(1750, 330)

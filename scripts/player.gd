@@ -16,6 +16,7 @@ const SLOW_TINT := Color(1.0, 0.85, 0.3)
 const WOBBLE_AMPLITUDE := 6.0
 const WOBBLE_SPEED := 18.0
 const ICE_ACCEL := 300.0  # px/s^2 -- much softer than the instant velocity snap used off-ice, so input lags into a slide
+const CARRY_OFFSET := Vector2(0, -45)  # Wrap finale delivery ritual (Phase 4): held above Cornchip's head, clear of the sprite
 
 # Emitted on every hit (obstacle or enemy), whatever the source -- Level1
 # listens to this to track lives, so any new hazard type gets lives-tracking
@@ -48,6 +49,36 @@ var spin_time_remaining := 0.0
 # trying to persist state across that boundary.
 var has_double_jump := false
 var air_jumps_used := 0
+
+# Wrap finale delivery ritual (Phase 4, confirmed 2026-07-20): carrying is
+# explicitly safe, not risky -- full jump/stomp stays available (this is a
+# plain reparent-and-follow, nothing here touches movement/jump/collision),
+# so carried_item just rides along as a child node. One at a time by design:
+# start_carrying() refuses a second item while one is already held.
+var carried_item: Node2D = null
+
+func start_carrying(item: Node2D) -> bool:
+	if carried_item != null:
+		return false
+	var old_parent := item.get_parent()
+	if old_parent:
+		old_parent.remove_child(item)
+	add_child(item)
+	item.position = CARRY_OFFSET
+	item.rotation = 0.0
+	carried_item = item
+	return true
+
+# Called by WrapBoss once the carried item is actually delivered -- hands
+# ownership back so the caller can free/animate it without the player still
+# tracking it as held.
+func take_carried_item() -> Node2D:
+	var item := carried_item
+	if item == null:
+		return null
+	remove_child(item)
+	carried_item = null
+	return item
 
 func _ready() -> void:
 	spawn_position = global_position
