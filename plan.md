@@ -48,8 +48,10 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 - [x] Playtested Level 1 post-fix -- confirmed good by the user (jump gaps/obstacles, parallax background, arena transition). Level 2 not yet played through.
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)
+Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): build the complete 7-level MVP per this existing plan, not just stop at the original single-level vertical slice.
 - [ ] Ability-gated upgrade system unlocked between levels
-- [ ] Levels 3–6 — **confirmed roster**, see `characters.txt` Bestiary by Level: Guac Stand, Market Tomatoes, Frosty Fridge, Sizzling Griddle, each with its own boss (Big Red, Sour Cream Sam, Iron Skillet still need art; Avocado already has art) and new enemies (Lime, Onion, Cherry Tomato, Ice Cube, Chive Bit, Grease Splatter still need art -- each generation batch confirmed with prompts before running)
+- [x] Level 3 (Guac Stand) built -- see `feature.md` F12. Avocado boss (jump-stomp, confirmed by the user as the standard defeat condition; his guac-puddle drop is a new terrain-hazard attack type via `boss.gd`'s new `hazard_scene` export), Lime (ranged, reuses `BossProjectile.tscn`) and Onion (stationary, introduces a proximity-based "screen wobble" nuisance effect via a new `wobble_radius` export + `player.gd`'s `apply_screen_wobble()`) as enemies. Ground/obstacles/ingredient are procedural placeholders -- Level 3's own environment-art pass (equivalent to F11) hasn't happened yet, deferred as its own confirmed batch rather than bundled into this gameplay pass.
+- [ ] Levels 4–6 — **confirmed roster**, see `characters.txt` Bestiary by Level: Market Tomatoes, Frosty Fridge, Sizzling Griddle, each with its own boss (Big Red, Sour Cream Sam, Iron Skillet still need art) and new enemies (Cherry Tomato, Ice Cube, Chive Bit, Grease Splatter still need art -- each generation batch confirmed with prompts before running)
 - [ ] Level 7: no separate ingredient boss, built entirely around the Wrap confrontation, preceded by a remix gauntlet of one earlier enemy per level
 - [ ] Wrap final-boss battle and end-game reconciliation scene
 - [ ] On-screen bean token counter (see `feature.md` FB13)
@@ -71,7 +73,8 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 Canonical list of confirmed product decisions lives in `instructions-ai.txt` under "Confirmed Product Decisions." Update both files together when a decision changes.
 
 ## Open Questions / Risks
-- **Onion's fume-line decoration is missing from 2 of its 8 frames** (see Phase 1 note above) -- ship as-is (the blur/wobble gameplay effect doesn't depend on the art showing fumes), try to recover it with a crop-script tweak (risk: might let real noise back in elsewhere), or pay to regenerate with a prompt tuned to draw thicker/larger fumes more likely to survive processing?
+- ~~Onion's fume-line decoration is missing from 2 of its 8 frames~~ -- resolved: user confirmed ship as-is.
+- **Level 3 needs its own environment-art pass** (obstacles, ground tile, hazard fill, background/parallax, and a real ingredient icon -- equivalent to F11 for Levels 1-2). Currently all procedural placeholders. Not yet scheduled; needs its own confirmed prompt batch before any paid generation runs.
 - Whether the Wrap final battle plays as straight combat like other bosses, or shifts tone for the reconciliation moment.
 - Reference art/style direction still needed for the sprite-generation pipeline.
-- Levels 3-6 need new art (Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter) -- each batch gets confirmed with prompts before generating, per standing practice.
+- Levels 4-6 need new art (Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter) -- each batch gets confirmed with prompts before generating, per standing practice.

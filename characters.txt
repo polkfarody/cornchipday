@@ -57,10 +57,11 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Enemies:** Cheese returns, with its sleep effect (see Regular Enemies above). Jalapeño, a hopping enemy that's otherwise a standard side-hit stun.
 - **Palette/setting:** tiled nacho bar, cheese-yellow.
 
-### Level 3 — Guac Stand
-- **Boss:** Avocado (already designed/generated)
-- **Enemies:** Lime (user-specified, additions.txt) — a wedge of lime that squirts toxic lime juice at Cornchip, a ranged attack (standard hit/stun like other projectiles). Replaces an earlier AI-invented version that had it reversing Cornchip's controls -- dropped now that a real spec exists. Onion — a stationary enemy whose nearby presence blurs/wobbles the screen briefly (a nuisance, not a hit). Neither has art yet.
+### Level 3 — Guac Stand (built)
+- **Boss:** Avocado. Defeat condition confirmed by the user: jump-stomp, same as every other boss -- the guac-puddle drops are terrain to dodge between hits, not part of how he's defeated.
+- **Enemies:** Lime (user-specified, additions.txt) — a wedge of lime that squirts toxic lime juice at Cornchip, a ranged attack (standard hit/stun like other projectiles, reuses `BossProjectile.tscn`). Onion — a stationary enemy (`boss.gd`'s `move_speed = 0`) whose nearby presence briefly wobbles the screen (new `wobble_radius` export + `player.gd`'s `apply_screen_wobble()`, a camera-offset jitter reusing the run-bob's sine-wave technique) rather than costing a life; still stompable like any regular enemy on direct contact.
 - **Palette/setting:** produce stand, greens.
+- **Onion's missing fume-line decoration** (2 of 8 generated frames, see `plan.md` Phase 1): user confirmed ship as-is rather than attempt a crop-script recovery or pay to regenerate.
 
 ### Level 4 — Market Tomatoes
 - **Boss:** Big Red — a giant tomato that splits into two Cherry Tomato enemies partway through the fight, an evolving-fight-pattern boss rather than Hot Sauce's single-phase loop.
@@ -83,6 +84,5 @@ No separate ingredient-boss precedes this one — the level is built entirely ar
 ## Open Items
 - Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
 - Confirm Cheese's visual silhouette (currently unspecified/placeholder art).
-- Confirm whether every boss is defeated the same way (jump-stomp, see `feature.md` F5) or each has a unique defeat condition — e.g. can Avocado be stomped directly, or must Cornchip avoid the guacamole and find another opening? The Bestiary plan already assumes some bosses change the fight itself (Sour Cream Sam's icy floor, Iron Skillet's heating floor) rather than needing a unique defeat condition.
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.
-- Levels 3-6 need new art generated for: Lime, Onion, Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter. Each generation batch will be confirmed with prompts before running, per standing practice.
+- Levels 4-6 need new art generated for: Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter. Each generation batch will be confirmed with prompts before running, per standing practice. (Lime and Onion, Level 3's pair, already have art and are built -- see Level 3 above.)

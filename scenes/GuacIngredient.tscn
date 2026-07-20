@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ingredient.gd" id="1_ingredient"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_guac"]
+radius = 16
+
+[node name="GuacIngredient" type="Area2D"]
+script = ExtResource("1_ingredient")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_guac")
+
+[node name="Blob" type="Polygon2D" parent="."]
+color = Color(0.45, 0.62, 0.16, 1)
+polygon = PackedVector2Array(16, 0, 11, 11, 0, 16, -11, 11, -16, 0, -11, -11, 0, -16, 11, -11)
+
+[node name="Highlight" type="Polygon2D" parent="Blob"]
+position = Vector2(-4, -4)
+color = Color(0.65, 0.85, 0.3, 0.7)
+polygon = PackedVector2Array(5, 0, 3.5, 3.5, 0, 5, -3.5, 3.5, -5, 0, -3.5, -3.5, 0, -5, 3.5, -3.5)

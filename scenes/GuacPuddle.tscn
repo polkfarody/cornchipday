@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/guac_puddle.gd" id="1_guac_puddle"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/avocado_boss/avocado_boss_guac_puddle.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puddle"]
+size = Vector2(70, 30)
+
+[node name="GuacPuddle" type="Area2D"]
+script = ExtResource("1_guac_puddle")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_puddle")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -46)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_tex")

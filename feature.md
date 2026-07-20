@@ -106,21 +106,29 @@ User-requested: levels should have jump-over obstacles (not just gaps to jump ac
 
 **Generation notes:** obstacles and background-scenery items (cactus, string lights, chip, cheese drip, window views) are icon-style assets on solid magenta, same treatment as character art. Hazard-fill and ground-tile textures are NOT magenta/chroma-key assets -- they're requested directly as seamless tileable patterns, since the whole image is the visible texture rather than an icon to key out. Same reference images (`cornchip_frame1.png`, `hot_sauce_boss_frame1.png`) used for all, for style consistency.
 
+### F12 — Level 3 (Guac Stand)
+- Boss: Avocado (3-hit, jump-stomp -- confirmed by the user as the standard defeat condition, same as every other boss so far). Attack is a new hazard *type*, not a projectile: `boss.gd` gained a `hazard_scene` export (parallel to `projectile_scene`) that drops a static ground hazard at the boss's own feet on the attack beat instead of firing something at the player. `GuacPuddle.tscn`/`guac_puddle.gd` stuns on touch like any obstacle and self-frees after 4 seconds so puddles from a long fight don't keep piling up in the arena.
+- Enemies: Lime (new, 2-hit ranged -- reuses the plain `BossProjectile.tscn`, same "standard hit" tier as Salsa Bowl) and Onion (new, 1-hit, stationary via `boss.gd`'s `move_speed = 0`). Onion introduces a genuinely new interaction: proximity, not touch, matters. `boss.gd` gained a `wobble_radius` export, checked every physics frame against the player's distance (not an Area2D touch event); in range, it calls a new `player.gd` method `apply_screen_wobble()`, which jitters `Camera2D.offset` with a sine wave -- the same technique already used for the run-cycle sprite bob, just applied to the camera instead. No life cost, matching the "a nuisance, not a hit" spec in `characters.txt`.
+- Lime's sprite sheet came back with 9 poses instead of the standard 8 (an extra squirt-attack frame, same anomaly plan.md already noted for this batch) -- used frames 5 and 6 as the two attack phases and skipped 7, per the standing "pick 2 of the 3, no cleanup needed" call.
+- Its own ingredient: `GuacIngredient.tscn` is a **procedural placeholder** (a `Polygon2D` blob, no generated art yet) -- Level 3's art pass (obstacles, ground tile, hazard fill, parallax background, ingredient icon, equivalent to F11 for Levels 1-2) hasn't happened yet and needs its own confirmed prompt batch before any paid generation runs, per standing practice. Jump-over obstacles are likewise plain procedural `Polygon2D` crates for the same reason -- both are placeholders, not a finished art pass.
+- Ground has 2 real jump gaps, same overall scale as Level 2 (this level doesn't get Level 1's "epic" treatment either).
+- `next_level_path` points to `Level4.tscn`, which doesn't exist yet -- same forward-declared pattern as every prior level.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
-- ~~FB2 — Remaining 6 levels~~ — Level 2 (Nacho Kitchen) built, see F10. Guac Stand, Market Tomatoes, Frosty Fridge, Sizzling Griddle, and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
+- ~~FB2 — Remaining 6 levels~~ — Level 2 (Nacho Kitchen) and Level 3 (Guac Stand) built, see F10/F12. Market Tomatoes, Frosty Fridge, Sizzling Griddle, and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
 - **FB3** — Wrap final-boss battle and end-game reconciliation scene (depends on FB9's boss-battle structure)
 - **FB4** — Full art pass across all characters/levels for visual consistency
 - **FB5** — Audio/music/SFX pass
 - **FB6** — 2-player local co-op with Cheeto
 - **FB7** — "Spin dash" upgrade: Cornchip spins rapidly, letting him plow through enemies unharmed while they comically fly off-screen (front- or back-flipping). Unlocked via the Air Fryer collectible (see below). Candidate for the ability-gated upgrade system (FB1).
-- ~~FB8 — Stomp-to-defeat~~ and ~~FB9 — Per-level boss battles~~ — built, see F5. Cheese and Salsa Bowl are built as regular enemies (see F6); Avocado still needs its own boss instance (art is ready), and further stomp-triggered upgrades (beyond the baseline stomp) are still backlog.
+- ~~FB8 — Stomp-to-defeat~~ and ~~FB9 — Per-level boss battles~~ — built, see F5. Cheese and Salsa Bowl are built as regular enemies (see F6); Avocado is now built too (see F12). Further stomp-triggered upgrades (beyond the baseline stomp) are still backlog.
 - ~~FB10 — Air Fryer collectible~~ — built, see F8.
 - **FB11** — Tomato collectible: temporary power-up letting Cornchip fire seeds at enemies from range for a short duration. Still not built.
 - ~~FB12 — Lettuce as the main collectible token~~ — superseded: the collectible is beans, not lettuce (additions.txt correction), built as F7. Lettuce stays an ingredient-only concept.
 - **FB13** — On-screen bean token counter (icon + count, no reading-heavy number if avoidable). `level_base.gd` already tracks the count; only the display is missing.
 - ~~FB14 — Cheese's "sleep for 10 seconds" effect~~ — built, see F6.
-- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. Remaining for Levels 3-6: Lime, Onion, Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter -- none have art or code yet; each generation batch gets confirmed with prompts first, per standing practice.
+- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. ~~Lime and Onion~~ — built, see F12. Remaining for Levels 4-6: Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter -- none have art or code yet; each generation batch gets confirmed with prompts first, per standing practice.
 
 ## Explicitly Out of Scope (MVP)
 - Touch/mobile input

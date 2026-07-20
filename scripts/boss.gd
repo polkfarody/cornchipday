@@ -17,6 +17,8 @@ extends CharacterBody2D
 @export var ingredient_scene: PackedScene
 @export var ingredient_spawn_position: Vector2
 @export var sleep_duration: float = 0.0  # > 0: a side touch puts the player to sleep instead of the normal hit stun (Cheese)
+@export var hazard_scene: PackedScene  # set instead of projectile_scene: dropped at the boss's own feet on the attack beat rather than fired at the player (Avocado's guac puddle)
+@export var wobble_radius: float = 0.0  # > 0: player proximity (not touch) briefly wobbles the screen instead of a hit, checked every physics frame (Onion)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var hurt_area: Area2D = $HurtArea
@@ -34,7 +36,7 @@ func _ready() -> void:
 	start_x = global_position.x
 	hurt_area.body_entered.connect(_on_hurt_area_body_entered)
 	fire_timer.wait_time = fire_interval
-	fire_timer.timeout.connect(_fire_projectile)
+	fire_timer.timeout.connect(_perform_attack)
 	fire_timer.start()
 	sprite.play("idle")
 
@@ -78,6 +80,11 @@ func _physics_process(delta: float) -> void:
 	if sprite.animation != "move":
 		sprite.play("move")
 
+	if wobble_radius > 0.0:
+		var player := get_tree().get_first_node_in_group("player")
+		if player and global_position.distance_to(player.global_position) <= wobble_radius:
+			player.apply_screen_wobble(0.2)
+
 func _is_floor_ahead(direction: float) -> bool:
 	var shape: RectangleShape2D = body_collision.shape
 	var half_width: float = shape.size.x / 2.0
@@ -93,16 +100,27 @@ func _is_floor_ahead(direction: float) -> bool:
 	var result := space_state.intersect_ray(query)
 	return not result.is_empty()
 
-func _fire_projectile() -> void:
-	if is_defeated or action_lock > 0.0 or projectile_scene == null:
+# Periodic attack beat: fires a projectile at the player (most bosses) or
+# drops a static hazard at the boss's own feet instead (Avocado's guac
+# puddle -- a terrain hazard to dodge around, not something aimed at you).
+func _perform_attack() -> void:
+	if is_defeated or action_lock > 0.0:
+		return
+	if projectile_scene == null and hazard_scene == null:
 		return
 	sprite.play("attack")
 	action_lock = 0.5
-	var proj := projectile_scene.instantiate()
-	get_tree().current_scene.add_child(proj)
-	proj.global_position = global_position
-	var dir := -1.0 if sprite.flip_h else 1.0
-	proj.set_direction(dir * projectile_speed)
+	if projectile_scene:
+		var proj := projectile_scene.instantiate()
+		get_tree().current_scene.add_child(proj)
+		proj.global_position = global_position
+		var dir := -1.0 if sprite.flip_h else 1.0
+		proj.set_direction(dir * projectile_speed)
+	elif hazard_scene:
+		var shape: RectangleShape2D = body_collision.shape
+		var hazard := hazard_scene.instantiate()
+		get_tree().current_scene.add_child(hazard)
+		hazard.global_position = Vector2(global_position.x, global_position.y + body_collision.position.y + shape.size.y / 2.0)
 
 func _on_hurt_area_body_entered(body: Node) -> void:
 	if is_defeated or not body.is_in_group("player"):
