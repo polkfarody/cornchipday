@@ -22,12 +22,12 @@ Acting as the project's game development lead: a senior/principal-level Godot 4 
 | `feature.md` | Feature backlog/spec, tracked as scope evolves |
 
 ## Additions Log Workflow
-`additions.txt` is the user's own persistent scratchpad for quick ideas (new abilities, obstacle gags, level concepts, etc.), jotted down at any time without needing to ask first. It is never cleared or edited by the AI — it belongs to the user, and stays a permanent, growing running log across the whole project.
+`user-input.txt` (originally `additions.txt` — renamed by the user at some point; this charter now tracks the current filename) is the user's own persistent scratchpad for quick ideas (new abilities, obstacle gags, level concepts, etc.), jotted down at any time without needing to ask first. It is never cleared or edited by the AI — it belongs to the user, and stays a permanent, growing running log across the whole project.
 At the start of any work in this project:
-1. Read `additions.txt`.
+1. Read `user-input.txt`.
 2. Fold each item into the correct document — `feature.md` for mechanics/abilities, `game-brief.txt` for premise/tone changes, `characters.txt` for character details, `plan.md` if it changes roadmap/scope.
 3. Before merging, check whether an item is already reflected in the target doc (the file only grows, so old, already-merged entries stay in it) — skip anything already captured to avoid duplicate entries.
-4. Leave `additions.txt` itself completely untouched. Note the merge briefly to the user; don't ask permission to do this triage — that's the point of the file.
+4. Leave `user-input.txt` itself completely untouched. Note the merge briefly to the user; don't ask permission to do this triage — that's the point of the file. (Operating Principle 4 still applies to the *content* of what gets merged: folding a raw idea into a doc as a tracked, unbuilt item doesn't authorize spending real effort on it — that still needs a direct go-ahead, per the Phase 4 items in `plan.md`.)
 
 ## Current Objective
 Direct user mandate (2026-07-20): design and implement the complete 7-level MVP, start to end, following the existing confirmed plan — not just the original single-level vertical slice. User input then iterates on top of that. This does not relax Operating Principle 4 — content not already confirmed in `plan.md`/`characters.txt` (new characters, mechanics, level concepts) still needs a direct go-ahead before real effort is spent on it.
@@ -39,7 +39,10 @@ Direct user mandate (2026-07-20): design and implement the complete 7-level MVP,
 - **Accessibility:** No reading required anywhere; instructions and story communicated visually
 - **Humor delivery:** Physical/visual comedy, not text or voice-over
 - **Art pipeline:** AI-generated sprites, iterated toward one consistent style
-- **MVP scope:** Single vertical-slice level, not the full 7-level progression
+- **MVP scope:** Single vertical-slice level, not the full 7-level progression (superseded — full 7-level MVP shipped 2026-07-20, see `plan.md` Phase 2)
+- **Maze-style level paths (Phase 4, confirmed 2026-07-20):** two-tier, reconverging — a raised platform route and the ground route both available through most of a level's length, rejoining before the boss arena. Camera stays horizontal-follow with a taller deadzone; explicitly not a full multi-screen vertical-scroll maze.
+- **World map (Phase 4, confirmed 2026-07-20):** one connected path in level order (curves for visual variety, not true branching routes). Cornchip avatar walks node-to-node in 4 directions; walking back replays any unlocked level.
+- **Wrap delivery carry mechanic (Phase 4, confirmed 2026-07-20):** carrying an ingredient to Wrap is safe, not risky — Cornchip keeps full jump/stomp ability while carrying, and Wrap's evasive movement can't cost a life. The challenge is timing/positioning the delivery jump, not another hit-point risk, consistent with the gentle-stakes pillar.
 
 ## Next Steps
 Superseded as a standalone checklist by `plan.md`'s Roadmap, which is the single tracked source of truth for status (this list drifted out of sync with it once — not maintaining two parallel checklists again). As of 2026-07-20: Level 1 and Level 2 are fully built including their environment-art pass; two Phase 1 items remain open (a scene-graph node cleanup in `Level1.tscn`, and the first real playtest) before Phase 2 (Levels 3-7 + Wrap finale) begins in earnest. See `plan.md` for the live checklist.
