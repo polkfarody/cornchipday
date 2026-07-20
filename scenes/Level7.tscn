@@ -1,0 +1,174 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/WrapBoss.tscn" id="2_wrap"]
+[ext_resource type="PackedScene" path="res://scenes/CheeseEnemy.tscn" id="3_cheese"]
+[ext_resource type="PackedScene" path="res://scenes/JalapenoEnemy.tscn" id="4_jalapeno"]
+[ext_resource type="PackedScene" path="res://scenes/LimeEnemy.tscn" id="5_lime"]
+[ext_resource type="PackedScene" path="res://scenes/BossProjectile.tscn" id="6_lime_projectile"]
+[ext_resource type="PackedScene" path="res://scenes/CherryTomatoEnemy.tscn" id="7_cherrytomato"]
+[ext_resource type="PackedScene" path="res://scenes/IceCubeEnemy.tscn" id="8_icecube"]
+[ext_resource type="PackedScene" path="res://scenes/GreaseSplatterEnemy.tscn" id="9_greasesplatter"]
+[ext_resource type="PackedScene" path="res://scenes/Ingredient.tscn" id="10_lettuce"]
+[ext_resource type="PackedScene" path="res://scenes/CheeseIngredient.tscn" id="11_cheese_ing"]
+[ext_resource type="PackedScene" path="res://scenes/GuacIngredient.tscn" id="12_guac_ing"]
+[ext_resource type="PackedScene" path="res://scenes/TomatoIngredient.tscn" id="13_tomato_ing"]
+[ext_resource type="PackedScene" path="res://scenes/SourCreamIngredient.tscn" id="14_sourcream_ing"]
+[ext_resource type="PackedScene" path="res://scenes/CrunchyShellIngredient.tscn" id="15_crunchyshell_ing"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="16_life_icon"]
+[ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="17_bean"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
+size = Vector2(1036, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundB"]
+size = Vector2(710, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_groundC"]
+size = Vector2(1337, 80)
+
+[node name="Level7" type="Node2D"]
+script = ExtResource("0_level_base")
+grants_double_jump = true
+
+[node name="Backdrop" type="ColorRect" parent="."]
+offset_left = -700.0
+offset_top = -600.0
+offset_right = 2800.0
+offset_bottom = 500.0
+color = Color(0.9, 0.75, 0.5, 1)
+
+[node name="GroundA" type="StaticBody2D" parent="."]
+position = Vector2(200, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+position = Vector2(-218, 0)
+shape = SubResource("RectangleShape2D_groundA")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+offset_left = -742.0
+offset_top = -40.0
+offset_right = 300.0
+offset_bottom = 200.0
+color = Color(0.6, 0.42, 0.2, 1)
+
+[node name="GroundB" type="StaticBody2D" parent="."]
+position = Vector2(945, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
+shape = SubResource("RectangleShape2D_groundB")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+offset_left = -355.0
+offset_top = -40.0
+offset_right = 355.0
+offset_bottom = 200.0
+color = Color(0.6, 0.42, 0.2, 1)
+
+[node name="GroundC" type="StaticBody2D" parent="."]
+position = Vector2(1795, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundC"]
+position = Vector2(263.5, 0)
+shape = SubResource("RectangleShape2D_groundC")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+offset_left = -405.0
+offset_top = -40.0
+offset_right = 966.0
+offset_bottom = 200.0
+color = Color(0.85, 0.68, 0.35, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(75, 317)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Life1" type="TextureRect" parent="HUD"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 56.0
+offset_bottom = 56.0
+texture = ExtResource("16_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life2" type="TextureRect" parent="HUD"]
+offset_left = 64.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 56.0
+texture = ExtResource("16_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life3" type="TextureRect" parent="HUD"]
+offset_left = 108.0
+offset_top = 20.0
+offset_right = 144.0
+offset_bottom = 56.0
+texture = ExtResource("16_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BeanToken1" parent="." instance=ExtResource("17_bean")]
+position = Vector2(150, 330)
+
+[node name="BeanToken2" parent="." instance=ExtResource("17_bean")]
+position = Vector2(185, 330)
+
+[node name="CheeseEnemy1" parent="." instance=ExtResource("3_cheese")]
+position = Vector2(300, 330)
+
+[node name="JalapenoEnemy1" parent="." instance=ExtResource("4_jalapeno")]
+position = Vector2(420, 330)
+
+[node name="BeanToken3" parent="." instance=ExtResource("17_bean")]
+position = Vector2(460, 330)
+
+[node name="BeanToken4" parent="." instance=ExtResource("17_bean")]
+position = Vector2(620, 330)
+
+[node name="BeanToken5" parent="." instance=ExtResource("17_bean")]
+position = Vector2(655, 330)
+
+[node name="LimeEnemy1" parent="." instance=ExtResource("5_lime")]
+position = Vector2(750, 330)
+projectile_scene = ExtResource("6_lime_projectile")
+
+[node name="CherryTomatoEnemy1" parent="." instance=ExtResource("7_cherrytomato")]
+position = Vector2(950, 330)
+
+[node name="IceCubeEnemy1" parent="." instance=ExtResource("8_icecube")]
+position = Vector2(1150, 330)
+
+[node name="GreaseSplatterEnemy1" parent="." instance=ExtResource("9_greasesplatter")]
+position = Vector2(1500, 330)
+
+[node name="BeanToken6" parent="." instance=ExtResource("17_bean")]
+position = Vector2(1600, 330)
+
+[node name="BeanToken7" parent="." instance=ExtResource("17_bean")]
+position = Vector2(1635, 330)
+
+[node name="LettuceDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("10_lettuce")]
+position = Vector2(1850, 330)
+
+[node name="CheeseDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("11_cheese_ing")]
+position = Vector2(1920, 330)
+
+[node name="GuacDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("12_guac_ing")]
+position = Vector2(1990, 330)
+
+[node name="WrapBoss" parent="." instance=ExtResource("2_wrap")]
+position = Vector2(2050, 330)
+
+[node name="TomatoDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("13_tomato_ing")]
+position = Vector2(2110, 330)
+
+[node name="SourCreamDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("14_sourcream_ing")]
+position = Vector2(2180, 330)
+
+[node name="CrunchyShellDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("15_crunchyshell_ing")]
+position = Vector2(2250, 330)

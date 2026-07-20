@@ -1,7 +1,7 @@
 # Cornchip Day — Development Plan
 
-## Current Phase: MVP Vertical Slice
-Goal: prove the core loop is fun and age-appropriate before committing to all 7 levels.
+## Current Phase: Full 7-Level MVP Complete
+As of 2026-07-20, all 7 levels are built and playable start to finish (see Phase 2 below), per the direct user mandate in `instructions-ai.txt` to build the complete game rather than stop at the original single-level vertical slice. Current focus is Phase 3 polish: the Levels 3-6 environment-art pass and a full interactive playtest of the whole game.
 
 ## Roadmap
 
@@ -49,28 +49,32 @@ Goal: prove the core loop is fun and age-appropriate before committing to all 7 
 
 ### Phase 2 — Full 7-Level Progression (post vertical-slice validation)
 Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): build the complete 7-level MVP per this existing plan, not just stop at the original single-level vertical slice.
-- [ ] Ability-gated upgrade system unlocked between levels
 - [x] Level 3 (Guac Stand) built -- see `feature.md` F12. Avocado boss (jump-stomp, confirmed by the user as the standard defeat condition; his guac-puddle drop is a new terrain-hazard attack type via `boss.gd`'s new `hazard_scene` export), Lime (ranged, reuses `BossProjectile.tscn`) and Onion (stationary, introduces a proximity-based "screen wobble" nuisance effect via a new `wobble_radius` export + `player.gd`'s `apply_screen_wobble()`) as enemies. Ground/obstacles/ingredient are procedural placeholders -- Level 3's own environment-art pass (equivalent to F11) hasn't happened yet, deferred as its own confirmed batch rather than bundled into this gameplay pass. Post-launch fix: the Avocado boss was originally placed too close to the arena's entrance edge (per direct playtest feedback) -- moved deeper in (x=1795 -> 2050).
 - [x] Level 4 (Market Tomatoes) built -- see `feature.md` F13. Big Red is the first "evolving fight" boss: splits into two Cherry Tomato enemies on the killing blow instead of dying normally (`boss.gd`'s new `split_into_scene`/`shared_defeat_group` mechanism, confirmed with the user before building since it's a genuinely new fight structure). **A real race-condition bug was caught and fixed before shipping**, not after: a headless script that kills both spawned Cherry Tomato pieces back-to-back found the ingredient never dropped (0 instead of 1) -- `queue_free()` doesn't leave a node's groups until its deferred free actually runs, so two same-frame deaths each still saw the other as "still alive." Fixed by having each piece call `remove_from_group()` synchronously as the first step of its own death. Salsa Bowl "returns tougher" via a plain `fire_interval` override, no new code. Cherry Tomato needed a regeneration pass (see below).
 - [x] Level 5 (Frosty Fridge) built -- see `feature.md` F14. Sour Cream Sam is the first boss with no attack at all -- the icy arena floor is the entire challenge, via a new reusable `IceZone.tscn`/`player.gd` `is_on_ice` state (`move_toward`-based sliding instead of the normal instant velocity snap), confirmed with the user before building. Ice Cube (fastest enemy yet) and Chive Bit (smallest yet, placed as a 3-instance cluster for "small swarms") as enemies.
 - [x] Found and fixed a real fairness bug via direct playtest feedback, in two rounds: Grease Splatter originally patrolled (`move_speed = 25`, `patrol_half_width = 40`), which the user correctly called "impossible to get past." First fix (making it stationary) was necessary but not sufficient -- redoing the jump-arc math properly showed that even stationary, its 53px-tall hurtbox needed clearing for a horizontal span (100px, hazard width + player width) that *exceeds* the ~81px window a single jump can stay above that height for. It was genuinely, geometrically impossible, not just hard, and my first fix missed that. Real fix, per the user's own suggestion: **double jump**, added as a new permanent ability (`player.gd`'s `has_double_jump`/`air_jumps_used`, one extra air-jump reset on landing) granted starting Level 6 rather than from the start of the game, so Levels 1-5's jump gaps (tuned around the single-jump ~154px range) keep their original difficulty. Granted per-level via `level_base.gd`'s new `grants_double_jump` export rather than trying to persist state across the scene-reload boundary between levels (the same lesson Air Fryer/spin-dash already taught: `has_spin_dash` doesn't survive `change_scene_to_file()`). A double-jump timed near the first jump's apex reaches roughly double the single-jump height and covers ~205px of "high enough" horizontal distance -- over 2x the 100px danger zone, comfortable margin verified analytically (the exact jump-arc math, not a guess) rather than via a live headless playtest, since simulated keyboard input doesn't register through this project's headless test harness (same limitation noted for Level 5's ice feel). **Level 7, when built, needs `grants_double_jump = true` too** so the ability carries forward into the finale rather than disappearing.
 - [x] Level 6 (Sizzling Griddle) built -- see `feature.md` F15. Iron Skillet is the second no-attack boss; his arena runs a new self-cycling `HeatZone` (safe -> warning flash -> hot, hurts a grounded player once per hot phase), confirmed with the user before building and verified correct via a headless script driving a real Player instance through several cycles. Jalapeño/Onion return tougher via plain instance overrides. Grease Splatter is the first genuinely unstompable enemy (`boss.gd`'s new `cannot_be_stomped` export) -- verified via headless script that a stomp-shaped hit does nothing to it (and hurts the player instead) while spin-dash still works. **This closes out Levels 2-6 of Phase 2 -- only Level 7 (the Wrap finale) remains before the full 7-level MVP is complete.**
-- [ ] Level 7: no separate ingredient boss, built entirely around the Wrap confrontation, preceded by a remix gauntlet of one earlier enemy per level
-- [ ] Wrap final-boss battle and end-game reconciliation scene
+- [x] Level 7 (The Wrap Finale) built -- see `feature.md` F17. Tone resolved by direct user design: not combat. A remix gauntlet (one returning enemy per Level 1-6, no new assets) leads to Wrap's arena, where the 6 already-built ingredient scenes are placed as delivery pickups; reaching this level at all already proves all 6 were earned (the level chain only advances on ingredient collection), so no new cross-level save state was needed. New `wrap.gd`/`WrapBoss.tscn` (deliberately not a `boss.gd` instance -- no health, no combat, doesn't fit that model) tracks deliveries via a `wrap_delivery` group, lights up at 6/6 (his existing Phase-1-generated "warmer, softer smile" pose), and a jump-onto landing triggers `player.gd`'s new `win_celebration()` -- a simple in-place celebration per the user's explicit choice, no dedicated ending scene. Double jump carried forward via `grants_double_jump = true`. **Verified end-to-end via headless script**: withholds light-up at 5/6, ignores touches before lighting up and non-jump touches after, only completes on a proper jump-onto after 6/6. **This completes the full 7-level MVP -- every level, boss, and mechanic in the confirmed plan is now built.**
+- [ ] Ability-gated upgrade system beyond double jump / Air Fryer (post-MVP stretch, see Phase 3)
 - [ ] On-screen bean token counter (see `feature.md` FB13)
 - [ ] Tomato power-up (see `feature.md` FB11)
 
 ### Phase 3 — Polish & Post-MVP Stretch
-- ~~Textures and style consistency pass~~ — scoped and detailed for Levels 1-2, see the Phase 1 item above and `feature.md` F11 (obstacles, hazard fills, ground tiles, scenery, parallax window depth). Levels 3-7 will need their own equivalent pass once built.
+- ~~Textures and style consistency pass~~ — scoped and detailed for Levels 1-2, see the Phase 1 item above and `feature.md` F11 (obstacles, hazard fills, ground tiles, scenery, parallax window depth).
+- [ ] **Environment-art pass for Levels 3-6** (equivalent to F11) -- all four still use procedural placeholder ground/obstacles/ingredient icons. Needs its own confirmed prompt batch before any paid generation runs.
+- [ ] **Full interactive playtest of the complete 7-level game, start to finish** -- every level has been individually playtested and fixed as it was built, but the whole game hasn't been run through end to end in one sitting yet.
 - [ ] Full AI-art pass across all levels/characters for visual consistency (FB4)
 - [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)
 - [ ] 2-player local co-op investigation (Cheeto)
 
-## Definition of Done — Vertical Slice
-- Playable, single level, start to finish, keyboard only
-- No game-over screen; running out of lives restarts the level rather than ending the game
-- No text required to understand any mechanic
-- Ingredient-collection loop functions with clear visual feedback
+## Definition of Done — Full 7-Level MVP
+Superseded from the original single-level vertical-slice definition now that the complete game is built (2026-07-20):
+- [x] Playable, all 7 levels, start to finish, keyboard only
+- [x] No game-over screen; running out of lives restarts the current level rather than ending the game
+- [x] No text required to understand any mechanic
+- [x] Ingredient-collection loop functions with clear visual feedback, culminating in the Wrap finale's delivery-and-jump-in ending
+- [ ] Full interactive playtest of the whole game start to finish (see Phase 3)
+- [ ] Environment art for Levels 3-6 (see Phase 3) -- functionally complete but visually placeholder
 
 ## Decision Log
 Canonical list of confirmed product decisions lives in `instructions-ai.txt` under "Confirmed Product Decisions." Update both files together when a decision changes.

@@ -140,10 +140,19 @@ Verified analytically rather than via a live headless playtest (simulated keyboa
 - Its own ingredient: `CrunchyShellIngredient.tscn`, another procedural placeholder -- Level 6 environment art deferred the same way as Levels 3-5.
 - `next_level_path` points to `Level7.tscn` (the Wrap finale), not yet built. This closes out Phase 2's Levels 2-6 -- only Level 7 remains before the full 7-level MVP is complete.
 
+### F17 — Level 7 (The Wrap Finale)
+- Tone resolved by direct user design, not the open question it was in earlier docs: no combat at all for the finale. Structure: a remix gauntlet (one returning enemy per Level 1-6 -- Cheese, Jalapeño, Lime, Cherry Tomato, Ice Cube, Grease Splatter -- no new assets) leads to Wrap's arena.
+- Wrap himself is deliberately **not** a `boss.gd` instance -- new `wrap.gd`/`WrapBoss.tscn`. He has no health, doesn't patrol, isn't damaged or defeated; forcing that mismatch into the shared boss script would have stretched it well past its actual model (a combat entity) for an object that's fundamentally a narrative set-piece. He tracks deliveries via any node in a new `wrap_delivery` group (same idiom `level_base.gd` already uses for `bean_token`) rather than needing bespoke wiring per delivery item.
+- The 6 "delivery" ingredients are the exact same `Ingredient`/`CheeseIngredient`/`GuacIngredient`/`TomatoIngredient`/`SourCreamIngredient`/`CrunchyShellIngredient` scenes already built for Levels 1-6 -- just placed as pickups in this level, no new scenes needed. **No new cross-level save state was needed either**: since the level chain only advances by collecting each level's ingredient, reaching Level 7 at all already proves all 6 were earned along the way.
+- Win condition: at 6/6 deliveries, Wrap switches to his existing frame-8 pose (generated back in Phase 1 as "a warmer, softer smiling pose" -- a perfect fit found rather than needing new art) and a jump-onto landing (the exact same fall-and-land shape every boss already uses for a stomp) triggers `player.gd`'s new `win_celebration()`: physics processing stops, Cornchip plays a new `celebrate` animation (`cornchip_frame8.png`, generated in Phase 1 and never wired into `Player.tscn` until now). Per the user's explicit choice, no dedicated ending scene -- a simple in-place celebration, matching MVP scope.
+- **Verified via headless script** end to end: 5/6 deliveries correctly withholds the light-up; a touch before lighting up does nothing; a non-jump-shaped touch even after lighting up does nothing; only a proper jump-onto landing after 6/6 triggers the win, freezing the player and playing the celebrate animation.
+- Double jump (F16) is carried forward (`grants_double_jump = true` on `Level7.tscn`) since it's meant to be a permanent ability from Level 6 on, not lost at the finale.
+- **This completes the full 7-level MVP** -- every level, boss, and mechanic in the confirmed plan is now built. Remaining work is polish: the Levels 3-6 environment-art pass (still procedural placeholders) and a full interactive playtest start to finish.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
-- ~~FB2 — Remaining 6 levels~~ — Levels 2-6 built, see F10/F12/F13/F14/F15. Only the Wrap finale (Level 7) still to go — see `characters.txt` Bestiary by Level.
-- **FB3** — Wrap final-boss battle and end-game reconciliation scene (depends on FB9's boss-battle structure)
+- ~~FB2 — Remaining 6 levels~~ — Levels 2-6 built, see F10/F12/F13/F14/F15.
+- ~~FB3 — Wrap final-boss battle and end-game reconciliation scene~~ — built, see F17. Not a combat battle in the end -- an ingredient-delivery ritual plus a jump-in to complete the ultimate crunch wrap, per the user's direct design. **The full 7-level MVP is now complete.**
 - **FB4** — Full art pass across all characters/levels for visual consistency
 - **FB5** — Audio/music/SFX pass
 - **FB6** — 2-player local co-op with Cheeto

@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/wrap.gd" id="1_wrap"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame1.png" id="tex_idle1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame2.png" id="tex_idle2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame8.png" id="tex_celebrate"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_touch"]
+size = Vector2(50, 70)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wrap"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_idle2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_celebrate")
+}],
+"loop": true,
+"name": &"celebrate",
+"speed": 5.0
+}]
+
+[node name="WrapBoss" type="Node2D"]
+script = ExtResource("1_wrap")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(0.28, 0.28)
+sprite_frames = SubResource("SpriteFrames_wrap")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="TouchArea" type="Area2D" parent="."]
+position = Vector2(0, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TouchArea"]
+shape = SubResource("RectangleShape2D_touch")

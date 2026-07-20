@@ -101,6 +101,17 @@ func grant_spin_dash() -> void:
 func grant_double_jump() -> void:
 	has_double_jump = true
 
+# The Wrap finale (characters.txt Bestiary by Level, Level 7): jumping into a
+# lit-up Wrap after delivering all 6 ingredients ends the game right there --
+# no next level to transition to, so this just freezes the player in a happy
+# pose rather than handing control back.
+func win_celebration() -> void:
+	set_physics_process(false)
+	velocity = Vector2.ZERO
+	sprite.position = SPRITE_BASE_POSITION
+	sprite.rotation_degrees = 0.0
+	sprite.play("celebrate")
+
 # Sour Cream Sam's arena (characters.txt Bestiary by Level, Level 5): the
 # challenge is the icy floor itself, not a separate attack -- toggled by
 # IceZone.tscn's body_entered/body_exited over the boss arena, not a timed

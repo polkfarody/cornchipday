@@ -80,11 +80,11 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Double jump unlocked starting this level** (see `feature.md` F16) -- added after direct playtest feedback that Grease Splatter, even stationary, was genuinely too tall for a single jump to clear (confirmed with the actual jump-arc math, not just a guess). A permanent new ability from here on, not a pickup.
 - **Palette/setting:** kitchen grill station, reds/oranges.
 
-### Level 7 — The Wrap (Finale)
-No separate ingredient-boss precedes this one — the level is built entirely around the Wrap confrontation. A short remix gauntlet of one enemy from each earlier level (no new assets needed) leads into Wrap himself as the true final boss. Tone (straight combat vs. a gentler reconciliation moment) is still an open question — see `game-brief.txt`.
+### Level 7 — The Wrap (Finale) (built)
+No separate ingredient-boss precedes this one. Tone, resolved by direct user design: not combat at all. A remix gauntlet (one returning enemy per Level 1-6: Cheese, Jalapeño, Lime, Cherry Tomato, Ice Cube, Grease Splatter -- no new assets) leads to an arena where Wrap stands, no health, no attack, not fought. Six delivery pickups (the same `Ingredient`/`CheeseIngredient`/`GuacIngredient`/`TomatoIngredient`/`SourCreamIngredient`/`CrunchyShellIngredient` scenes already built for Levels 1-6, just placed as tokens in this arena) are collected by walking into them, same interaction as any pickup. Reaching Level 7 at all already proves all 6 were earned, since the level chain only advances on ingredient collection -- no new cross-level save state needed. Once all 6 are delivered, Wrap lights up (his existing "warmer, softer smile" pose); jumping onto him (a stomp-shaped landing, matching every other boss's detection) completes the ultimate crunch wrap and ends the game in a simple in-place celebration -- see `feature.md` F17.
+Double jump (F16) is carried forward into this level (`grants_double_jump = true`) since it's meant to be permanent from Level 6 onward.
 
 ## Open Items
-- Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
-- Confirm Cheese's visual silhouette (currently unspecified/placeholder art).
-- Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.
+- Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization -- low priority now that the full game is built and all art is already locked in, but still an open loop in this doc.
+- All 7 levels are now built end-to-end (see `plan.md`). Remaining known work is entirely polish, not new mechanics: the environment-art pass for Levels 3-6 (still procedural placeholders) and a full interactive playtest of the complete game start to finish.
 - Levels 1-6 are all fully cast now (every boss/enemy has art and code). Level 7 (The Wrap finale) needs Wrap's own boss-fight art -- his 8-pose grid already exists from early Phase 1 work, so likely just needs confirming it's still suitable rather than a new generation batch.
