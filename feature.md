@@ -129,9 +129,15 @@ User-requested: levels should have jump-over obstacles (not just gaps to jump ac
 - Its own ingredient: `SourCreamIngredient.tscn`, another procedural placeholder -- Level 5 environment art deferred the same way as Levels 3 and 4.
 - `next_level_path` points to `Level6.tscn`, not yet built.
 
+### F15 — Level 6 (Sizzling Griddle)
+- Boss: Iron Skillet is the second boss with no attack at all (`projectile_scene`/`hazard_scene`/`split_into_scene` unset), same as Sour Cream Sam -- the arena floor is the whole challenge. New `HeatZone.tscn`/`heat_zone.gd`, the sibling of Level 5's `IceZone`: a self-looping timer cycles safe (4s) -> warning flash (0.8s, a fairness cue for the target 5-8 year old audience) -> hot (2s) -> repeat. While hot, any body inside the zone that's grounded (`is_on_floor()`) and has a `hit_by_obstacle` method takes exactly one hit per hot phase (a per-cycle latch prevents repeat hits even if the player recovers and stays put). Confirmed with the user before building. **Verified via a headless script** driving a real `Player.tscn` instance settled on a floor inside a fast-cycling zone: hit fires exactly once at the hot-phase transition, latch blocks a second hit through the rest of the phase, resets correctly on the next cycle.
+- Enemies: Jalapeño and Onion return tougher via plain instance overrides in `Level6.tscn` (Jalapeño: `max_health` 1->2, `move_speed` 55->65; Onion: `wobble_radius` 100->140) -- no script changes. Grease Splatter (new) is the first enemy that's genuinely immune to stomping: `boss.gd` gained a `cannot_be_stomped` export that forces `is_stomp` false regardless of fall angle, so any contact stuns the player like a side-touch instead of defeating it. The Air Fryer spin-dash still works on it (no stated exception to its "defeats anything you touch" rule in F8). **Verified via headless script**: a stomp-shaped contact leaves it undamaged and stuns the player; a spin-dash contact still defeats it.
+- Its own ingredient: `CrunchyShellIngredient.tscn`, another procedural placeholder -- Level 6 environment art deferred the same way as Levels 3-5.
+- `next_level_path` points to `Level7.tscn` (the Wrap finale), not yet built. This closes out Phase 2's Levels 2-6 -- only Level 7 remains before the full 7-level MVP is complete.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
-- ~~FB2 — Remaining 6 levels~~ — Levels 2-5 built, see F10/F12/F13/F14. Sizzling Griddle and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
+- ~~FB2 — Remaining 6 levels~~ — Levels 2-6 built, see F10/F12/F13/F14/F15. Only the Wrap finale (Level 7) still to go — see `characters.txt` Bestiary by Level.
 - **FB3** — Wrap final-boss battle and end-game reconciliation scene (depends on FB9's boss-battle structure)
 - **FB4** — Full art pass across all characters/levels for visual consistency
 - **FB5** — Audio/music/SFX pass
@@ -143,7 +149,7 @@ User-requested: levels should have jump-over obstacles (not just gaps to jump ac
 - ~~FB12 — Lettuce as the main collectible token~~ — superseded: the collectible is beans, not lettuce (additions.txt correction), built as F7. Lettuce stays an ingredient-only concept.
 - **FB13** — On-screen bean token counter (icon + count, no reading-heavy number if avoidable). `level_base.gd` already tracks the count; only the display is missing.
 - ~~FB14 — Cheese's "sleep for 10 seconds" effect~~ — built, see F6.
-- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. ~~Lime and Onion~~ — built, see F12. ~~Big Red and Cherry Tomato~~ — built, see F13. ~~Sour Cream Sam, Ice Cube, and Chive Bit~~ — built, see F14. Remaining for Level 6: Iron Skillet, Grease Splatter -- no art or code yet; generation batch gets confirmed with prompts first, per standing practice.
+- ~~FB15 — Queso Grande and Jalapeño, Lime and Onion, Big Red and Cherry Tomato, Sour Cream Sam/Ice Cube/Chive Bit, Iron Skillet and Grease Splatter~~ — all built, see F10/F12/F13/F14/F15. Every boss/enemy through Level 6 now has art and code; only Wrap (Level 7's final boss) remains, and his art already exists from early Phase 1 work.
 
 ## Explicitly Out of Scope (MVP)
 - Touch/mobile input

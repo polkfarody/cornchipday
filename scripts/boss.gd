@@ -23,6 +23,7 @@ extends CharacterBody2D
 @export var split_count: int = 2
 @export var split_offset_x: float = 30.0
 @export var shared_defeat_group: String = ""  # when set, only drops the ingredient on death if no other member of this group is still alive -- set programmatically on split-spawned pieces, not meant to be hand-authored in a scene file
+@export var cannot_be_stomped: bool = false  # Grease Splatter: a jump-from-above contact hurts the player like any other touch instead of defeating it -- must be avoided entirely, not fought
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var hurt_area: Area2D = $HurtArea
@@ -134,7 +135,7 @@ func _on_hurt_area_body_entered(body: Node) -> void:
 	if body.get("is_spinning") == true:
 		_take_stomp_hit(body)
 		return
-	var is_stomp: bool = body.velocity.y > 0.0 and body.global_position.y < global_position.y - 10.0
+	var is_stomp: bool = not cannot_be_stomped and body.velocity.y > 0.0 and body.global_position.y < global_position.y - 10.0
 	if is_stomp:
 		_take_stomp_hit(body)
 	elif sleep_duration > 0.0 and body.has_method("put_to_sleep"):

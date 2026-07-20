@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/boss.gd" id="1_boss"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/grease_splatter/grease_splatter_frame1.png" id="tex_idle1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/grease_splatter/grease_splatter_frame2.png" id="tex_idle2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/grease_splatter/grease_splatter_frame3.png" id="tex_move1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/grease_splatter/grease_splatter_frame4.png" id="tex_move2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/grease_splatter/grease_splatter_frame7.png" id="tex_hit"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/grease_splatter/grease_splatter_frame8.png" id="tex_defeated"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(44, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
+size = Vector2(60, 56)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_greasesplatter"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_idle2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_move1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_move2")
+}],
+"loop": true,
+"name": &"move",
+"speed": 3.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_hit")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_defeated")
+}],
+"loop": false,
+"name": &"defeated",
+"speed": 5.0
+}]
+
+[node name="GreaseSplatterEnemy" type="CharacterBody2D"]
+script = ExtResource("1_boss")
+max_health = 1
+move_speed = 25.0
+patrol_half_width = 40.0
+cannot_be_stomped = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_greasesplatter")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="HurtArea" type="Area2D" parent="."]
+position = Vector2(0, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
+shape = SubResource("RectangleShape2D_hurt")
+
+[node name="FireTimer" type="Timer" parent="."]

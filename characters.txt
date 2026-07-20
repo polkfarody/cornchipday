@@ -74,9 +74,9 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Enemies:** Ice Cube (new, 1-hit, fast -- highest `move_speed` of any enemy so far). Chive Bit (new, 1-hit, tiny -- smallest scale of any character so far, placed in a cluster of 3 for the "small swarms" description rather than any new spawner code).
 - **Palette/setting:** walk-in fridge, cool blues.
 
-### Level 6 — Sizzling Griddle (Crunchy Shell)
-- **Boss:** Iron Skillet — the whole arena floor periodically heats up (can't stand still), an escalation of Sour Cream Sam's floor-changes-the-fight idea.
-- **Enemies:** Jalapeño and Onion return tougher (explicit callback, not brand new) alongside one new one: Grease Splatter — hazard-only, cannot be stomped, must be avoided entirely (a deliberately different interaction type from every stompable enemy so far).
+### Level 6 — Sizzling Griddle (Crunchy Shell) (built)
+- **Boss:** Iron Skillet — no attack of any kind, same as Sour Cream Sam; the arena floor itself is the challenge. New `HeatZone.tscn`/`heat_zone.gd` (same family as `IceZone.tscn`): cycles safe (4s) -> warning flash (0.8s) -> hot (2s) -> repeat, hurting any grounded player inside it during the hot phase ("can't stand still"). Design confirmed with the user before building, including the warning-flash fairness detail for the target 5-8 year old audience. Verified via headless script: exactly one hit per hot phase (a latch resets each cycle), correct phase timing.
+- **Enemies:** Jalapeño returns tougher (2-hit instead of 1, faster). Onion returns tougher (`wobble_radius` 100 -> 140). Grease Splatter (new) is the first enemy that genuinely cannot be stomped -- `boss.gd`'s new `cannot_be_stomped` export skips the stomp-from-above check entirely, so any contact (including from above) hurts the player instead of defeating it; the Air Fryer spin-dash is the one thing that still defeats it, matching its established "defeats anything you touch" rule with no stated exception. Verified via headless script: a stomp-shaped contact leaves it undamaged and stuns the player, spin-dash still defeats it.
 - **Palette/setting:** kitchen grill station, reds/oranges.
 
 ### Level 7 — The Wrap (Finale)
@@ -86,4 +86,4 @@ No separate ingredient-boss precedes this one — the level is built entirely ar
 - Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
 - Confirm Cheese's visual silhouette (currently unspecified/placeholder art).
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.
-- Level 6 needs new art generated for: Iron Skillet, Grease Splatter. Each generation batch will be confirmed with prompts before running, per standing practice.
+- Levels 1-6 are all fully cast now (every boss/enemy has art and code). Level 7 (The Wrap finale) needs Wrap's own boss-fight art -- his 8-pose grid already exists from early Phase 1 work, so likely just needs confirming it's still suitable rather than a new generation batch.

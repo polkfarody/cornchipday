@@ -195,6 +195,16 @@ $sprites = @(
         "hopping/bouncing quickly in place, an energetic tiny hop, alternating a slight lean left and right" `
         "a quick playful tumble/somersault toward the viewer" `
         "a dizzy, defeated pose, slightly squished") },
+    @{ Name = "iron_skillet_grid"; Prompt = (Grid-Prompt `
+        "a cast-iron skillet character with a wooden handle, dark metallic body with a browned/seasoned texture, small comedic cartoon legs, a big fiery intense face." `
+        "shuffling side to side with a sizzle, leaning left then right" `
+        "radiating heat waves, glowing red-hot around the rim, heat shimmer intensifying" `
+        "a dizzy, defeated pose, slightly dented") },
+    @{ Name = "grease_splatter_grid"; Prompt = (Grid-Prompt `
+        "a cartoon splatter of hot sizzling grease, glossy amber-brown blob shape with small bubble details, small comedic stick legs, a mischievous crackling expression." `
+        "hopping/sizzling in place with small bubbling pops, alternating a slight lean left and right" `
+        "a quick bubbling burst, popping outward then settling" `
+        "a dizzy, defeated pose, slightly flattened") },
 
     # Level 1/2 environment art pass (feature.md F11) -- obstacles, scenery,
     # and window/parallax views are icon-on-magenta like everything above;
