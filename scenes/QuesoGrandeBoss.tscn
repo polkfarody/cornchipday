@@ -72,7 +72,7 @@ animations = [{
 script = ExtResource("1_boss")
 max_health = 3
 move_speed = 15.0
-patrol_half_width = 20.0
+patrol_half_width = 60.0
 fire_interval = 3.5
 projectile_speed = 130.0
 

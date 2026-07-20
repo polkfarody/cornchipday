@@ -64,8 +64,16 @@ func _physics_process(delta: float) -> void:
 	# Also turn around immediately on hitting something solid (e.g. a jump
 	# obstacle) instead of silently stalling against it until the
 	# distance-based check above eventually (never) flips direction.
-	if get_slide_collision_count() > 0:
-		patrol_direction = -patrol_direction
+	# Only a near-horizontal collision normal counts as a wall: standing on
+	# flat ground registers a slide collision every single frame too (floor
+	# snap contact, normal ~(0,-1)), which would otherwise flip the
+	# direction every frame and make the character jitter in place instead
+	# of patrolling -- confirmed with a headless repro before this fix.
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		if absf(collision.get_normal().x) > 0.5:
+			patrol_direction = -patrol_direction
+			break
 	sprite.flip_h = patrol_direction < 0.0
 	if sprite.animation != "move":
 		sprite.play("move")

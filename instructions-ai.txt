@@ -30,8 +30,7 @@ At the start of any work in this project:
 4. Leave `additions.txt` itself completely untouched. Note the merge briefly to the user; don't ask permission to do this triage — that's the point of the file.
 
 ## Current Objective
-1. Flesh out the documentation set above so it fully covers professional, speedy development practice (in progress).
-2. Deliver a vertical-slice MVP: one fully polished level demonstrating core run/jump movement, one obstacle type, and the ingredient-collection loop.
+Direct user mandate (2026-07-20): design and implement the complete 7-level MVP, start to end, following the existing confirmed plan — not just the original single-level vertical slice. User input then iterates on top of that. This does not relax Operating Principle 4 — content not already confirmed in `plan.md`/`characters.txt` (new characters, mechanics, level concepts) still needs a direct go-ahead before real effort is spent on it.
 
 ## Confirmed Product Decisions
 - **Platform:** Desktop, keyboard-only input (MVP)
@@ -43,15 +42,4 @@ At the start of any work in this project:
 - **MVP scope:** Single vertical-slice level, not the full 7-level progression
 
 ## Next Steps
-- [x] Draft `plan.md`, `readme.md`, `feature.md`
-- [x] Install Godot 4 and scaffold the project
-- [x] Build a first pass of the vertical-slice MVP level (run/jump, one obstacle, one ingredient collectible)
-- [x] Real illustrated art for Cornchip (idle/run/jump/hit) and all 4 confirmed bosses (Hot Sauce, Avocado, Cheese, Salsa Bowl), generated via Gemini/AI Studio and wired into the Player/boss scenes
-- [x] Stomp-to-defeat combat, a full Hot Sauce boss fight, and a real first level (bean tokens, Cheese + Salsa Bowl enemies, Air Fryer power-up, 3-life system) — see `plan.md` Phase 1 for detail
-- [x] Cheese's proper "sleep for 10 seconds" effect built (`player.gd` `put_to_sleep()`), replacing the generic stun for that one enemy
-- [x] Level-to-level transition system: `level1.gd` generalized into reusable `level_base.gd` (lives/HUD/bean-tracking + `next_level_path`/`register_level_ingredient()` for progressing between levels)
-- [x] Real art generated for the salsa obstacle and lettuce ingredient (plus a new cheese ingredient icon), wired into `Obstacle.tscn`/`Ingredient.tscn`
-- [x] Sprite pipeline hardened: reference images now included in generation requests for style consistency; the grid-slicer detects however many rows a layout actually has instead of assuming 2; transparent pixels are now fully zeroed (RGB *and* alpha), not just alpha; the crop script can no longer reprocess and corrupt its own prior output
-- [ ] **Awaiting confirmation, not yet built into a level:** art was generated for Queso Grande (Level 2 boss) and Jalapeño (Level 2 enemy) — both are AI-invented, not user-specified. Per Operating Principle 4, these need an explicit go-ahead before any further building, even though the art already exists. See the question raised in-session.
-- [ ] Playtest the level and iterate
-- [ ] Build Level 2 (Nacho Kitchen) once the above is resolved
+Superseded as a standalone checklist by `plan.md`'s Roadmap, which is the single tracked source of truth for status (this list drifted out of sync with it once — not maintaining two parallel checklists again). As of 2026-07-20: Level 1 and Level 2 are fully built including their environment-art pass; two Phase 1 items remain open (a scene-graph node cleanup in `Level1.tscn`, and the first real playtest) before Phase 2 (Levels 3-7 + Wrap finale) begins in earnest. See `plan.md` for the live checklist.
