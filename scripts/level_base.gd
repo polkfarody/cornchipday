@@ -34,6 +34,8 @@ func _ready() -> void:
 		player.grant_double_jump()
 	for token in get_tree().get_nodes_in_group("bean_token"):
 		token.collected.connect(_on_bean_token_collected)
+	for pickup in get_tree().get_nodes_in_group("life_pickup"):
+		pickup.collected.connect(_on_life_pickup_collected)
 
 func _on_player_hit() -> void:
 	if level_complete:
@@ -47,6 +49,17 @@ func _on_player_hit() -> void:
 
 func _on_bean_token_collected() -> void:
 	bean_tokens_collected += 1
+
+# Extra-life pickup (feature.md backlog, direct user request): capped at
+# MAX_LIVES so the icon-only HUD never needs a 4th slot or a number. Reveals
+# the icon this exact life level corresponds to, mirroring how
+# _on_player_hit hides icons by index.
+func _on_life_pickup_collected() -> void:
+	if lives >= MAX_LIVES:
+		return
+	if lives < life_icons.size():
+		life_icons[lives].visible = true
+	lives += 1
 
 func register_level_ingredient(ingredient: Node) -> void:
 	ingredient.collected.connect(_on_level_ingredient_collected)

@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cimqxbx5i60t8" path="res://Assets/generated/environment/level2/l2_cheese_drip.png" id="15_cheese_drip"]
 [ext_resource type="Texture2D" uid="uid://dchmvgp0pmh53" path="res://Assets/generated/environment/level2/l2_window_view.png" id="16_window_view"]
 [ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="17_airfryer"]
+[ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="18_life_pickup"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -33,6 +34,9 @@ size = Vector2(15, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_medium"]
 size = Vector2(54, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bonus_platform"]
+size = Vector2(60, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
 size = Vector2(58, 58)
@@ -277,3 +281,16 @@ position = Vector2(1795, 330)
 projectile_scene = ExtResource("4_slow_projectile")
 ingredient_scene = ExtResource("2_ingredient")
 ingredient_spawn_position = Vector2(1795, 330)
+
+[node name="BonusPlatform1" type="StaticBody2D" parent="."]
+position = Vector2(945, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BonusPlatform1"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="Polygon2D" parent="BonusPlatform1"]
+color = Color(0.7, 0.55, 0.15, 1)
+polygon = PackedVector2Array(-30, 30, 30, 30, 30, -30, -30, -30)
+
+[node name="BonusLifePickup1" parent="." instance=ExtResource("18_life_pickup")]
+position = Vector2(945, 275)

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ChiveBitEnemy.tscn" id="6_chivebit"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="7_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="8_bean"]
+[ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="9_life_pickup"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -24,6 +25,9 @@ size = Vector2(16, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_medium"]
 size = Vector2(42, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bonus_platform"]
+size = Vector2(60, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_large"]
 size = Vector2(22, 58)
@@ -194,3 +198,16 @@ position = Vector2(1485, 330)
 position = Vector2(2050, 330)
 ingredient_scene = ExtResource("2_ingredient")
 ingredient_spawn_position = Vector2(2050, 330)
+
+[node name="BonusPlatform1" type="StaticBody2D" parent="."]
+position = Vector2(945, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BonusPlatform1"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="Polygon2D" parent="BonusPlatform1"]
+color = Color(0.55, 0.7, 0.78, 1)
+polygon = PackedVector2Array(-30, 30, 30, 30, 30, -30, -30, -30)
+
+[node name="BonusLifePickup1" parent="." instance=ExtResource("9_life_pickup")]
+position = Vector2(945, 275)

@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://co5j5fpv6yv5w" path="res://Assets/generated/environment/level1/l1_cactus.png" id="17_cactus"]
 [ext_resource type="Texture2D" uid="uid://dg8lgmuhpoumd" path="res://Assets/generated/environment/level1/l1_string_lights.png" id="18_string_lights"]
 [ext_resource type="Texture2D" uid="uid://btsioems04pvs" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
+[ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="20_life_pickup"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(978, 80)
@@ -47,6 +48,9 @@ size = Vector2(22, 58)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(20, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bonus_platform"]
+size = Vector2(60, 60)
 
 [node name="Level1" type="Node2D" unique_id=1358928885]
 script = ExtResource("0_level_base")
@@ -552,3 +556,16 @@ position = Vector2(3400, 330)
 projectile_scene = ExtResource("6_boss_projectile")
 ingredient_scene = ExtResource("3_ingredient")
 ingredient_spawn_position = Vector2(3400, 330)
+
+[node name="BonusPlatform1" type="StaticBody2D" parent="."]
+position = Vector2(935, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BonusPlatform1"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="Polygon2D" parent="BonusPlatform1"]
+color = Color(0.6, 0.4, 0.2, 1)
+polygon = PackedVector2Array(-30, 30, 30, 30, 30, -30, -30, -30)
+
+[node name="BonusLifePickup1" parent="." instance=ExtResource("20_life_pickup")]
+position = Vector2(935, 275)

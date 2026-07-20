@@ -18,12 +18,16 @@
 [ext_resource type="PackedScene" path="res://scenes/CrunchyShellIngredient.tscn" id="15_crunchyshell_ing"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="16_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="17_bean"]
+[ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="18_life_pickup"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundB"]
 size = Vector2(710, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bonus_platform"]
+size = Vector2(60, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundC"]
 size = Vector2(1337, 80)
@@ -172,3 +176,16 @@ position = Vector2(2180, 330)
 
 [node name="CrunchyShellDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("15_crunchyshell_ing")]
 position = Vector2(2250, 330)
+
+[node name="BonusPlatform1" type="StaticBody2D" parent="."]
+position = Vector2(945, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BonusPlatform1"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="Polygon2D" parent="BonusPlatform1"]
+color = Color(0.75, 0.55, 0.25, 1)
+polygon = PackedVector2Array(-30, 30, 30, 30, 30, -30, -30, -30)
+
+[node name="BonusLifePickup1" parent="." instance=ExtResource("18_life_pickup")]
+position = Vector2(945, 275)
