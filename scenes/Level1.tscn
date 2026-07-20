@@ -558,7 +558,7 @@ ingredient_scene = ExtResource("3_ingredient")
 ingredient_spawn_position = Vector2(3400, 330)
 
 [node name="BonusPlatform1" type="StaticBody2D" parent="."]
-position = Vector2(935, 330)
+position = Vector2(2730, 330)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BonusPlatform1"]
 shape = SubResource("RectangleShape2D_bonus_platform")
@@ -568,4 +568,4 @@ color = Color(0.6, 0.4, 0.2, 1)
 polygon = PackedVector2Array(-30, 30, 30, 30, 30, -30, -30, -30)
 
 [node name="BonusLifePickup1" parent="." instance=ExtResource("20_life_pickup")]
-position = Vector2(935, 275)
+position = Vector2(2730, 275)

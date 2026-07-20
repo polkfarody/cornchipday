@@ -84,20 +84,28 @@ A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20,
 - [ ] Wrap only reaches his final "warmer, softer smile" pose (already built in F17) once all 6 are delivered under the new ritual — rework the trigger condition, not the pose itself.
 
 **Level pacing & challenge design** (raw points 4-7):
-- [ ] Real placement issue in F19: all 7 levels' bonus jump-challenge platforms sit near the level start, before any real stakes exist. Relocate deeper into each level's route, more embedded in the path than an obvious detour.
+- [x] **Real placement issue in F19, fixed 2026-07-20:** all 7 levels' bonus jump-challenge platforms sat near the level start (all at the template's shared x=935/945, right after the first gap). Relocated deeper into each route -- see `feature.md` F21 for exact positions and rationale per level.
 - [ ] Levels judged "a bit short" across the board — addressed structurally via the maze rework below rather than just padding existing routes.
 - [ ] Level 7 needs new content beyond the existing remix gauntlet + delivery ritual. **Confirmed direction: a blend of all three brainstormed flavors** — (a) environmental-gimmick remixes reusing L1-6's own hazard mechanics (ice, heat, guac) in new combinations, (b) a timing/chase-style segment (new to the game, no combat), (c) hidden/optional detours (extra beans/lives tucked behind new maze branching). Concrete design still to be drafted and confirmed before building.
 
 **Two-tier maze-style paths** (raw point 8):
 - [ ] **Confirmed scope: two-tier, reconverging** (see `instructions-ai.txt`) — most sections offer a raised platform route or the ground route, rejoining periodically before the boss arena; camera stays horizontal-follow with a taller deadzone, no new vertical-scroll camera system.
-- [ ] **Sequencing decision:** Levels 3-6 are still on procedural placeholder art (see the resequenced item above), while Levels 1-2 already have real generated art wired to specific ground positions — redesign L3-6's layout into two-tier form *first*, then run the deferred environment-art pass against the final layout. **L1/L2 maze retrofit scope not yet decided** — flagged for a direct go-ahead before touching either, since they're also the deliberately-simpler onboarding levels per `game-brief.txt` and already have real art tied to current positions.
+- [ ] **Sequencing decision:** Levels 3-6 are still on procedural placeholder art (see the resequenced item above), while Levels 1-2 already have real generated art wired to specific ground positions — redesign L3-6's layout into two-tier form *first*, then run the deferred environment-art pass against the final layout. **Confirmed 2026-07-20: Levels 1-2 stay as-is, not retrofitted.** They're the deliberately-simpler onboarding levels per `game-brief.txt` and already have real generated art wired to current ground positions — reworking that art for no gameplay gain wasn't worth it. Maze treatment is L3-6 only.
 
 **Title screen & world map** (raw points 9-10):
 - [ ] New `TitleScreen.tscn` — the game's actual entry point (currently boots straight into `Level1.tscn`), reading "Corn Chip Day." The title text itself is exempt from the no-reading-required pillar (it's the game's name, same as a box cover), but everything else on the screen should stay icon/animation-driven.
 - [ ] New `WorldMap.tscn` shown between levels (SMB3-style). **Confirmed: one connected path**, not true branching (see `instructions-ai.txt`) — Cornchip avatar walks node-to-node in 4 directions along a curving route. Walking forward advances to the next unlocked level; walking back replays any already-unlocked level (e.g. for more beans).
 - [ ] Needs new persistent "which levels are unlocked" state that survives scene changes — genuinely new territory, since nothing today persists across a level load except in-memory ability flags (`has_double_jump`/`has_spin_dash`), which explicitly *don't* survive `change_scene_to_file()`. Unlock progress needs to, so this likely wants an autoload/singleton — nothing built so far uses one.
 
-**Not yet started.** Build order across these five groups still needs to be proposed and confirmed with the user before any code changes begin.
+**Confirmed 2026-07-20: build order across the five groups**, proposed and confirmed with the user before any code changes:
+1. Jump-challenge platform relocation (all 7 levels) — smallest, fully-specified, no open design questions.
+2. L3-6 two-tier maze redesign — unblocks the paused environment-art spend as early as possible; biggest layout change, best done before more content stacks on top.
+3. Wrap delivery ritual rework + L7 new content (bundled — both touch only `Level7.tscn`/`WrapBoss.tscn`) — sequenced after L3-6 so L7's environmental-gimmick remixes can draw on the already-reshaped L3-6 layouts.
+4. Title screen + world map — biggest net-new architecture (first autoload/singleton in the project); last, so its node layout doesn't need revisiting if level count/order shifts during 2-3.
+
+Then (not a Phase 4 group, but the next milestone once Phase 4 lands): resume the deferred L3-6 environment-art generation pass against the final redesigned layouts.
+
+**Group 1 (jump-challenge platform relocation) complete 2026-07-20** -- see F21. **Starting next: group 2, L3-6 two-tier maze redesign.**
 
 ## Definition of Done — Full 7-Level MVP
 Superseded from the original single-level vertical-slice definition now that the complete game is built (2026-07-20):
@@ -114,7 +122,7 @@ Canonical list of confirmed product decisions lives in `instructions-ai.txt` und
 ## Open Questions / Risks
 - ~~Onion's fume-line decoration is missing from 2 of its 8 frames~~ -- resolved: user confirmed ship as-is.
 - **Levels 3-6 need their own environment-art pass, now sequenced after the Phase 4 maze redesign** (obstacles, ground tile, hazard fill, background/parallax, and real ingredient icons -- equivalent to F11 for Levels 1-2). Currently all procedural placeholders. Prompt batch still needs to be drafted and confirmed once the new two-tier layout for each level is finalized.
-- **Level 5's `move_toward`-based ice-sliding feel, and Level 6's heat-cycle feel/fairness, haven't been verified interactively** -- both are confirmed correct mechanically via headless scripts, but the actual in-game *feel* (timing, difficulty, whether the warning flash gives enough reaction time for a young player) needs a real playtest.
+- **Level 5's `move_toward`-based ice-sliding feel, and Level 6's heat-cycle feel/fairness, haven't been verified interactively** -- both are confirmed correct mechanically via headless scripts, but the actual in-game *feel* (timing, difficulty, whether the warning flash gives enough reaction time for a young player) needs a real playtest. This now also covers the relocated bonus platforms in both levels (see F21), which deliberately land inside the ice/heat zone -- confirm landing on the pedestal mid-slide/mid-heat-cycle feels fair, not cheap.
 - ~~Whether the Wrap final battle plays as straight combat like other bosses, or shifts tone for the reconciliation moment~~ -- resolved twice now: not combat (F17), and the Phase 4 delivery-ritual rework keeps it that way (carrying is safe, not another combat/hit-point risk).
 - Reference art/style direction still needed for the sprite-generation pipeline.
-- **Phase 4 build order not yet decided** -- five groups of work (Wrap delivery rework, jump-challenge relocation, L7 new content, L3-6 maze redesign, title screen + world map), plus an open call on whether L1/L2 get the maze treatment too. See Phase 4 in the Roadmap above.
+- ~~Phase 4 build order not yet decided~~ -- resolved 2026-07-20: order confirmed (jump-challenge relocation -> L3-6 maze redesign -> Wrap ritual + L7 content -> title screen/world map), and L1/L2 confirmed out of scope for the maze retrofit. See Phase 4 in the Roadmap above.

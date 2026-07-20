@@ -175,6 +175,20 @@ Direct user request ("more textures for the main character and wrap"), fulfilled
 - Cornchip's `run` animation was a single held frame with the actual sense of motion coming entirely from a procedural bob+tilt (`player.gd`'s `RUN_BOB_AMPLITUDE`/`RUN_TILT_DEGREES`, still there, now layered on top of a real 2-frame leg-alternating cycle instead of a static pose).
 - Wrap's `idle` animation went from a 2-frame (blink/weight-shift) loop to a 4-frame loop adding his two "walking, arms crossed" poses -- he doesn't actually move in Level 7 (stationary the whole finale, per `wrap.gd`), so this is idle-only variety rather than a real walk cycle, but it gives him more visible life during however long the player takes to gather the 6 deliveries.
 
+### F21 — Bonus Platform Relocation (Phase 4, Group 1)
+Direct user feedback: all 7 levels' `BonusPlatform1`/`BonusLifePickup1` (see F19) sat at the same template position (x=935 in Level 1, x=945 in Levels 2-7) -- right after the first hazard gap, before any real stakes existed in the route. Moved deeper into each level, same proven solid-pedestal design (unchanged), only position changed:
+- **Level 1** (935 -> 2730): past 3 of 4 hazard gaps and both Salsa Bowl enemies, shortly before the final gap into the Hot Sauce arena. Closest neighbor (BeanToken14) 70px clear.
+- **Level 2** (945 -> 1650): past the Jalapeño/Cheese enemies and both mid-level jump obstacles, between the Air Fryer pickup and the Queso Grande arena. Closest neighbor (AirFryer) 90px clear.
+- **Level 3** (945 -> 1800): past both Lime enemies and the first Onion, shortly before the Avocado arena. Closest neighbor (JumpObstacleLarge1) 100px clear.
+- **Level 4** (945 -> 1800): past both Cherry Tomato enemies and the Salsa Bowl, shortly before the Big Red arena. Closest neighbor (JumpObstacleLarge1) 100px clear.
+- **Level 5** (945 -> 1880): inside the ice-zone half of the level (unavoidable -- the ice floor covers the entire post-gap-2 route by design, and existing bean tokens already sit in that zone too), past the Ice Cube/Chive Bit cluster, before the Sour Cream Sam arena. Closest neighbor (boss) 170px clear.
+- **Level 6** (945 -> 1880): same reasoning as Level 5 but inside the heat-zone half -- reaching it now requires timing the heat cycle (see `heat_zone.gd`), consistent with the level's own central mechanic. Closest neighbor (boss) 170px clear.
+- **Level 7** (945 -> 1750): past the Grease Splatter enemy (unstompable), shortly before the delivery-item cluster and Wrap's arena. Closest neighbor (LettuceDelivery) 100px clear.
+
+Verified via a temporary headless script (instantiate each level, measure `BonusPlatform1`'s x-distance to every other gameplay node, flag anything under 50px) -- all 7 levels clear with 70-170px margin to the nearest enemy/obstacle/delivery item; ground/decorative-sprite nodes excluded from the check since their `position` reflects the whole segment's anchor, not a collidable footprint. Script discarded after use, matching this project's established ad hoc verification pattern (not a persisted test).
+
+Levels 5 and 6 placements deliberately land inside their level's ice/heat zone rather than avoiding it -- there was no viable pre-zone window large enough (the gap between the last enemy and the zone boundary was under 50px in both cases), and it's thematically consistent with "more difficult to find and use" per the raw feedback. Flagged here since it compounds with two already-open, not-yet-interactively-verified feel questions (ice-sliding precision, heat-cycle fairness) -- worth confirming during the eventual full playtest that landing on the pedestal while sliding/mid-heat-cycle feels fair, not cheap.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
 - ~~FB2 — Remaining 6 levels~~ — Levels 2-6 built, see F10/F12/F13/F14/F15.
