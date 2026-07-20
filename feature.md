@@ -122,9 +122,16 @@ User-requested: levels should have jump-over obstacles (not just gaps to jump ac
 - Its own ingredient: `TomatoIngredient.tscn`, another procedural placeholder like Level 3's -- Level 4 environment art is deferred the same way, not yet scheduled.
 - `next_level_path` points to `Level5.tscn`, not yet built.
 
+### F14 — Level 5 (Frosty Fridge)
+- Boss: Sour Cream Sam is the first boss with no attack of any kind (`projectile_scene`/`hazard_scene`/`split_into_scene` all unset) -- per `characters.txt`, the icy arena floor itself is the entire challenge, "changing how Cornchip's movement feels rather than adding another attack type." New `IceZone.tscn`/`ice_zone.gd`: a plain `Area2D` region trigger (not a hazard -- no life cost) that calls a new `player.gd` method `set_on_ice()` on entry/exit. While `is_on_ice` is true, horizontal movement switches from the normal instant velocity snap to `move_toward(velocity.x, target, ICE_ACCEL * delta)`, so input lags into a slide instead of stopping/turning immediately. Confirmed with the user before building since it's a new player-movement mechanic, not just an enemy config. Deliberately built as a generic reusable zone (not Sour-Cream-specific) for Level 6's heating floor to reuse the same pattern later.
+- Enemies: Ice Cube (new, 1-hit, the fastest `move_speed` of any character yet, matching its "fast" spec) and Chive Bit (new, 1-hit, the smallest `Sprite2D` scale of any character yet, matching "tiny" -- placed as 3 instances clustered together for "small swarms," no new spawner code needed).
+- Verification note: the `is_on_ice` zone-detection/toggle was confirmed correct via a headless script (teleporting the player in and out of the zone and checking the flag). The `move_toward` velocity-ramp itself couldn't be verified the same way -- simulated `Input.action_press()` didn't register through this particular headless harness, a test-tooling limitation rather than a sign of an engine or code issue (the toggle logic driving it is proven correct, and `move_toward` is a standard, well-understood built-in). Left for the user to feel-check directly during play, same as any other movement-feel question.
+- Its own ingredient: `SourCreamIngredient.tscn`, another procedural placeholder -- Level 5 environment art deferred the same way as Levels 3 and 4.
+- `next_level_path` points to `Level6.tscn`, not yet built.
+
 ## Backlog (Post-MVP, Not Yet Scheduled)
 - **FB1** — Ability-gated upgrade system spanning all 7 levels
-- ~~FB2 — Remaining 6 levels~~ — Level 2 (Nacho Kitchen), Level 3 (Guac Stand), and Level 4 (Market Tomatoes) built, see F10/F12/F13. Frosty Fridge, Sizzling Griddle, and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
+- ~~FB2 — Remaining 6 levels~~ — Levels 2-5 built, see F10/F12/F13/F14. Sizzling Griddle and the Wrap finale still to go — see `characters.txt` Bestiary by Level for the confirmed roster/order.
 - **FB3** — Wrap final-boss battle and end-game reconciliation scene (depends on FB9's boss-battle structure)
 - **FB4** — Full art pass across all characters/levels for visual consistency
 - **FB5** — Audio/music/SFX pass
@@ -136,7 +143,7 @@ User-requested: levels should have jump-over obstacles (not just gaps to jump ac
 - ~~FB12 — Lettuce as the main collectible token~~ — superseded: the collectible is beans, not lettuce (additions.txt correction), built as F7. Lettuce stays an ingredient-only concept.
 - **FB13** — On-screen bean token counter (icon + count, no reading-heavy number if avoidable). `level_base.gd` already tracks the count; only the display is missing.
 - ~~FB14 — Cheese's "sleep for 10 seconds" effect~~ — built, see F6.
-- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. ~~Lime and Onion~~ — built, see F12. ~~Big Red and Cherry Tomato~~ — built, see F13. Remaining for Levels 5-6: Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter -- none have art or code yet; each generation batch gets confirmed with prompts first, per standing practice.
+- ~~FB15 (partial) — Queso Grande and Jalapeño~~ — built, see F10. ~~Lime and Onion~~ — built, see F12. ~~Big Red and Cherry Tomato~~ — built, see F13. ~~Sour Cream Sam, Ice Cube, and Chive Bit~~ — built, see F14. Remaining for Level 6: Iron Skillet, Grease Splatter -- no art or code yet; generation batch gets confirmed with prompts first, per standing practice.
 
 ## Explicitly Out of Scope (MVP)
 - Touch/mobile input

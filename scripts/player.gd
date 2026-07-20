@@ -15,6 +15,7 @@ const FALL_RESPAWN_Y := 650.0  # missed a jump gap -- same consequence as any ot
 const SLOW_TINT := Color(1.0, 0.85, 0.3)
 const WOBBLE_AMPLITUDE := 6.0
 const WOBBLE_SPEED := 18.0
+const ICE_ACCEL := 300.0  # px/s^2 -- much softer than the instant velocity snap used off-ice, so input lags into a slide
 
 # Emitted on every hit (obstacle or enemy), whatever the source -- Level1
 # listens to this to track lives, so any new hazard type gets lives-tracking
@@ -32,6 +33,7 @@ var speed_multiplier := 1.0
 var wobble_time_remaining := 0.0
 var wobble_cycle_time := 0.0
 var camera_base_offset: Vector2
+var is_on_ice := false
 
 # Air Fryer power-up (feature.md FB7/FB10): once granted, pressing Up briefly
 # lets Cornchip defeat any enemy he touches instead of being hurt by it.
@@ -56,7 +58,11 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var direction := Input.get_axis("ui_left", "ui_right")
-	velocity.x = direction * SPEED * speed_multiplier
+	var target_velocity_x := direction * SPEED * speed_multiplier
+	if is_on_ice:
+		velocity.x = move_toward(velocity.x, target_velocity_x, ICE_ACCEL * delta)
+	else:
+		velocity.x = target_velocity_x
 	if direction != 0.0:
 		sprite.flip_h = direction < 0.0
 
@@ -76,6 +82,13 @@ func _physics_process(delta: float) -> void:
 
 func grant_spin_dash() -> void:
 	has_spin_dash = true
+
+# Sour Cream Sam's arena (characters.txt Bestiary by Level, Level 5): the
+# challenge is the icy floor itself, not a separate attack -- toggled by
+# IceZone.tscn's body_entered/body_exited over the boss arena, not a timed
+# effect like apply_slow/put_to_sleep.
+func set_on_ice(value: bool) -> void:
+	is_on_ice = value
 
 func _start_spin() -> void:
 	is_spinning = true

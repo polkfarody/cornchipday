@@ -69,9 +69,9 @@ A fun Mexican-restaurant vibe; the onboarding level, kept simple so the theme an
 - **Palette/setting:** outdoor market stalls, reds.
 - **Art note:** Cherry Tomato's first generation batch came back with readable text labels baked into every pose (a real defect, not shipped) -- regenerated clean with `gemini-3-pro-image`, same fix as the earlier F11 text-defect batch. Big Red's grid had the same "extra pose" anomaly as Lime's (10 frames instead of 8, from the crack-apart sequence rendering as disconnected blobs) -- used frames 1,2,3,4 (idle/move) plus 7 (dizzy, as the normal hit reaction) and 8 (fully-cracked, used as the split moment), skipped the redundant 5/6/9/10.
 
-### Level 5 — Frosty Fridge (Sour Cream)
-- **Boss:** Sour Cream Sam — the arena floor turns icy/slippery for this fight, changing how Cornchip's movement feels rather than adding another attack type.
-- **Enemies:** Ice Cube — fast, low-health, slides back and forth. Chive Bit — tiny, appears in small swarms.
+### Level 5 — Frosty Fridge (Sour Cream) (built)
+- **Boss:** Sour Cream Sam — has no projectile/hazard attack at all; per spec, the icy floor *is* the challenge. New `IceZone.tscn` (an `Area2D` covering the arena) toggles a new `player.gd` state (`is_on_ice`) on entry/exit; while true, horizontal movement uses `move_toward` (a gradual ramp) instead of the normal instant velocity snap, so Cornchip drifts/slides rather than stopping and turning on a dime. Reusable for any future arena-changes-the-fight boss (e.g. Level 6's heating floor).
+- **Enemies:** Ice Cube (new, 1-hit, fast -- highest `move_speed` of any enemy so far). Chive Bit (new, 1-hit, tiny -- smallest scale of any character so far, placed in a cluster of 3 for the "small swarms" description rather than any new spawner code).
 - **Palette/setting:** walk-in fridge, cool blues.
 
 ### Level 6 — Sizzling Griddle (Crunchy Shell)
@@ -86,4 +86,4 @@ No separate ingredient-boss precedes this one — the level is built entirely ar
 - Confirm the "draft — pending confirmation" personality notes for Cornchip, Wrap, and Cheese, or replace with your intended characterization.
 - Confirm Cheese's visual silhouette (currently unspecified/placeholder art).
 - Reference art or color/proportion direction for Cornchip and Wrap, to lock down before the sprite-generation pipeline starts producing final assets.
-- Levels 4-6 need new art generated for: Big Red, Cherry Tomato, Sour Cream Sam, Ice Cube, Chive Bit, Iron Skillet, Grease Splatter. Each generation batch will be confirmed with prompts before running, per standing practice. (Lime and Onion, Level 3's pair, already have art and are built -- see Level 3 above.)
+- Level 6 needs new art generated for: Iron Skillet, Grease Splatter. Each generation batch will be confirmed with prompts before running, per standing practice.

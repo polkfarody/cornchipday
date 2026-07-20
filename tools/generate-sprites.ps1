@@ -180,6 +180,21 @@ $sprites = @(
         "darting quickly side to side, an energetic fast hop, alternating a slight lean left and right" `
         "a quick playful pouncing lunge toward the viewer, crouching low then springing forward" `
         "a dizzy, defeated pose, slightly squished"); Model = "gemini-3-pro-image" },
+    @{ Name = "sour_cream_sam_grid"; Prompt = (Grid-Prompt `
+        "a friendly tub of sour cream character, smooth pale-white creamy body with a slight dollop-swirl on top, small comedic cartoon legs, a big blustery cool-tempered face." `
+        "shuffling side to side with a cold shiver, leaning left then right" `
+        "exhaling a chilling frosty breath, breath fogging then a burst of cold mist" `
+        "a dizzy, defeated pose, slightly melted/drooping") },
+    @{ Name = "ice_cube_grid"; Prompt = (Grid-Prompt `
+        "a cartoon ice cube character, translucent pale-blue with sharp geometric edges and visible sparkle highlights, small comedic stick legs, big round cartoon eyes, a mischievous grin." `
+        "sliding/skating quickly side to side, an energetic fast slide, alternating a slight lean left and right" `
+        "a quick spinning slide-dash toward the viewer, crouching low then sliding forward" `
+        "a dizzy, defeated pose, partially melted into a puddle") },
+    @{ Name = "chive_bit_grid"; Prompt = (Grid-Prompt `
+        "a tiny cartoon chive sprout character, thin bright-green stalks bundled together, small comedic stick legs, big round cartoon eyes, a cheeky grin, noticeably smaller and simpler than other characters." `
+        "hopping/bouncing quickly in place, an energetic tiny hop, alternating a slight lean left and right" `
+        "a quick playful tumble/somersault toward the viewer" `
+        "a dizzy, defeated pose, slightly squished") },
 
     # Level 1/2 environment art pass (feature.md F11) -- obstacles, scenery,
     # and window/parallax views are icon-on-magenta like everything above;
