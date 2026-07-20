@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dexeknrxj4esm" path="res://Assets/generated/characters/cornchip/cornchip_frame5.png" id="tex_jump1"]
 [ext_resource type="Texture2D" uid="uid://dbltojdnjjjxu" path="res://Assets/generated/characters/cornchip/cornchip_frame6.png" id="tex_jump2"]
 [ext_resource type="Texture2D" uid="uid://bscwwyaufk4rv" path="res://Assets/generated/characters/cornchip/cornchip_frame3.png" id="tex_run1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame4.png" id="tex_run2"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame8.png" id="tex_celebrate"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
@@ -55,10 +56,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("tex_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_run2")
 }],
 "loop": 1,
 "name": &"run",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=687729441 groups=["player"]]

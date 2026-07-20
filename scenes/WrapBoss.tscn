@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/wrap.gd" id="1_wrap"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame1.png" id="tex_idle1"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame2.png" id="tex_idle2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame3.png" id="tex_idle3"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame4.png" id="tex_idle4"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame8.png" id="tex_celebrate"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_touch"]
@@ -16,10 +18,16 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("tex_idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_idle3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_idle4")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 2.0
+"speed": 1.5
 }, {
 "frames": [{
 "duration": 1.0,
