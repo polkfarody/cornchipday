@@ -71,7 +71,7 @@ function Get-AssetSubdir([string]$name) {
         $character = $name -replace "_grid$", ""
         return "characters\$character"
     }
-    if ($name -in @("salsa_obstacle", "lettuce_ingredient", "cheese_ingredient")) {
+    if ($name -in @("salsa_obstacle", "lettuce_ingredient", "cheese_ingredient", "guac_ingredient", "tomato_ingredient", "sour_cream_ingredient", "crunchy_shell_ingredient")) {
         return "items"
     }
     if ($name -like "l1_*") {
@@ -79,6 +79,18 @@ function Get-AssetSubdir([string]$name) {
     }
     if ($name -like "l2_*") {
         return "environment\level2"
+    }
+    if ($name -like "l3_*") {
+        return "environment\level3"
+    }
+    if ($name -like "l4_*") {
+        return "environment\level4"
+    }
+    if ($name -like "l5_*") {
+        return "environment\level5"
+    }
+    if ($name -like "l6_*") {
+        return "environment\level6"
     }
     return ""
 }
@@ -225,7 +237,53 @@ $sprites = @(
     @{ Name = "l2_ground_tile"; Prompt = "A texture of a checkered nacho-bar floor, alternating warm yellow and tan square tiles. Plain tiles only -- no characters, faces, creatures, or icons of any kind in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
     @{ Name = "l2_chip"; Prompt = "A single cartoon tortilla chip, triangular, golden-tan with small brown speckles, for a platformer background decoration. $styleSuffix" },
     @{ Name = "l2_cheese_drip"; Prompt = "A single cartoon cheese drip/dollop hanging shape, glossy orange-yellow, for a platformer background decoration. $styleSuffix" },
-    @{ Name = "l2_window_view"; Prompt = "A window frame set into a tiled cheese-yellow kitchen wall, with a hazy, softer-detailed distant scene visible through the glass: a softly-lit dining area or second kitchen counter, suggesting depth beyond the window. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true }
+    @{ Name = "l2_window_view"; Prompt = "A window frame set into a tiled cheese-yellow kitchen wall, with a hazy, softer-detailed distant scene visible through the glass: a softly-lit dining area or second kitchen counter, suggesting depth beyond the window. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true },
+
+    # Level 3-6 environment art pass (equivalent to F11) -- every asset here
+    # uses gemini-3-pro-image from the start (per direct user instruction)
+    # rather than the flash-then-regen detour F11 needed for L1/L2. Obstacle
+    # prompts deliberately omit "with labels" (the wording that caused F11's
+    # readable-text defect on the L1 salsa jars).
+    @{ Name = "l3_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single wooden crate stacked with whole green avocados, rustic slatted wood, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: two stacked wooden crates of whole green avocados, rustic slatted wood, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: three stacked wooden crates of whole green avocados, topped with one oversized prize avocado, rustic slatted wood, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_hazard_fill"; Prompt = "A texture of bubbling chunky green guacamole, glossy surface with visible avocado chunk highlights. No characters, faces, or creatures of any kind anywhere in the pattern -- plain food texture only. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_ground_tile"; Prompt = "A texture of weathered wooden produce-stand planking, greenish-brown wood grain, plain boards only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_lime_bunch"; Prompt = "A hanging bunch of whole limes tied together with a simple twine bow, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_onion_braid"; Prompt = "A hanging braided string of whole onions, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l3_window_view"; Prompt = "A rustic wooden market-stall awning frame, with a hazy, softer-detailed distant scene visible beyond it: silhouettes of more produce stands and crates under daylight, suggesting depth beyond the frame. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+
+    @{ Name = "l4_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single wooden crate of round red tomatoes, rustic slatted wood, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: two stacked wooden crates of round red tomatoes, rustic slatted wood, no text or labels. No characters, faces, or creatures of any kind anywhere in the image -- the crates themselves only, nothing standing in front of or beside them. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: three stacked wooden crates of round red tomatoes, topped with one oversized tomato, rustic slatted wood, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_hazard_fill"; Prompt = "A texture of spilled glossy red marinara/tomato sauce, smooth glossy surface with subtle simmering highlights. $textureSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_ground_tile"; Prompt = "A texture of outdoor cobblestone market-square paving, warm red-brown stone tones, plain stones only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_chili_string"; Prompt = "A hanging string of red chili peppers tied together, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_awning_bunting"; Prompt = "A small triangle of red-and-white striped market bunting/awning fabric, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l4_window_view"; Prompt = "A red-and-white striped market-stall awning frame, with a hazy, softer-detailed distant scene visible beyond it: silhouettes of more market stalls and rooftops under daylight, suggesting depth beyond the frame. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+
+    @{ Name = "l5_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single frosty white plastic tub with a light coating of frost, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: two stacked frosty white plastic tubs with a light coating of frost, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: three stacked frosty white plastic tubs with a heavy coating of frost and small icicles, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_hazard_fill"; Prompt = "A texture of icy pale-blue slush, glossy surface with frost-crystal highlights and subtle cracks. $textureSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_ground_tile"; Prompt = "A texture of steel walk-in-fridge flooring with light frost patches, cool blue-gray metallic tones, plain flooring only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_icicles"; Prompt = "A cluster of hanging translucent pale-blue icicles, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_frost_puff"; Prompt = "A frosted metal shelf-edge with small puffs of cold mist rising off it, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l5_window_view"; Prompt = "A frosted metal fridge-shelving frame, with a hazy, softer-detailed distant scene visible beyond it: silhouettes of more shelving deeper in a walk-in fridge under cool blue light with soft fog, suggesting depth beyond the frame. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+
+    @{ Name = "l6_obstacle_small"; Prompt = "A cartoon obstacle for a platformer: a single stack of golden crunchy taco shells, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_obstacle_medium"; Prompt = "A cartoon obstacle for a platformer: two stacked crates of golden crunchy taco shells, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_obstacle_large"; Prompt = "A cartoon obstacle for a platformer: three stacked crates of golden crunchy taco shells topped with a metal spice tin with a warm heat glow, no text or labels. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_hazard_fill"; Prompt = "A texture of bubbling hot amber-brown grease, glossy surface with small bubble highlights. $textureSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_ground_tile"; Prompt = "A texture of a dark metal sizzling griddle surface with subtle grill marks and a warm orange glow, plain metal only -- no characters, faces, or creatures of any kind anywhere in the pattern. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_utensil_rack"; Prompt = "A hanging spatula and tongs on a small rack, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_shell_stack"; Prompt = "A small stack of golden crunchy taco shells, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l6_window_view"; Prompt = "A dark metal griddle vent-hood frame, with a hazy, softer-detailed distant kitchen scene visible beyond it: silhouettes of more kitchen equipment and shelving lit by warm orange lighting, suggesting depth beyond the frame. No translucent overlay effects, fog, or haze layered on top of the objects -- solid flat-shaded silhouettes only. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+
+    @{ Name = "guac_ingredient"; Prompt = "A cute cartoon scoop of green guacamole in a small bowl, collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "tomato_ingredient"; Prompt = "A cartoon whole red tomato collectible icon for a kids' video game, glossy highlight, small green stem, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "sour_cream_ingredient"; Prompt = "A cartoon dollop of white sour cream collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "crunchy_shell_ingredient"; Prompt = "A cartoon golden crunchy taco shell collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" }
 )
 
 if ($Only) {

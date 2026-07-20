@@ -1,7 +1,7 @@
 # Cornchip Day — Development Plan
 
-## Current Phase: Phase 4 Complete -- Playtest Needed Next
-As of 2026-07-20, all 7 levels are built and playable start to finish (Phase 2), and Phase 4's full level-redesign/meta-progression pass is also complete (all 5 groups: bonus-platform relocation, L3-6 two-tier maze paths, Wrap delivery ritual, new L7 content, title screen + world map). Everything in Phase 4 is headless-verified for correctness only, not feel. Immediate next step: a real interactive playtest of the whole game start to finish (title screen -> map -> all 7 levels), then the Levels 3-6 environment-art pass against the now-final maze layouts.
+## Current Phase: Phase 4 + L3-6 Art Pass Complete -- Playtest Needed Next
+As of 2026-07-20, all 7 levels are built and playable start to finish (Phase 2), Phase 4's full level-redesign/meta-progression pass is complete (all 5 groups: bonus-platform relocation, L3-6 two-tier maze paths, Wrap delivery ritual, new L7 content, title screen + world map), and the deferred Levels 3-6 environment-art pass is now done too (see `feature.md` F26) -- every level has real generated art, closing the last open item in the Full 7-Level MVP's Definition of Done. Everything is headless- and screenshot-verified for correctness/rendering, not feel. Immediate next step: a real interactive playtest of the whole game start to finish (title screen -> map -> all 7 levels).
 
 ## Roadmap
 
@@ -114,7 +114,7 @@ Superseded from the original single-level vertical-slice definition now that the
 - [x] No text required to understand any mechanic
 - [x] Ingredient-collection loop functions with clear visual feedback, culminating in the Wrap finale's delivery-and-jump-in ending
 - [ ] Full interactive playtest of the whole game start to finish (see Phase 3)
-- [ ] Environment art for Levels 3-6 (see Phase 3) -- functionally complete but visually placeholder
+- [x] Environment art for Levels 3-6 (see `feature.md` F26) -- real generated art wired into all four levels, replacing the procedural placeholders
 
 ## Decision Log
 Canonical list of confirmed product decisions lives in `instructions-ai.txt` under "Confirmed Product Decisions." Update both files together when a decision changes.
@@ -122,7 +122,7 @@ Canonical list of confirmed product decisions lives in `instructions-ai.txt` und
 ## Open Questions / Risks
 - **The entire new title screen -> world map -> level -> back-to-map loop has never been played interactively**, only headless-verified for logic correctness (see F25). This is now the single most important thing to playtest -- it's the actual game boot flow, so a bug here blocks playing anything.
 - ~~Onion's fume-line decoration is missing from 2 of its 8 frames~~ -- resolved: user confirmed ship as-is.
-- **Levels 3-6 need their own environment-art pass, now sequenced after the Phase 4 maze redesign** (obstacles, ground tile, hazard fill, background/parallax, and real ingredient icons -- equivalent to F11 for Levels 1-2). Currently all procedural placeholders. Prompt batch still needs to be drafted and confirmed once the new two-tier layout for each level is finalized.
+- ~~Levels 3-6 need their own environment-art pass~~ -- resolved 2026-07-20, see `feature.md` F26: all 36 assets generated, verified, and wired into all four levels. Two real bugs caught and fixed along the way (character bleed on 2 assets, and a parallax-backdrop screen-space sizing bug only visible via an actual rendered screenshot, not headless instantiation). Scenery-decoration placement was a judgment call worth a look during the eventual full playtest, and the F22 maze walkways / F19 bonus pedestals deliberately stayed untextured (out of the confirmed asset scope).
 - **Level 5's `move_toward`-based ice-sliding feel, and Level 6's heat-cycle feel/fairness, haven't been verified interactively** -- both are confirmed correct mechanically via headless scripts, but the actual in-game *feel* (timing, difficulty, whether the warning flash gives enough reaction time for a young player) needs a real playtest. This now also covers the relocated bonus platforms in both levels (see F21), which deliberately land inside the ice/heat zone -- confirm landing on the pedestal mid-slide/mid-heat-cycle feels fair, not cheap.
 - ~~Whether the Wrap final battle plays as straight combat like other bosses, or shifts tone for the reconciliation moment~~ -- resolved twice now: not combat (F17), and the Phase 4 delivery-ritual rework keeps it that way (carrying is safe, not another combat/hit-point risk).
 - Reference art/style direction still needed for the sprite-generation pipeline.

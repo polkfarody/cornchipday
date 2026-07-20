@@ -10,6 +10,14 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="7_life_icon"]
 [ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="8_bean"]
 [ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="9_life_pickup"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_obstacle_small.png" id="10_obstacle_small"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_obstacle_medium.png" id="11_obstacle_medium"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_obstacle_large.png" id="12_obstacle_large"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_ground_tile.png" id="13_ground_tile"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_hazard_fill.png" id="14_hazard_fill"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_icicles.png" id="15_icicles"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_frost_puff.png" id="16_frost_puff"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_window_view.png" id="17_window_view"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -51,12 +59,70 @@ size = Vector2(290, 20)
 script = ExtResource("0_level_base")
 level_number = 5
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="WindowParallax" type="ParallaxBackground" parent="."]
+
+[node name="BackdropLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0, 0)
+
+[node name="Backdrop" type="ColorRect" parent="WindowParallax/BackdropLayer"]
 offset_left = -700.0
-offset_top = -600.0
-offset_right = 2800.0
-offset_bottom = 500.0
+offset_top = -450.0
+offset_right = 5127.0
+offset_bottom = 750.0
 color = Color(0.75, 0.88, 0.95, 1)
+
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0.4, 1)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(400, 0)
+scale = Vector2(0.682, 0.682)
+texture = ExtResource("17_window_view")
+
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(1100, 0)
+scale = Vector2(0.682, 0.682)
+texture = ExtResource("17_window_view")
+
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(1800, 0)
+scale = Vector2(0.682, 0.682)
+texture = ExtResource("17_window_view")
+
+[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(2500, 0)
+scale = Vector2(0.682, 0.682)
+texture = ExtResource("17_window_view")
+
+[node name="IcicleCluster1" type="Sprite2D" parent="."]
+position = Vector2(380, -100)
+scale = Vector2(0.1238, 0.1238)
+texture = ExtResource("15_icicles")
+
+[node name="IcicleCluster2" type="Sprite2D" parent="."]
+position = Vector2(1150, -100)
+scale = Vector2(0.1238, 0.1238)
+texture = ExtResource("15_icicles")
+
+[node name="IcicleCluster3" type="Sprite2D" parent="."]
+position = Vector2(1950, -100)
+scale = Vector2(0.1238, 0.1238)
+texture = ExtResource("15_icicles")
+
+[node name="FrostPuff1" type="Sprite2D" parent="."]
+position = Vector2(700, 333)
+scale = Vector2(0.1285, 0.1285)
+texture = ExtResource("16_frost_puff")
+
+[node name="FrostPuff2" type="Sprite2D" parent="."]
+position = Vector2(1550, 333)
+scale = Vector2(0.1285, 0.1285)
+texture = ExtResource("16_frost_puff")
+
+[node name="FrostPuff3" type="Sprite2D" parent="."]
+position = Vector2(2200, 333)
+scale = Vector2(0.1285, 0.1285)
+texture = ExtResource("16_frost_puff")
 
 [node name="GroundA" type="StaticBody2D" parent="."]
 position = Vector2(200, 400)
@@ -65,12 +131,14 @@ position = Vector2(200, 400)
 position = Vector2(-218, 0)
 shape = SubResource("RectangleShape2D_groundA")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+[node name="GroundVisual" type="TextureRect" parent="GroundA"]
 offset_left = -742.0
 offset_top = -40.0
 offset_right = 300.0
 offset_bottom = 200.0
-color = Color(0.55, 0.7, 0.78, 1)
+texture = ExtResource("13_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundB" type="StaticBody2D" parent="."]
 position = Vector2(945, 400)
@@ -78,12 +146,14 @@ position = Vector2(945, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
 shape = SubResource("RectangleShape2D_groundB")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+[node name="GroundVisual" type="TextureRect" parent="GroundB"]
 offset_left = -355.0
 offset_top = -40.0
 offset_right = 355.0
 offset_bottom = 200.0
-color = Color(0.55, 0.7, 0.78, 1)
+texture = ExtResource("13_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundC" type="StaticBody2D" parent="."]
 position = Vector2(1795, 400)
@@ -92,12 +162,32 @@ position = Vector2(1795, 400)
 position = Vector2(263.5, 0)
 shape = SubResource("RectangleShape2D_groundC")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+[node name="GroundVisual" type="TextureRect" parent="GroundC"]
 offset_left = -405.0
 offset_top = -40.0
 offset_right = 966.0
 offset_bottom = 200.0
-color = Color(0.68, 0.85, 0.92, 1)
+texture = ExtResource("13_ground_tile")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="HazardFill1" type="TextureRect" parent="."]
+offset_left = 500.0
+offset_top = 360.0
+offset_right = 590.0
+offset_bottom = 650.0
+texture = ExtResource("14_hazard_fill")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="HazardFill2" type="TextureRect" parent="."]
+offset_left = 1300.0
+offset_top = 360.0
+offset_right = 1390.0
+offset_bottom = 650.0
+texture = ExtResource("14_hazard_fill")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="IceZone" parent="." instance=ExtResource("4_icezone")]
 position = Vector2(2058, 360)
@@ -108,9 +198,9 @@ position = Vector2(300, 344)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleSmall1"]
 shape = SubResource("RectangleShape2D_obstacle_small")
 
-[node name="Crate" type="Polygon2D" parent="JumpObstacleSmall1"]
-color = Color(0.6, 0.78, 0.85, 1)
-polygon = PackedVector2Array(-8, 16, 8, 16, 8, -16, -8, -16)
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleSmall1"]
+scale = Vector2(0.0566, 0.0566)
+texture = ExtResource("10_obstacle_small")
 
 [node name="JumpObstacleMedium1" type="StaticBody2D" parent="."]
 position = Vector2(900, 337)
@@ -118,9 +208,9 @@ position = Vector2(900, 337)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleMedium1"]
 shape = SubResource("RectangleShape2D_obstacle_medium")
 
-[node name="Crate" type="Polygon2D" parent="JumpObstacleMedium1"]
-color = Color(0.6, 0.78, 0.85, 1)
-polygon = PackedVector2Array(-21, 23, 21, 23, 21, -23, -21, -23)
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleMedium1"]
+scale = Vector2(0.0597, 0.0597)
+texture = ExtResource("11_obstacle_medium")
 
 [node name="JumpObstacleLarge1" type="StaticBody2D" parent="."]
 position = Vector2(1700, 331)
@@ -128,9 +218,9 @@ position = Vector2(1700, 331)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JumpObstacleLarge1"]
 shape = SubResource("RectangleShape2D_obstacle_large")
 
-[node name="Crate" type="Polygon2D" parent="JumpObstacleLarge1"]
-color = Color(0.6, 0.78, 0.85, 1)
-polygon = PackedVector2Array(-11, 29, 11, 29, 11, -29, -11, -29)
+[node name="Sprite2D" type="Sprite2D" parent="JumpObstacleLarge1"]
+scale = Vector2(0.0651, 0.0651)
+texture = ExtResource("12_obstacle_large")
 
 [node name="UpperAccess1" type="StaticBody2D" parent="."]
 position = Vector2(115, 330)
