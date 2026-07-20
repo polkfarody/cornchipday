@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_frost_puff.png" id="16_frost_puff"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_window_view.png" id="17_window_view"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_maze_tier.png" id="18_maze_tier"]
+[ext_resource type="ShaderMaterial" path="res://Assets/materials/hazard_flow.tres" id="19_hazard_mat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -178,6 +179,7 @@ offset_top = 360.0
 offset_right = 590.0
 offset_bottom = 650.0
 texture = ExtResource("14_hazard_fill")
+material = ExtResource("19_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 
@@ -187,6 +189,7 @@ offset_top = 360.0
 offset_right = 1390.0
 offset_bottom = 650.0
 texture = ExtResource("14_hazard_fill")
+material = ExtResource("19_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 

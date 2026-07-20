@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dchmvgp0pmh53" path="res://Assets/generated/environment/level2/l2_window_view.png" id="16_window_view"]
 [ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="17_airfryer"]
 [ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="18_life_pickup"]
+[ext_resource type="ShaderMaterial" path="res://Assets/materials/hazard_flow.tres" id="19_hazard_mat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -148,6 +149,7 @@ offset_top = 360.0
 offset_right = 590.0
 offset_bottom = 653.0
 texture = ExtResource("13_hazard_fill")
+material = ExtResource("19_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 
@@ -157,6 +159,7 @@ offset_top = 360.0
 offset_right = 1390.0
 offset_bottom = 656.0
 texture = ExtResource("13_hazard_fill")
+material = ExtResource("19_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 

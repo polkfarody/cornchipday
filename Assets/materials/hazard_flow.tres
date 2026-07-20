@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://scripts/shaders/hazard_flow.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/scroll_speed = Vector2(0.12, 0.09)
+shader_parameter/wobble_amount = 0.015
+shader_parameter/wobble_speed = 1.5

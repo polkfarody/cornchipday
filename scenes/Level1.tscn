@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://btsioems04pvs" path="res://Assets/generated/environment/level1/l1_window_view.png" id="19_window_view"]
 [ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="20_life_pickup"]
 [ext_resource type="PackedScene" path="res://scenes/HotSauceProjectile.tscn" id="21_hotsauce_projectile"]
+[ext_resource type="ShaderMaterial" path="res://Assets/materials/hazard_flow.tres" id="22_hazard_mat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(978, 80)
@@ -376,6 +377,7 @@ offset_top = 360.0
 offset_right = 590.0
 offset_bottom = 670.0
 texture = ExtResource("16_hazard_fill")
+material = ExtResource("22_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 
@@ -385,6 +387,7 @@ offset_top = 360.0
 offset_right = 1370.0
 offset_bottom = 687.0
 texture = ExtResource("16_hazard_fill")
+material = ExtResource("22_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 
@@ -394,6 +397,7 @@ offset_top = 360.0
 offset_right = 2170.0
 offset_bottom = 695.0
 texture = ExtResource("16_hazard_fill")
+material = ExtResource("22_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 
@@ -403,6 +407,7 @@ offset_top = 360.0
 offset_right = 3000.0
 offset_bottom = 745.0
 texture = ExtResource("16_hazard_fill")
+material = ExtResource("22_hazard_mat")
 expand_mode = 1
 stretch_mode = 6
 
