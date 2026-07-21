@@ -73,7 +73,7 @@ Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): b
 - [x] **Full interactive playtest of the complete 7-level game, start to finish** -- done 2026-07-20, see Phase 5 below for the feedback it produced.
 - [ ] Full AI-art pass across all levels/characters for visual consistency (FB4)
 - [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)
-- [ ] 2-player local co-op investigation (Cheeto)
+- [x] 2-player local co-op investigation (Cheeto) -- investigated 2026-07-21, see `feature.md` FB6 for full findings. **Not built:** Cheeto has zero existing visual design ("concept only" per `characters.txt`), and there's a real unresolved game-design fork (shared vs. separate lives, shared vs. distinct moveset) that isn't answerable from the existing docs -- flagged as the actual blocker, not the camera/input engineering.
 
 ### Phase 4 — Level Redesign & Meta Progression
 A fresh round of direct user feedback dropped into `user-input.txt` (2026-07-20, post-full-MVP-playthrough) — folded in here per the Additions Log Workflow in `instructions-ai.txt` (the scratchpad file itself is left untouched, per that workflow). Ten raw points, grouped below; scope confirmed with the user before any building starts (Operating Principle 4 — folding an idea into this list is not the same as authorization to spend real effort on it).
