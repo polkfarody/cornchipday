@@ -5,8 +5,9 @@ extends Node2D
 #   - The 3-life system: Player emits player_hit on every hit regardless of
 #     source, and this is what actually decrements lives and restarts the
 #     level at 0 -- Player itself just handles the per-hit stumble/respawn.
-#   - Counts the scattered bean tokens (group "bean_token"); no on-screen
-#     counter yet.
+#   - Counts the scattered bean tokens (group "bean_token") and shows a
+#     collected/total counter in the HUD (FB24), plus adds every collected
+#     bean to GameProgress's persisted lifetime total.
 #   - Returns to WorldMap.tscn once the level's ingredient is collected
 #     (Phase 4 world map, confirmed 2026-07-20 -- previously chained
 #     straight into next_level_path; the map is now the hub between every
@@ -40,6 +41,11 @@ const SKY_LIFE_DROP_SCENE := preload("res://scenes/LifePickup.tscn")
 const SKY_LIFE_DROP_HEIGHT_ABOVE := 500.0
 const SKY_LIFE_DROP_FALL_TIME := 0.6
 
+# FB24: built at runtime rather than hand-added to all 7 level scenes, same
+# reasoning as the boundary walls above -- one place to change, and it can't
+# drift out of sync between levels.
+const BEAN_ICON_TEXTURE := preload("res://Assets/generated/items/bean_ingredient.png")
+
 @export var level_number: int = 0  # 1-7, used to unlock level_number+1 on completion (GameProgress)
 @export var grants_double_jump: bool = false  # Level 6+ (characters.txt Bestiary by Level) -- re-granted per level rather than persisted, see player.gd's has_double_jump comment
 
@@ -48,6 +54,8 @@ const SKY_LIFE_DROP_FALL_TIME := 0.6
 
 var lives := MAX_LIVES
 var bean_tokens_collected := 0
+var bean_total := 0
+var bean_count_label: Label
 var level_complete := false
 var level_floor_y := 592.0  # overwritten by _setup_level_bounds() from the level's real ground pieces
 
@@ -55,11 +63,40 @@ func _ready() -> void:
 	player.player_hit.connect(_on_player_hit)
 	if grants_double_jump:
 		player.grant_double_jump()
+	bean_total = get_tree().get_nodes_in_group("bean_token").size()
 	for token in get_tree().get_nodes_in_group("bean_token"):
 		token.collected.connect(_on_bean_token_collected)
 	for pickup in get_tree().get_nodes_in_group("life_pickup"):
 		pickup.collected.connect(_on_life_pickup_collected)
 	_setup_level_bounds()
+	_setup_bean_hud()
+
+func _setup_bean_hud() -> void:
+	if bean_total <= 0:
+		return
+	var hud: CanvasLayer = $HUD
+	var icon := TextureRect.new()
+	icon.texture = BEAN_ICON_TEXTURE
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	icon.offset_left = 20.0
+	icon.offset_top = 64.0
+	icon.offset_right = 56.0
+	icon.offset_bottom = 100.0
+	hud.add_child(icon)
+
+	bean_count_label = Label.new()
+	bean_count_label.offset_left = 62.0
+	bean_count_label.offset_top = 64.0
+	bean_count_label.offset_right = 200.0
+	bean_count_label.offset_bottom = 100.0
+	bean_count_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	bean_count_label.add_theme_font_size_override("font_size", 28)
+	bean_count_label.add_theme_color_override("font_color", Color.WHITE)
+	bean_count_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	bean_count_label.add_theme_constant_override("outline_size", 4)
+	bean_count_label.text = "0/%d" % bean_total
+	hud.add_child(bean_count_label)
 
 # FB29: the camera used to be able to scroll arbitrarily far down/left/right
 # of the level's actual content -- most visible as a jarring dip into empty
@@ -127,6 +164,9 @@ func _spawn_sky_life_drop() -> void:
 
 func _on_bean_token_collected() -> void:
 	bean_tokens_collected += 1
+	GameProgress.add_beans(1)
+	if bean_count_label:
+		bean_count_label.text = "%d/%d" % [bean_tokens_collected, bean_total]
 
 # Extra-life pickup (feature.md backlog, direct user request): capped at
 # MAX_LIVES so the icon-only HUD never needs a 4th slot or a number. Reveals

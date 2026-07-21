@@ -8,6 +8,7 @@ radius = 14
 
 [node name="BeanToken" type="Area2D" groups=["bean_token"]]
 script = ExtResource("1_ingredient")
+sparkle_on_collect = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bean")

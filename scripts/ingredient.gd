@@ -16,6 +16,12 @@ signal collected
 # item's existing unique visual (Sprite/Blob children) untouched.
 @export var carry_to_wrap: bool = false
 
+# FB24: bean tokens only (set true on BeanToken.tscn) -- a small one-shot
+# particle burst on top of the existing scale/fade tween, so the main
+# collectible currency reads as a little more celebratory than every other
+# use of this shared script (ingredients, life pickups, wrap deliveries).
+@export var sparkle_on_collect: bool = false
+
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
@@ -33,10 +39,32 @@ func _on_body_entered(body: Node) -> void:
 	_play_collect_tween()
 
 func _play_collect_tween() -> void:
+	if sparkle_on_collect:
+		_spawn_sparkle()
 	var tween := create_tween()
 	tween.tween_property(self, "scale", Vector2(1.6, 1.6), 0.2)
 	tween.parallel().tween_property(self, "modulate:a", 0.0, 0.2)
 	tween.tween_callback(queue_free)
+
+func _spawn_sparkle() -> void:
+	var particles := CPUParticles2D.new()
+	particles.one_shot = true
+	particles.emitting = false
+	particles.amount = 12
+	particles.lifetime = 0.5
+	particles.explosiveness = 1.0
+	particles.direction = Vector2.UP
+	particles.spread = 180.0
+	particles.initial_velocity_min = 60.0
+	particles.initial_velocity_max = 140.0
+	particles.gravity = Vector2(0, 200)
+	particles.scale_amount_min = 2.0
+	particles.scale_amount_max = 4.0
+	particles.color = Color(1.0, 0.95, 0.4)
+	get_tree().current_scene.add_child(particles)
+	particles.global_position = global_position
+	particles.emitting = true
+	particles.finished.connect(particles.queue_free)
 
 # Called by WrapBoss once this specific carried item is actually delivered
 # (jumped onto Wrap while carrying it) -- the carry_to_wrap equivalent of the

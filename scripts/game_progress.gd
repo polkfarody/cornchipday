@@ -21,6 +21,37 @@ const LEVEL_SCENE_PATHS := [
 var highest_unlocked_level := 1
 var last_played_level := 1
 
+# FB24: unlike highest_unlocked_level/last_played_level above (deliberately
+# in-memory only, see this file's header comment), the bean total is a
+# genuine cross-session high score -- saved to disk on every change and
+# loaded once at startup, since "beans ever collected" should keep climbing
+# across separate play sessions rather than resetting with the app.
+const SAVE_PATH := "user://progress.save"
+
+var total_beans_collected := 0
+
+func _ready() -> void:
+	_load_beans()
+
+func add_beans(amount: int) -> void:
+	total_beans_collected += amount
+	_save_beans()
+
+func _save_beans() -> void:
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file:
+		file.store_var({"total_beans_collected": total_beans_collected})
+
+func _load_beans() -> void:
+	if not FileAccess.file_exists(SAVE_PATH):
+		return
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if file == null:
+		return
+	var data = file.get_var()
+	if typeof(data) == TYPE_DICTIONARY and data.has("total_beans_collected"):
+		total_beans_collected = data["total_beans_collected"]
+
 func unlock_level(level_number: int) -> void:
 	highest_unlocked_level = max(highest_unlocked_level, min(level_number, LEVEL_COUNT))
 
