@@ -19,6 +19,8 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level6/l6_utensil_rack.png" id="16_utensil_rack"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level6/l6_shell_stack.png" id="17_shell_stack"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level6/l6_window_view.png" id="18_window_view"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level6/l6_window_view_b.png" id="18b_window_view"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level6/l6_window_view_c.png" id="18c_window_view"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level6/l6_maze_tier.png" id="19_maze_tier"]
 [ext_resource type="ShaderMaterial" path="res://Assets/materials/hazard_flow.tres" id="20_hazard_mat"]
 
@@ -85,8 +87,8 @@ texture = ExtResource("18_window_view")
 
 [node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1100, 20)
-scale = Vector2(0.579, 0.579)
-texture = ExtResource("18_window_view")
+scale = Vector2(0.7261, 0.7261)
+texture = ExtResource("18b_window_view")
 
 [node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1800, 20)
@@ -95,8 +97,8 @@ texture = ExtResource("18_window_view")
 
 [node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(2500, 20)
-scale = Vector2(0.579, 0.579)
-texture = ExtResource("18_window_view")
+scale = Vector2(0.5700, 0.5700)
+texture = ExtResource("18c_window_view")
 
 [node name="UtensilRack1" type="Sprite2D" parent="."]
 position = Vector2(380, 305)
