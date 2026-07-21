@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="17_airfryer"]
 [ext_resource type="PackedScene" path="res://scenes/LifePickup.tscn" id="18_life_pickup"]
 [ext_resource type="ShaderMaterial" path="res://Assets/materials/hazard_flow.tres" id="19_hazard_mat"]
+[ext_resource type="PackedScene" path="res://scenes/ClimbZone.tscn" id="20_climbzone"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -302,3 +303,24 @@ stretch_mode = 6
 
 [node name="BonusLifePickup1" parent="." instance=ExtResource("18_life_pickup")]
 position = Vector2(1650, 275)
+
+[node name="ClimbZone1" parent="." instance=ExtResource("20_climbzone")]
+position = Vector2(1150, 270)
+
+[node name="ClimbPlatform1" type="StaticBody2D" parent="."]
+position = Vector2(1150, 150)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbPlatform1"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="TextureRect" parent="ClimbPlatform1"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("12_ground_tile")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BonusLifePickup2" parent="." instance=ExtResource("18_life_pickup")]
+position = Vector2(1150, 95)

@@ -18,6 +18,7 @@ const SLOW_TINT := Color(1.0, 0.85, 0.3)
 const WOBBLE_AMPLITUDE := 6.0
 const WOBBLE_SPEED := 18.0
 const ICE_ACCEL := 300.0  # px/s^2 -- much softer than the instant velocity snap used off-ice, so input lags into a slide
+const CLIMB_SPEED := 140.0  # FB33: L2 climbing bonus section -- grabbed by pressing up/down while inside a ClimbZone, released by leaving the zone or jumping off
 const CARRY_OFFSET := Vector2(0, -45)  # Wrap finale delivery ritual (Phase 4): held above Cornchip's head, clear of the sprite
 
 # Emitted on every hit (obstacle or enemy), whatever the source -- Level1
@@ -37,6 +38,8 @@ var wobble_time_remaining := 0.0
 var wobble_cycle_time := 0.0
 var camera_base_offset: Vector2
 var is_on_ice := false
+var in_climb_zone := false
+var is_climbing := false
 
 # Air Fryer power-up (feature.md FB7/FB10): once granted, pressing Up briefly
 # lets Cornchip defeat any enemy he touches instead of being hurt by it.
@@ -120,16 +123,31 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		air_jumps_used = 0
 
+	var climb_vertical := 0.0
+	if in_climb_zone:
+		if Input.is_action_pressed("ui_up"):
+			climb_vertical -= 1.0
+		if Input.is_action_pressed("ui_down"):
+			climb_vertical += 1.0
+		if climb_vertical != 0.0:
+			is_climbing = true
+
 	if Input.is_action_just_pressed("ui_accept"):
-		if is_on_floor():
+		if is_climbing:
+			is_climbing = false
+			velocity.y = JUMP_VELOCITY
+		elif is_on_floor():
 			velocity.y = JUMP_VELOCITY
 		elif has_double_jump and air_jumps_used < 1:
 			velocity.y = JUMP_VELOCITY
 			air_jumps_used += 1
 
+	if is_climbing:
+		velocity.y = climb_vertical * CLIMB_SPEED
+
 	if spin_cooldown_remaining > 0.0:
 		spin_cooldown_remaining -= delta
-	if has_spin_dash and not is_spinning and spin_cooldown_remaining <= 0.0 and Input.is_action_just_pressed("ui_up"):
+	if has_spin_dash and not is_spinning and spin_cooldown_remaining <= 0.0 and not in_climb_zone and Input.is_action_just_pressed("ui_up"):
 		_start_spin()
 	if is_spinning:
 		spin_time_remaining -= delta
@@ -142,6 +160,15 @@ func _physics_process(delta: float) -> void:
 
 func grant_spin_dash() -> void:
 	has_spin_dash = true
+
+# FB33 (ClimbZone.tscn): entering re-arms the grab (engaged on the next
+# up/down press, not automatically -- so brushing past the zone's edge
+# mid-jump doesn't suck the player onto it); leaving always releases it
+# immediately, same as walking off a ladder.
+func set_in_climb_zone(value: bool) -> void:
+	in_climb_zone = value
+	if not value:
+		is_climbing = false
 
 func grant_double_jump() -> void:
 	has_double_jump = true
@@ -185,6 +212,11 @@ func _update_animation(delta: float) -> void:
 	var target := "idle"
 	if is_spinning:
 		target = "spin"
+	elif is_climbing:
+		# FB33: no climbing pose exists in the generated art (flagged mismatch,
+		# not silently worked around) -- "jump" is the closest existing pose,
+		# reused as a stand-in rather than blocking the mechanic on new art.
+		target = "jump"
 	elif is_on_ice and absf(velocity.x) > 1.0:
 		target = "slide"
 	elif not is_on_floor():
