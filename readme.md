@@ -1,6 +1,6 @@
 # Cornchip Day
 
-A 2D single-player platformer starring Cornchip, a walking corn chip on a quest across seven levels to reunite with his brother Wrap and make the ultimate crunch wrap.
+A 2D single-player platformer starring Cornchip, a walking corn chip on a quest across seven levels to reunite with his brother Wrap and make the ultimate crunch wrap. Are you ready to crunch!
 
 ## Status
 Pre-alpha — vertical-slice MVP in development. See [plan.md](plan.md) for the roadmap and [feature.md](feature.md) for feature-level detail.
