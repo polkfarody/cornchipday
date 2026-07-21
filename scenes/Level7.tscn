@@ -25,6 +25,10 @@
 [ext_resource type="Script" path="res://scripts/chase_trigger.gd" id="22_chase_trigger"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level5/l5_ground_tile.png" id="23_ice_tex"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level3/l3_hazard_fill.png" id="24_guac_tex"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level7/l7_ground_tile.png" id="25_ground_tile"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level7/l7_window_view.png" id="26_window_view"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level7/l7_napkin_stack.png" id="27_napkin_stack"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level7/l7_condiment_rack.png" id="28_condiment_rack"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -55,12 +59,60 @@ script = ExtResource("0_level_base")
 grants_double_jump = true
 level_number = 7
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="WindowParallax" type="ParallaxBackground" parent="."]
+
+[node name="BackdropLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0, 0)
+
+[node name="Backdrop" type="ColorRect" parent="WindowParallax/BackdropLayer"]
 offset_left = -700.0
-offset_top = -600.0
-offset_right = 2800.0
-offset_bottom = 500.0
+offset_top = -450.0
+offset_right = 4700.0
+offset_bottom = 750.0
 color = Color(0.9, 0.75, 0.5, 1)
+
+[node name="WindowLayer" type="ParallaxLayer" parent="WindowParallax"]
+motion_scale = Vector2(0.4, 1)
+
+[node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(400, 20)
+scale = Vector2(0.4972, 0.4972)
+texture = ExtResource("26_window_view")
+
+[node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(1100, 20)
+scale = Vector2(0.4972, 0.4972)
+texture = ExtResource("26_window_view")
+
+[node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(1800, 20)
+scale = Vector2(0.4972, 0.4972)
+texture = ExtResource("26_window_view")
+
+[node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(2500, 20)
+scale = Vector2(0.4972, 0.4972)
+texture = ExtResource("26_window_view")
+
+[node name="Window5" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(3200, 20)
+scale = Vector2(0.4972, 0.4972)
+texture = ExtResource("26_window_view")
+
+[node name="Window6" type="Sprite2D" parent="WindowParallax/WindowLayer"]
+position = Vector2(3900, 20)
+scale = Vector2(0.4972, 0.4972)
+texture = ExtResource("26_window_view")
+
+[node name="NapkinStack1" type="Sprite2D" parent="."]
+position = Vector2(1300, 305)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("27_napkin_stack")
+
+[node name="CondimentRack1" type="Sprite2D" parent="."]
+position = Vector2(2700, 300)
+scale = Vector2(0.11, 0.11)
+texture = ExtResource("28_condiment_rack")
 
 [node name="GroundA" type="StaticBody2D" parent="."]
 position = Vector2(200, 400)
@@ -69,12 +121,14 @@ position = Vector2(200, 400)
 position = Vector2(-218, 0)
 shape = SubResource("RectangleShape2D_groundA")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+[node name="GroundVisual" type="TextureRect" parent="GroundA"]
 offset_left = -742.0
 offset_top = -40.0
 offset_right = 300.0
 offset_bottom = 200.0
-color = Color(0.6, 0.42, 0.2, 1)
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundB" type="StaticBody2D" parent="."]
 position = Vector2(945, 400)
@@ -82,12 +136,14 @@ position = Vector2(945, 400)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundB"]
 shape = SubResource("RectangleShape2D_groundB")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundB"]
+[node name="GroundVisual" type="TextureRect" parent="GroundB"]
 offset_left = -355.0
 offset_top = -40.0
 offset_right = 355.0
 offset_bottom = 200.0
-color = Color(0.6, 0.42, 0.2, 1)
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="GroundC" type="StaticBody2D" parent="."]
 position = Vector2(1795, 400)
@@ -96,12 +152,14 @@ position = Vector2(1795, 400)
 position = Vector2(810, 0)
 shape = SubResource("RectangleShape2D_groundC")
 
-[node name="GroundVisual" type="ColorRect" parent="GroundC"]
+[node name="GroundVisual" type="TextureRect" parent="GroundC"]
 offset_left = -405.0
 offset_top = -40.0
 offset_right = 2025.0
 offset_bottom = 200.0
-color = Color(0.85, 0.68, 0.35, 1)
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(75, 317)
@@ -248,31 +306,121 @@ hazard_path = NodePath("../RollingHazard")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseTrigger"]
 shape = SubResource("RectangleShape2D_chase_trigger")
 
-[node name="LettuceDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("10_lettuce")]
+[node name="LettuceDeliveryPedestal" type="StaticBody2D" parent="."]
 position = Vector2(2900, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LettuceDeliveryPedestal"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="TextureRect" parent="LettuceDeliveryPedestal"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="LettuceDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("10_lettuce")]
+position = Vector2(2900, 275)
 carry_to_wrap = true
+
+[node name="CheeseDeliveryPedestal" type="StaticBody2D" parent="."]
+position = Vector2(3040, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheeseDeliveryPedestal"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="TextureRect" parent="CheeseDeliveryPedestal"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="CheeseDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("11_cheese_ing")]
-position = Vector2(3040, 330)
+position = Vector2(3040, 275)
 carry_to_wrap = true
 
-[node name="GuacDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("12_guac_ing")]
+[node name="GuacDeliveryPedestal" type="StaticBody2D" parent="."]
 position = Vector2(3180, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GuacDeliveryPedestal"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="TextureRect" parent="GuacDeliveryPedestal"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="GuacDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("12_guac_ing")]
+position = Vector2(3180, 275)
 carry_to_wrap = true
 
 [node name="WrapBoss" parent="." instance=ExtResource("2_wrap")]
 position = Vector2(3270, 330)
 
-[node name="TomatoDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("13_tomato_ing")]
+[node name="TomatoDeliveryPedestal" type="StaticBody2D" parent="."]
 position = Vector2(3360, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TomatoDeliveryPedestal"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="TextureRect" parent="TomatoDeliveryPedestal"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TomatoDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("13_tomato_ing")]
+position = Vector2(3360, 275)
 carry_to_wrap = true
+
+[node name="SourCreamDeliveryPedestal" type="StaticBody2D" parent="."]
+position = Vector2(3540, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SourCreamDeliveryPedestal"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="TextureRect" parent="SourCreamDeliveryPedestal"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="SourCreamDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("14_sourcream_ing")]
-position = Vector2(3540, 330)
+position = Vector2(3540, 275)
 carry_to_wrap = true
 
-[node name="CrunchyShellDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("15_crunchyshell_ing")]
+[node name="CrunchyShellDeliveryPedestal" type="StaticBody2D" parent="."]
 position = Vector2(3720, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CrunchyShellDeliveryPedestal"]
+shape = SubResource("RectangleShape2D_bonus_platform")
+
+[node name="Plank" type="TextureRect" parent="CrunchyShellDeliveryPedestal"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("25_ground_tile")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CrunchyShellDelivery" parent="." groups=["wrap_delivery"] instance=ExtResource("15_crunchyshell_ing")]
+position = Vector2(3720, 275)
 carry_to_wrap = true
 
 [node name="BonusPlatform1" type="StaticBody2D" parent="."]

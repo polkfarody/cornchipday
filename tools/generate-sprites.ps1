@@ -95,6 +95,9 @@ function Get-AssetSubdir([string]$name) {
     if ($name -like "l6_*") {
         return "environment\level6"
     }
+    if ($name -like "l7_*") {
+        return "environment\level7"
+    }
     return ""
 }
 
@@ -284,6 +287,11 @@ $sprites = @(
     @{ Name = "l6_window_view"; Prompt = "A dark metal griddle vent-hood frame, with a hazy, softer-detailed distant kitchen scene visible beyond it: silhouettes of more kitchen equipment and shelving lit by warm orange lighting, suggesting depth beyond the frame. No translucent overlay effects, fog, or haze layered on top of the objects -- solid flat-shaded silhouettes only. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
     @{ Name = "l6_window_view_b"; Prompt = "A dark metal griddle vent-hood frame, with a hazy, softer-detailed distant kitchen scene visible beyond it: silhouettes of a walk-in pantry with stacked crates and hanging utensils, lit by warm orange lighting, suggesting depth beyond the frame. No translucent overlay effects, fog, or haze layered on top of the objects -- solid flat-shaded silhouettes only. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
     @{ Name = "l6_window_view_c"; Prompt = "A dark metal griddle vent-hood frame, with a hazy, softer-detailed distant kitchen scene filling the entire visible opening behind the frame -- an orange-lit kitchen wall with no gaps or empty background showing through -- silhouettes of a prep line with hanging pots, a tall oven, and stacked bowls, lit by warm orange lighting, suggesting depth beyond the frame. No translucent overlay effects, fog, or haze layered on top of the objects -- solid flat-shaded silhouettes only. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+
+    @{ Name = "l7_ground_tile"; Prompt = "A seamless tileable stainless-steel serving-counter surface texture, warm golden highlights, subtle panel seams. $textureSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l7_window_view"; Prompt = "A warm golden serving-counter wall with a wide open pass-through window built into it. The window opening must be completely filled with a warm golden-orange lit scene -- absolutely no bright pink, magenta, or empty background showing anywhere inside the opening -- showing a hazy, softer-detailed distant scene: silhouettes of a busy assembly counter with trays and condiment bottles lit by warm golden light, suggesting depth beyond the opening. No translucent overlay effects, fog, or haze layered on top of the objects -- solid flat-shaded silhouettes only. No characters, faces, or creatures anywhere in the scene -- empty scenery only. $styleSuffix"; NoRefs = $true; Model = "gemini-3-pro-image" },
+    @{ Name = "l7_napkin_stack"; Prompt = "A small stack of folded paper napkins with a wrapped crunch-wrap on top, for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
+    @{ Name = "l7_condiment_rack"; Prompt = "A small rack holding a few condiment squeeze bottles (red, yellow, green), for a platformer background decoration. $styleSuffix"; Model = "gemini-3-pro-image" },
 
     @{ Name = "guac_ingredient"; Prompt = "A cute cartoon scoop of green guacamole in a small bowl, collectible icon for a kids' video game, glossy highlight, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
     @{ Name = "tomato_ingredient"; Prompt = "A cartoon whole red tomato collectible icon for a kids' video game, glossy highlight, small green stem, centered composition. $styleSuffix"; Model = "gemini-3-pro-image" },
