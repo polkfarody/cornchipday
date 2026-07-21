@@ -21,6 +21,24 @@ const LEVEL_SCENE_PATHS := [
 var highest_unlocked_level := 1
 var last_played_level := 1
 
+# FB25: the "shopping basket" ingredient checklist (level_base.gd) needs to
+# know which of the 6 boss-dropped ingredients have been collected so far.
+# That's fully derivable from highest_unlocked_level (levels below the
+# current frontier are, by construction, already beaten -- unlock_level(N+1)
+# only ever fires from collecting level N's ingredient) rather than tracked
+# as separate state that could drift out of sync with it.
+const INGREDIENT_TEXTURE_PATHS := [
+	"res://Assets/generated/items/lettuce_ingredient.png",
+	"res://Assets/generated/items/cheese_ingredient.png",
+	"res://Assets/generated/items/guac_ingredient.png",
+	"res://Assets/generated/items/tomato_ingredient.png",
+	"res://Assets/generated/items/sour_cream_ingredient.png",
+	"res://Assets/generated/items/crunchy_shell_ingredient.png",
+]
+
+func is_ingredient_collected(level_number: int) -> bool:
+	return level_number < highest_unlocked_level
+
 # FB24: unlike highest_unlocked_level/last_played_level above (deliberately
 # in-memory only, see this file's header comment), the bean total is a
 # genuine cross-session high score -- saved to disk on every change and

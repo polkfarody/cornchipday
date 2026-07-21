@@ -58,6 +58,7 @@ var bean_total := 0
 var bean_count_label: Label
 var level_complete := false
 var level_floor_y := 592.0  # overwritten by _setup_level_bounds() from the level's real ground pieces
+var ingredient_checklist_icons: Array = []
 
 func _ready() -> void:
 	player.player_hit.connect(_on_player_hit)
@@ -70,6 +71,7 @@ func _ready() -> void:
 		pickup.collected.connect(_on_life_pickup_collected)
 	_setup_level_bounds()
 	_setup_bean_hud()
+	_setup_ingredient_checklist()
 
 func _setup_bean_hud() -> void:
 	if bean_total <= 0:
@@ -97,6 +99,70 @@ func _setup_bean_hud() -> void:
 	bean_count_label.add_theme_constant_override("outline_size", 4)
 	bean_count_label.text = "0/%d" % bean_total
 	hud.add_child(bean_count_label)
+
+# FB25: "the ingredient should fly into a shopping basket... something that
+# can persist to show what ingredients you have and what you need" -- a row
+# of the 6 boss-drop ingredient icons, dimmed until that level's ingredient
+# has actually been collected (GameProgress.is_ingredient_collected, derived
+# from level-unlock progress). Anchored to the top-right corner (anchor 1.0)
+# rather than a hardcoded viewport width, mirroring the top-left life/bean
+# HUD but independent of it.
+const INGREDIENT_ICON_SIZE := 32.0
+const INGREDIENT_ICON_GAP := 4.0
+const INGREDIENT_DIMMED_COLOR := Color(0.35, 0.35, 0.35, 0.6)
+
+func _setup_ingredient_checklist() -> void:
+	var hud: CanvasLayer = $HUD
+	var paths: Array = GameProgress.INGREDIENT_TEXTURE_PATHS
+	var slot_width := INGREDIENT_ICON_SIZE + INGREDIENT_ICON_GAP
+	var total_width := paths.size() * slot_width
+	for i in paths.size():
+		var icon := TextureRect.new()
+		icon.texture = load(paths[i])
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		icon.anchor_left = 1.0
+		icon.anchor_right = 1.0
+		var x_start: float = -20.0 - total_width + i * slot_width
+		icon.offset_left = x_start
+		icon.offset_right = x_start + INGREDIENT_ICON_SIZE
+		icon.offset_top = 20.0
+		icon.offset_bottom = 20.0 + INGREDIENT_ICON_SIZE
+		icon.modulate = Color.WHITE if GameProgress.is_ingredient_collected(i + 1) else INGREDIENT_DIMMED_COLOR
+		hud.add_child(icon)
+		ingredient_checklist_icons.append(icon)
+
+# Flies a copy of the just-collected ingredient's own sprite from where it
+# was picked up in the world to its slot in the checklist above, then lights
+# the slot up right as it arrives -- the "fanfare" + "fly into a basket"
+# from the raw feedback, in one motion.
+func _fly_ingredient_to_hud(ingredient: Node) -> void:
+	if level_number <= 0 or level_number > ingredient_checklist_icons.size():
+		return
+	var target_icon: TextureRect = ingredient_checklist_icons[level_number - 1]
+	var icon_sprite: Node = ingredient.get_node_or_null("Sprite")
+	if icon_sprite == null:
+		return
+	var start_screen_pos: Vector2 = get_viewport().get_canvas_transform() * ingredient.global_position
+	var target_screen_pos: Vector2 = target_icon.global_position + target_icon.size / 2.0
+
+	var flying := TextureRect.new()
+	flying.texture = icon_sprite.texture
+	flying.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	flying.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	flying.size = Vector2(INGREDIENT_ICON_SIZE, INGREDIENT_ICON_SIZE) * 1.5
+	flying.pivot_offset = flying.size / 2.0
+	flying.position = start_screen_pos - flying.size / 2.0
+	$HUD.add_child(flying)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(flying, "position", target_screen_pos - flying.size / 2.0, 0.7).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_property(flying, "size", Vector2(INGREDIENT_ICON_SIZE, INGREDIENT_ICON_SIZE), 0.7)
+	tween.chain().tween_callback(func():
+		target_icon.modulate = Color.WHITE
+		flying.queue_free()
+	)
 
 # FB29: the camera used to be able to scroll arbitrarily far down/left/right
 # of the level's actual content -- most visible as a jarring dip into empty
@@ -180,12 +246,14 @@ func _on_life_pickup_collected() -> void:
 	lives += 1
 
 func register_level_ingredient(ingredient: Node) -> void:
-	ingredient.collected.connect(_on_level_ingredient_collected)
+	ingredient.collected.connect(_on_level_ingredient_collected.bind(ingredient))
 
-func _on_level_ingredient_collected() -> void:
+func _on_level_ingredient_collected(ingredient: Node = null) -> void:
 	if level_complete:
 		return
 	level_complete = true
+	if ingredient:
+		_fly_ingredient_to_hud(ingredient)
 	if level_number > 0:
 		GameProgress.unlock_level(level_number + 1)
 		GameProgress.last_played_level = level_number
