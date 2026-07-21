@@ -1,7 +1,7 @@
 # Cornchip Day — Development Plan
 
-## Current Phase: Phase 5 -- Full Playtest Feedback Triage
-As of 2026-07-20, all 7 levels are built and playable start to finish (Phase 2), Phase 4's full level-redesign/meta-progression pass is complete (all 5 groups), and the deferred Levels 3-6 environment-art pass is done too (see `feature.md` F26). The first full interactive playtest has now happened, closing the long-open "needs a real playtest" item -- feedback is in and triaged into Phase 5 below. It's a large batch spanning real bugs, art gaps (including some the AI's own visual QA had signed off on), and several bigger feature requests. Nothing in Phase 5 is built yet -- it's tracked scope pending prioritization/go-ahead, per Operating Principle 4.
+## Current Phase: Phase 5 complete -- deciding Phase 6
+As of 2026-07-21, all 7 levels are built and playable start to finish (Phase 2), Phase 4's full level-redesign/meta-progression pass is complete (all 5 groups), and Phase 5's entire playtest-feedback backlog is built (see the 2026-07-21 build session note below F34, plus F35-F37 closing out the two items -- Tomato power-up, full audio pass -- that were built same-day but briefly went undocumented until caught and fixed in a doc-accuracy pass). FB4 (full art-consistency pass) and FB6 (2-player co-op) were investigated and deliberately left unbuilt -- see their Backlog entries in `feature.md` for why. A follow-up AI-driven QA pass (real windowed screenshots across every level/screen, not just headless instantiation) caught and fixed one genuine live-play crash (see the Phase 5 real-bugs list below) but found no other visual regressions. **What's still missing before Phase 6 can be scoped with real confidence: an actual human interactive playtest of everything that's shipped since the last one** (all of F28-F37) -- headless/screenshot QA proves structure and catches gross regressions, not feel, and this project has already had one live-only regression (the F30 camera-limit bug) slip past both headless and screenshot checks once.
 
 ## Roadmap
 
@@ -57,7 +57,7 @@ Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): b
 - [x] Level 7 (The Wrap Finale) built -- see `feature.md` F17. Tone resolved by direct user design: not combat. A remix gauntlet (one returning enemy per Level 1-6, no new assets) leads to Wrap's arena, where the 6 already-built ingredient scenes are placed as delivery pickups; reaching this level at all already proves all 6 were earned (the level chain only advances on ingredient collection), so no new cross-level save state was needed. New `wrap.gd`/`WrapBoss.tscn` (deliberately not a `boss.gd` instance -- no health, no combat, doesn't fit that model) tracks deliveries via a `wrap_delivery` group, lights up at 6/6 (his existing Phase-1-generated "warmer, softer smile" pose), and a jump-onto landing triggers `player.gd`'s new `win_celebration()` -- a simple in-place celebration per the user's explicit choice, no dedicated ending scene. Double jump carried forward via `grants_double_jump = true`. **Verified end-to-end via headless script**: withholds light-up at 5/6, ignores touches before lighting up and non-jump touches after, only completes on a proper jump-onto after 6/6. **This completes the full 7-level MVP -- every level, boss, and mechanic in the confirmed plan is now built.**
 - [ ] Ability-gated upgrade system beyond double jump / Air Fryer (post-MVP stretch, see Phase 3)
 - [x] On-screen bean token counter (see `feature.md` FB13, built 2026-07-21 as F31)
-- [ ] Tomato power-up (see `feature.md` FB11)
+- [x] Tomato power-up (see `feature.md` F35, built 2026-07-21)
 
 ### Phase 3 — Polish & Post-MVP Stretch
 - ~~Textures and style consistency pass~~ — scoped and detailed for Levels 1-2, see the Phase 1 item above and `feature.md` F11 (obstacles, hazard fills, ground tiles, scenery, parallax window depth).
@@ -72,7 +72,7 @@ Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): b
 
 - [x] **Full interactive playtest of the complete 7-level game, start to finish** -- done 2026-07-20, see Phase 5 below for the feedback it produced.
 - [x] Full AI-art pass across all levels/characters for visual consistency (FB4) -- assessed 2026-07-21, not built: see `feature.md` FB4. No concrete inconsistency was identified (the generation pipeline's shared style-suffix convention has enforced consistency by construction throughout); a blind full-regeneration pass wasn't judged a good use of spend without one.
-- [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)
+- [x] Audio/music/SFX pass complete 2026-07-21 (see `feature.md` F36/F37) -- SFX (jump/collect/hit/life-pickup/level-complete) and a quiet ambient loop, both synthesized in-engine (no audio-gen API configured). Ambient loop's actual pleasantness needs the user's own ears -- the AI can't hear its own output.
 - [x] 2-player local co-op investigation (Cheeto) -- investigated 2026-07-21, see `feature.md` FB6 for full findings. **Not built:** Cheeto has zero existing visual design ("concept only" per `characters.txt`), and there's a real unresolved game-design fork (shared vs. separate lives, shared vs. distinct moveset) that isn't answerable from the existing docs -- flagged as the actual blocker, not the camera/input engineering.
 
 ### Phase 4 — Level Redesign & Meta Progression
@@ -116,6 +116,7 @@ The first full start-to-finish interactive playtest happened, closing the long-o
 - [x] Level 6 `HeatZone`: sometimes impossible to escape once caught in the hot phase — fixed, `aa67189`.
 - [x] Level 7: the chase-corridor hazard (`rolling_hazard.gd`) becomes lethal and inescapable once triggered — fixed, `aa67189`.
 - [x] Avocado boss's guac-puddle hazard (`GuacPuddle.tscn`) renders floating above the floor instead of looking dropped onto it — fixed, `aa67189`.
+- [x] **Real crash found via live play 2026-07-21** (not headless): "Can't change this state while flushing queries" on a boss's ingredient/split-piece drop and on any triggered obstacle spawn -- same root cause as FB30's sky-drop pickup crash, never generalized to these two other spots. Fixed via the same deferred-spawn pattern; see `feature.md`'s "Real bug found and fixed via live play" note after F37.
 
 **Texture/art gaps, called out once by the user but flagged as applying to every level:**
 - [x] Bean tokens still have no real sprite (plain brown ovals) — generated, see commit `81eb5d7`.

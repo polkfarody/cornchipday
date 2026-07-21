@@ -16,14 +16,25 @@ const SFX := {
 }
 
 const POOL_SIZE := 6
+const AMBIENT_VOLUME_DB := -16.0  # quiet by design -- sits under the game, never competes with SFX
 
 var _players: Array = []
+var _ambient_player: AudioStreamPlayer
 
 func _ready() -> void:
 	for i in POOL_SIZE:
 		var p := AudioStreamPlayer.new()
 		add_child(p)
 		_players.append(p)
+	# FB5 (remainder): one continuous ambient loop, started once here since
+	# AudioManager is an autoload -- persists as-is across every scene change
+	# (title, map, all 7 levels) rather than needing per-scene wiring.
+	_ambient_player = AudioStreamPlayer.new()
+	_ambient_player.stream = preload("res://Assets/generated/audio/ambient_loop.tres")
+	_ambient_player.volume_db = AMBIENT_VOLUME_DB
+	_ambient_player.bus = "Master"
+	add_child(_ambient_player)
+	_ambient_player.play()
 
 func play(sfx_name: String) -> void:
 	if not SFX.has(sfx_name):
