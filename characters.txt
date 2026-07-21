@@ -11,9 +11,11 @@
 - **Narrative Function:** Estranged from Cornchip after an argument. Reconciliation occurs once Cornchip has collected all 7 ingredients and presents them to make "the ultimate crunch wrap."
 - **Personality (draft — pending confirmation):** Proud and stubborn on the surface; the obstacle-throwing reads as wounded-sibling antics rather than genuine villainy, and he wants to reconcile as much as Cornchip does.
 
-## Cheeto (Post-MVP)
-- **Role:** Cornchip's best friend; planned second playable character for a future local co-op mode.
-- **Status:** Concept only — no visual design or mechanics required for MVP.
+## Cheeto (Post-MVP, in progress — FB6)
+- **Silhouette:** A chunky, curved cylindrical cheese-puff shape (distinct from Cornchip's upside-down triangle and Wrap's rounded tube), warm orange with a bumpy cheese-dust texture, comedic articulated legs, expressive eyes, and a mouth.
+- **Role:** Cornchip's best friend; second playable character for local co-op. Shares Cornchip's full moveset (run, jump, double jump, stomp, spin dash, Tomato power-up) — co-op is "a friend along for the ride," not a distinct playstyle. Both players draw from one shared 3-life pool.
+- **Personality:** Laid-back and goofy, a mellow foil to Cornchip's plucky determination — reacts to obstacles with an easygoing shrug rather than Cornchip's eager optimism.
+- **Status:** Design confirmed 2026-07-21, art generation in progress. See `feature.md` FB6.
 
 ## Level Bosses
 Each level culminates in a boss battle guarding that level's ingredient; Wrap is the final boss, fought after all other levels' ingredients are collected (see `game-brief.txt` Level & Narrative Structure).

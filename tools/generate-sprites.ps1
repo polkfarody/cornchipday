@@ -143,6 +143,11 @@ $sprites = @(
         "running, one leg forward and one leg back, leaning slightly forward" `
         "jumping, crouching down then airborne with legs tucked up" `
         "celebrating happily, arms up, big smile") },
+    @{ Name = "cheeto_grid"; Prompt = (Grid-Prompt `
+        "a chunky, curved cylindrical cheese-puff snack character, warm orange with a bumpy cheese-dust texture, small comedic stick legs, big round friendly cartoon eyes, a relaxed easygoing mouth. Distinct silhouette from a triangular corn chip or a rounded tube-shaped burrito -- clearly a curled, knobby puff shape." `
+        "running, one leg forward and one leg back, leaning slightly forward with a relaxed, loping gait" `
+        "jumping, crouching down then airborne with legs tucked up" `
+        "celebrating happily, arms up, a big laid-back grin") },
     @{ Name = "wrap_grid"; Prompt = (Grid-Prompt `
         "a round tubular burrito/wrap, tan-beige tortilla color with a visible fold seam, small comedic stick legs, big expressive round cartoon eyes, a stubborn/proud mouth expression." `
         "walking with arms crossed stubbornly, alternating a slight lean left and right" `

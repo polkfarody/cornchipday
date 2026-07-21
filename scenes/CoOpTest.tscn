@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_base.gd" id="0_level_base"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/Player2.tscn" id="2_player2"]
+[ext_resource type="PackedScene" path="res://scenes/BeanToken.tscn" id="3_bean"]
+[ext_resource type="PackedScene" path="res://scenes/Obstacle.tscn" id="4_obstacle"]
+[ext_resource type="PackedScene" path="res://scenes/AirFryer.tscn" id="5_airfryer"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame1.png" id="6_life_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(2000, 80)
+
+[node name="CoOpTest" type="Node2D"]
+script = ExtResource("0_level_base")
+level_number = 0
+
+[node name="GroundA" type="StaticBody2D" parent="."]
+position = Vector2(1000, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundA"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="GroundVisual" type="ColorRect" parent="GroundA"]
+offset_left = -1000.0
+offset_top = -40.0
+offset_right = 1000.0
+offset_bottom = 40.0
+color = Color(0.55, 0.4, 0.2, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(75, 317)
+
+[node name="Player2" parent="." instance=ExtResource("2_player2")]
+position = Vector2(150, 317)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Life1" type="TextureRect" parent="HUD"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 56.0
+offset_bottom = 56.0
+texture = ExtResource("6_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life2" type="TextureRect" parent="HUD"]
+offset_left = 64.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 56.0
+texture = ExtResource("6_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Life3" type="TextureRect" parent="HUD"]
+offset_left = 108.0
+offset_top = 20.0
+offset_right = 144.0
+offset_bottom = 56.0
+texture = ExtResource("6_life_icon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BeanToken1" parent="." instance=ExtResource("3_bean")]
+position = Vector2(300, 330)
+
+[node name="BeanToken2" parent="." instance=ExtResource("3_bean")]
+position = Vector2(340, 330)
+
+[node name="BeanToken3" parent="." instance=ExtResource("3_bean")]
+position = Vector2(380, 330)
+
+[node name="Obstacle1" parent="." instance=ExtResource("4_obstacle")]
+position = Vector2(600, 350)
+
+[node name="AirFryer1" parent="." instance=ExtResource("5_airfryer")]
+position = Vector2(900, 330)

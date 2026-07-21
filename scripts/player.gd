@@ -3,7 +3,7 @@ extends CharacterBody2D
 const SPEED := 220.0
 const JUMP_VELOCITY := -420.0
 const GRAVITY := 1200.0
-const SPRITE_SCALE := Vector2(0.22, 0.22)
+@export var SPRITE_SCALE := Vector2(0.22, 0.22)  # overridden per-character -- Cheeto's generated canvas is a different aspect ratio than Cornchip's, see Player2.tscn
 const SPRITE_BASE_POSITION := Vector2(0, 8)  # a few px below the collision box's own resting point, so Cornchip's feet sit slightly into the ground line rather than exactly on its top edge -- a cheap depth cue, purely visual (collision/physics untouched)
 const RUN_BOB_AMPLITUDE := 4.0
 const RUN_BOB_SPEED := 14.0
@@ -32,7 +32,16 @@ const CARRY_OFFSET := Vector2(0, -45)  # Wrap finale delivery ritual (Phase 4): 
 signal player_hit
 
 @onready var sprite: AnimatedSprite2D = $Sprite
-@onready var camera: Camera2D = $Camera2D
+@onready var camera: Camera2D = get_node_or_null("Camera2D")
+
+# FB6 (2P co-op): overridden by Player2/Cheeto's scene to the p2_* actions
+# registered in project.godot, so this same script drives both players --
+# "shared moveset" per the confirmed co-op design, not a second script.
+@export var input_left: String = "ui_left"
+@export var input_right: String = "ui_right"
+@export var input_up: String = "ui_up"
+@export var input_down: String = "ui_down"
+@export var input_jump: String = "ui_accept"
 
 var spawn_position: Vector2
 var is_stunned := false
@@ -101,7 +110,8 @@ func take_carried_item() -> Node2D:
 
 func _ready() -> void:
 	spawn_position = global_position
-	camera_base_offset = camera.offset
+	if camera:
+		camera_base_offset = camera.offset
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -124,7 +134,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis(input_left, input_right)
 	var target_velocity_x := direction * SPEED * speed_multiplier
 	if is_on_ice:
 		velocity.x = move_toward(velocity.x, target_velocity_x, ICE_ACCEL * delta)
@@ -138,14 +148,14 @@ func _physics_process(delta: float) -> void:
 
 	var climb_vertical := 0.0
 	if in_climb_zone:
-		if Input.is_action_pressed("ui_up"):
+		if Input.is_action_pressed(input_up):
 			climb_vertical -= 1.0
-		if Input.is_action_pressed("ui_down"):
+		if Input.is_action_pressed(input_down):
 			climb_vertical += 1.0
 		if climb_vertical != 0.0:
 			is_climbing = true
 
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed(input_jump):
 		if is_climbing:
 			is_climbing = false
 			velocity.y = JUMP_VELOCITY
@@ -163,7 +173,7 @@ func _physics_process(delta: float) -> void:
 
 	if spin_cooldown_remaining > 0.0:
 		spin_cooldown_remaining -= delta
-	if has_spin_dash and not is_spinning and spin_cooldown_remaining <= 0.0 and not in_climb_zone and Input.is_action_just_pressed("ui_up"):
+	if has_spin_dash and not is_spinning and spin_cooldown_remaining <= 0.0 and not in_climb_zone and Input.is_action_just_pressed(input_up):
 		_start_spin()
 	if is_spinning:
 		spin_time_remaining -= delta
@@ -177,7 +187,7 @@ func _physics_process(delta: float) -> void:
 			sprite.modulate = Color.WHITE if not is_spinning else SPIN_TINT
 	if seed_cooldown_remaining > 0.0:
 		seed_cooldown_remaining -= delta
-	if has_tomato_power and not in_climb_zone and seed_cooldown_remaining <= 0.0 and Input.is_action_just_pressed("ui_down"):
+	if has_tomato_power and not in_climb_zone and seed_cooldown_remaining <= 0.0 and Input.is_action_just_pressed(input_down):
 		_fire_seed()
 
 	move_and_slide()
@@ -300,7 +310,7 @@ func apply_screen_wobble(duration: float) -> void:
 	wobble_time_remaining = maxf(wobble_time_remaining, duration)
 
 func _update_wobble(delta: float) -> void:
-	if wobble_time_remaining <= 0.0:
+	if camera == null or wobble_time_remaining <= 0.0:
 		return
 	wobble_time_remaining -= delta
 	if wobble_time_remaining <= 0.0:

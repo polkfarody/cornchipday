@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame1.png" id="tex_idle1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame2.png" id="tex_idle2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame3.png" id="tex_run1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame4.png" id="tex_run2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame5.png" id="tex_jump1"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame6.png" id="tex_jump2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame7.png" id="tex_hit"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cheeto/cheeto_frame8.png" id="tex_celebrate"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body2"]
+size = Vector2(40, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cheeto"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_celebrate")
+}],
+"loop": 1,
+"name": &"celebrate",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_hit")
+}],
+"loop": 0,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_idle2")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_jump1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_jump2")
+}],
+"loop": 1,
+"name": &"jump",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("tex_run2")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_jump2")
+}],
+"loop": 1,
+"name": &"spin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("tex_run2")
+}],
+"loop": 1,
+"name": &"slide",
+"speed": 5.0
+}]
+
+[node name="Player2" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_player2")
+SPRITE_SCALE = Vector2(0.15, 0.15)
+input_left = "p2_left"
+input_right = "p2_right"
+input_up = "p2_up"
+input_down = "p2_down"
+input_jump = "p2_jump"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_body2")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 8)
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_cheeto")
+animation = &"idle"
+autoplay = "idle"

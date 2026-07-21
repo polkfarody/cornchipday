@@ -49,7 +49,10 @@ const BEAN_ICON_TEXTURE := preload("res://Assets/generated/items/bean_ingredient
 @export var grants_double_jump: bool = false  # Level 6+ (characters.txt Bestiary by Level) -- re-granted per level rather than persisted, see player.gd's has_double_jump comment
 
 @onready var player: CharacterBody2D = $Player
+@onready var player2: CharacterBody2D = get_node_or_null("Player2")
 @onready var life_icons: Array = [$HUD/Life1, $HUD/Life2, $HUD/Life3]
+
+const CO_OP_CAMERA_SCENE_SCRIPT := preload("res://scripts/co_op_camera.gd")
 
 var lives := MAX_LIVES
 var bean_tokens_collected := 0
@@ -64,6 +67,15 @@ func _ready() -> void:
 	player.player_hit.connect(_on_player_hit)
 	if grants_double_jump:
 		player.grant_double_jump()
+	if player2:
+		# FB6 (2P co-op): shared 3-life pool per the confirmed design -- both
+		# players' hits drain the same _on_player_hit counter/HUD rather than
+		# each tracking their own. Player2 (Cheeto) shares Cornchip's full
+		# moveset, so it gets the same per-level ability grants too.
+		player2.player_hit.connect(_on_player_hit)
+		if grants_double_jump:
+			player2.grant_double_jump()
+		_setup_coop_camera()
 	bean_total = get_tree().get_nodes_in_group("bean_token").size()
 	for token in get_tree().get_nodes_in_group("bean_token"):
 		token.collected.connect(_on_bean_token_collected)
@@ -200,6 +212,27 @@ func _fly_ingredient_to_hud(ingredient: Node) -> void:
 # alone (physical, no camera involvement) fully cover "can't walk off the
 # level," which is the actual reported problem -- verified via a headless
 # screenshot showing normal framing restored.
+# FB6 (2P co-op): Player.tscn's own Camera2D is a direct child hardcoded to
+# follow just that one CharacterBody2D (see FB29/FB30) -- can't track two
+# independent players. When Player2 is present, its camera and Player1's own
+# camera are both disabled in favor of one level-owned CoOpCamera (see
+# scripts/co_op_camera.gd) tracking both players' midpoint with dynamic zoom.
+func _setup_coop_camera() -> void:
+	var p1_camera: Camera2D = player.get_node_or_null("Camera2D")
+	if p1_camera:
+		p1_camera.enabled = false
+	var p2_camera: Camera2D = player2.get_node_or_null("Camera2D")
+	if p2_camera:
+		p2_camera.enabled = false
+
+	var coop_camera := Camera2D.new()
+	coop_camera.set_script(CO_OP_CAMERA_SCENE_SCRIPT)
+	coop_camera.target_a = player
+	coop_camera.target_b = player2
+	coop_camera.position_smoothing_enabled = false  # co_op_camera.gd already lerps position itself
+	add_child(coop_camera)
+	coop_camera.enabled = true
+
 func _setup_level_bounds() -> void:
 	var min_left := INF
 	var max_right := -INF

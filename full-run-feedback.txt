@@ -1,0 +1,61 @@
+As you read through this list you will see bugs or suggestions that will be generic for each level. 
+Because of this I've only mentioned them once, but you should log them against each level. 
+
+#Title Screen
+- He always blinks too much. The extra stationary frame switches in too much. 
+This is the case during the game as well.
+Possibly need another standing pose to give the impression he's alive without blinking and only blink on occasion once he's been idle for a while.
+- Arrow is hovering point down which doesn't make much sense since you hit enter or space to start.
+#Map scsreen. 
+- Needs a map texture underneath which has an icon for each level. 
+- They should appear locked and have the name of each level and the icon appear as you unlock them. 
+- It should have the name Corn Chip Day somewhere
+- A count of beans collected and powerups should be visible on this screen too. 
+#Level 1
+- Beans need a sprite, currently just brown ovals. 
+- A running bean tally should be visible somewhere (next to lives?)
+- When you run into a bean it will form it's position into your bean count and sparkle. 
+- Beans will be used to track high scores and can sometimes be hard to find or get to.
+- The airfyrer needs it's own sprite 
+- When you collect the airfryer it should fly up to the top right and a logo for the ability will appear. 
+Signifying it's active. There should also be a way to know how to use it. Maybe the first time there's a diagram of what to do and what it does that pops up and pauses the game. 
+- The enemy characters are too boring. They need to move more freely and not just back and forth. Similar to how they work in mario bros. They shouldn't fall into any holes though. 
+- When you fall in a hole the screen follows you too far. It should only get a small way down before you die and respawn. 
+- There should be retaining walls at each end of the map so you can't run off the edge either way. 
+- The hole background textures should move giving the affect of lava or whatever the affect is supposed to be. 
+- Extra lives don't work. Even when you have less than 3 lives remaining, picking up an extra life doesn't add a new one. (This is a bug)
+- The life should be harder to get and possibly should just drop from the sky when you are down to 1 life as well. 
+- Pressing up to activate the dash/spin feature is not intuitive. An extra sprite would help. Also knowing you had the ability. 
+- The hot sauce boss looks to fire hotsauce at you but nothing actually happens. We should use the salsa obsticle to be a missile it fires.
+- When you pick up the ingredient at the end it should make more of a fanfair and the ingredient should fly into a shopping basket? or something that can persist to show what ingredients you have and what you need.
+# Level 2
+- It would be good to make a cornchip climbing part for either a special powerup or a free life. (We already have the sprites.)
+- The dash/slide or spin feature (what ever it is) should have a cooldown period so you can't use it rapidly to make it a bit harder. 
+# Level 3 
+- The background image sucks balls. It looks like a broken mess and not like a window at all. 
+- The climbing block and floor should all have a texture so they don't look like grey rectangles. 
+- The climbing block and floor pieces make attacking or getting passed some of the enemies impossible before you get a double jump. 
+- They should be more than just a level floor you can fall into it should have depth and a bit of originality. 
+- Each climbing thing should be a different design in each level as well. 
+- The avocado boss's quac attack sits above the floor making it look like it floats rather than has been dropped. 
+- All square block sprites should be changed for actual textured images.
+# Level 4
+- The background needs to change or be expanded and brought down to ground level (I'd vote change it since it looks so bad.)
+# Level 5
+- Background is not right at all and doesn't look real. This one could actually be fixed by just enlarging it and positioning down at ground level since it would actually look ok. 
+# Level 6
+- Background is okay in this one, but they could be separated a bit more since they all show the same kitchen in the background.
+- The heat thing that the frypan does is a bit shit. If you get caught in it, sometimes you can't escape. 
+It would be better if it were a smaller area that you could escape from before it goes red, so maybe an area around the pan itself. 
+The solid see through colour is a bit weeird too and looks quite tacky. If it were a circle around the pan it would look much better. 
+# Level 7 
+- There's no textures at all. We need to fix this. 
+- IT should be the longest and hardest level to get to the boss. 
+- The ingredients for the boss fight should be on suspended blocks that you need to scale to get them. 
+- See through blue rectangle with the life in it is ice, but it looks really tacky. Instead lets use the ice texture on the floor from that level. 
+- I'm not sure what the green rectangle next to it is supposed to be but same thing. Let's get a floor texture on instead. Why are they all next to each other too. Let's spread things out so it's not all bam bam bam. 
+- I don't know what the smaller blocks are supposed to be to the right now but it's impossible to get passed the red one. Once you move a slight bit past it chases you very quickly and you die... repeatedly. This needs a texture and either make it easier to avoid or make it clear what you have to do. 
+- I can't get to the boss, but we already covered what would happen now. 
+#Final screen 
+- There should be some kind of ending screen that shows that cornchip has saved the day and made the wrap. 
+- When we get to this lets discuss. 
