@@ -149,11 +149,14 @@ func _physics_process(delta: float) -> void:
 		if is_climbing:
 			is_climbing = false
 			velocity.y = JUMP_VELOCITY
+			AudioManager.play("jump")
 		elif is_on_floor():
 			velocity.y = JUMP_VELOCITY
+			AudioManager.play("jump")
 		elif has_double_jump and air_jumps_used < 1:
 			velocity.y = JUMP_VELOCITY
 			air_jumps_used += 1
+			AudioManager.play("jump")
 
 	if is_climbing:
 		velocity.y = climb_vertical * CLIMB_SPEED
@@ -317,6 +320,7 @@ func hit_by_obstacle() -> void:
 	if is_stunned or is_asleep:
 		return
 	is_stunned = true
+	AudioManager.play("hit")
 	player_hit.emit()
 	velocity = Vector2.ZERO
 	sprite.position = SPRITE_BASE_POSITION

@@ -18,6 +18,7 @@ boot_splash/stretch_mode=4
 [autoload]
 
 GameProgress="*res://scripts/game_progress.gd"
+AudioManager="*res://scripts/audio_manager.gd"
 
 [display]
 

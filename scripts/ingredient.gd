@@ -39,6 +39,7 @@ func _on_body_entered(body: Node) -> void:
 	_play_collect_tween()
 
 func _play_collect_tween() -> void:
+	AudioManager.play("life_pickup" if is_in_group("life_pickup") else "bean_collect")
 	if sparkle_on_collect:
 		_spawn_sparkle()
 	var tween := create_tween()

@@ -289,6 +289,7 @@ func _on_level_ingredient_collected(ingredient: Node = null) -> void:
 	if level_complete:
 		return
 	level_complete = true
+	AudioManager.play("level_complete")
 	if ingredient:
 		_fly_ingredient_to_hud(ingredient)
 	if level_number > 0:
