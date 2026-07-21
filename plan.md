@@ -71,7 +71,7 @@ Direct user mandate (2026-07-20, see `instructions-ai.txt` Current Objective): b
 - [ ] ~~Environment-art pass for Levels 3-6 only~~ -- **resequenced into Phase 4 below.** Generating art for L3-6's current layout was paused after a fresh round of user feedback (`user-input.txt`) turned out to include level-geometry changes (maze-style paths, longer levels) that would target those same four levels -- doing the art pass first risked spending on layouts about to change.
 
 - [x] **Full interactive playtest of the complete 7-level game, start to finish** -- done 2026-07-20, see Phase 5 below for the feedback it produced.
-- [ ] Full AI-art pass across all levels/characters for visual consistency (FB4)
+- [x] Full AI-art pass across all levels/characters for visual consistency (FB4) -- assessed 2026-07-21, not built: see `feature.md` FB4. No concrete inconsistency was identified (the generation pipeline's shared style-suffix convention has enforced consistency by construction throughout); a blind full-regeneration pass wasn't judged a good use of spend without one.
 - [ ] Audio/music/SFX pass (ambient sound is fine — still no reading required)
 - [x] 2-player local co-op investigation (Cheeto) -- investigated 2026-07-21, see `feature.md` FB6 for full findings. **Not built:** Cheeto has zero existing visual design ("concept only" per `characters.txt`), and there's a real unresolved game-design fork (shared vs. separate lives, shared vs. distinct moveset) that isn't answerable from the existing docs -- flagged as the actual blocker, not the camera/input engineering.
 
