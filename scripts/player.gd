@@ -9,6 +9,7 @@ const RUN_BOB_AMPLITUDE := 4.0
 const RUN_BOB_SPEED := 14.0
 const RUN_TILT_DEGREES := 6.0
 const SPIN_DURATION := 1.0
+const SPIN_COOLDOWN := 1.5  # FB27: was instantly re-triggerable on SPIN_DURATION expiry, making the enemy-defeat window spammable into near-permanent invincibility
 const SPIN_TINT := Color(1.3, 1.3, 0.6)
 const SPIN_ROTATE_SPEED := 900.0  # deg/sec -- the "spin" pose is a single coiled sprite; the actual spin motion comes from rotating it in code rather than needing multiple animation frames
 const SLEEP_TINT := Color(0.55, 0.55, 0.9)
@@ -42,6 +43,7 @@ var is_on_ice := false
 var has_spin_dash := false
 var is_spinning := false
 var spin_time_remaining := 0.0
+var spin_cooldown_remaining := 0.0
 
 # Double jump (characters.txt Bestiary by Level, Level 6): granted permanently
 # starting Level 6 (level_base.gd's grants_double_jump), not a pickup -- Air
@@ -125,7 +127,9 @@ func _physics_process(delta: float) -> void:
 			velocity.y = JUMP_VELOCITY
 			air_jumps_used += 1
 
-	if has_spin_dash and not is_spinning and Input.is_action_just_pressed("ui_up"):
+	if spin_cooldown_remaining > 0.0:
+		spin_cooldown_remaining -= delta
+	if has_spin_dash and not is_spinning and spin_cooldown_remaining <= 0.0 and Input.is_action_just_pressed("ui_up"):
 		_start_spin()
 	if is_spinning:
 		spin_time_remaining -= delta
@@ -173,6 +177,7 @@ func _start_spin() -> void:
 
 func _end_spin() -> void:
 	is_spinning = false
+	spin_cooldown_remaining = SPIN_COOLDOWN
 	sprite.modulate = Color.WHITE
 	sprite.rotation_degrees = 0.0
 
