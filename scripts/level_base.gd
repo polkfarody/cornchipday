@@ -29,6 +29,17 @@ const BOUNDARY_WALL_HEIGHT := 4000.0
 const BOUNDARY_MARGIN := 40.0
 const PIT_FALL_CAMERA_MARGIN := 120.0  # lets a pit-fall dip the camera a little for game feel, without scrolling into the empty space below the level
 
+# FB30: full-run-feedback.txt asked for extra lives to be harder to come by,
+# and specifically for one to "drop from the sky" as a comeback chance once
+# down to the last life -- rather than only ever sitting in a fixed spot on
+# the level's main path. Spawns above wherever the player currently is (the
+# rolling checkpoint means that's also roughly where they'll respawn) and
+# tweens down to rest on the ground, so it's always somewhere the player can
+# actually reach without backtracking.
+const SKY_LIFE_DROP_SCENE := preload("res://scenes/LifePickup.tscn")
+const SKY_LIFE_DROP_HEIGHT_ABOVE := 500.0
+const SKY_LIFE_DROP_FALL_TIME := 0.6
+
 @export var level_number: int = 0  # 1-7, used to unlock level_number+1 on completion (GameProgress)
 @export var grants_double_jump: bool = false  # Level 6+ (characters.txt Bestiary by Level) -- re-granted per level rather than persisted, see player.gd's has_double_jump comment
 
@@ -38,6 +49,7 @@ const PIT_FALL_CAMERA_MARGIN := 120.0  # lets a pit-fall dip the camera a little
 var lives := MAX_LIVES
 var bean_tokens_collected := 0
 var level_complete := false
+var level_floor_y := 592.0  # overwritten by _setup_level_bounds() from the level's real ground pieces
 
 func _ready() -> void:
 	player.player_hit.connect(_on_player_hit)
@@ -76,6 +88,7 @@ func _setup_level_bounds() -> void:
 	camera.limit_left = int(min_left)
 	camera.limit_right = int(max_right)
 	camera.limit_bottom = int(max_floor_y + PIT_FALL_CAMERA_MARGIN)
+	level_floor_y = max_floor_y
 
 	_add_boundary_wall(min_left - BOUNDARY_MARGIN, "BoundaryWallLeft")
 	_add_boundary_wall(max_right + BOUNDARY_MARGIN, "BoundaryWallRight")
@@ -97,9 +110,20 @@ func _on_player_hit() -> void:
 	lives -= 1
 	if lives >= 0 and lives < life_icons.size():
 		life_icons[lives].visible = false
+	if lives == 1:
+		_spawn_sky_life_drop()
 	if lives <= 0:
 		await get_tree().create_timer(RESTART_DELAY).timeout
 		get_tree().reload_current_scene()
+
+func _spawn_sky_life_drop() -> void:
+	var pickup: Area2D = SKY_LIFE_DROP_SCENE.instantiate()
+	pickup.collected.connect(_on_life_pickup_collected)
+	add_child(pickup)
+	var target_y := level_floor_y - 20.0
+	pickup.position = Vector2(player.global_position.x, target_y - SKY_LIFE_DROP_HEIGHT_ABOVE)
+	var tween := create_tween()
+	tween.tween_property(pickup, "position:y", target_y, SKY_LIFE_DROP_FALL_TIME).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 func _on_bean_token_collected() -> void:
 	bean_tokens_collected += 1
