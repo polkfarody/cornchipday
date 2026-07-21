@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/heat_zone.gd" id="1_heat_zone"]
+[ext_resource type="Texture2D" path="res://Assets/generated/environment/level6/l6_ground_tile.png" id="2_tex"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_heat"]
 radius = 170.0
@@ -16,3 +17,4 @@ shape = SubResource("CircleShape2D_heat")
 position = Vector2(0, -40)
 color = Color(1, 0.2, 0, 0)
 polygon = PackedVector2Array(170, 0, 161.7, 52.5, 137.5, 99.9, 99.9, 137.5, 52.5, 161.7, 0, 170, -52.5, 161.7, -99.9, 137.5, -137.5, 99.9, -161.7, 52.5, -170, 0, -161.7, -52.5, -137.5, -99.9, -99.9, -137.5, -52.5, -161.7, 0, -170, 52.5, -161.7, 99.9, -137.5, 137.5, -99.9, 161.7, -52.5)
+texture = ExtResource("2_tex")
