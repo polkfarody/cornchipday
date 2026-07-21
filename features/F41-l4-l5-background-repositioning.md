@@ -1,8 +1,6 @@
 # F41 — L4/L5 Window-Background Repositioning
 
-**Status:** Not started. Small, fully scoped, no design questions — safe to build directly without
-confirmation (matches `instructions-ai.txt` Operating Principle 1: shippable speed, no gold-plating, and
-it's an explicit, already-approved user ask, not invented scope).
+**Status:** Done. Purely numeric fix in `Level4.tscn`/`Level5.tscn`, verified via real windowed screenshots.
 
 ## Background
 `feature.md` F29 fixed the L3/L4/L5 window-view art *content* (was rendering as a broken/unfilled mess —
@@ -38,3 +36,18 @@ known-good baseline). The fix is purely numeric, in `Level4.tscn` / `Level5.tscn
 ## Verification
 Real windowed screenshot of both levels (same technique as F26/F29), confirming the window art's bottom
 edge meets the ground tile with no visible seam/gap, matching the already-shipped L1/L2/L6/L7 backgrounds.
+
+## Result
+Ground line (top of `GroundVisual`) sits at world y=360 across every level (`Ground* position.y=400` +
+`offset_top=-40`) — confirmed against L1's already-correct `Window1` (native 1313x768, scale 0.99,
+position y=-20 → bottom edge lands at y≈360.16). Used that as the target for both fixes:
+- **L4:** scale left untouched at `0.5307` (already tuned to the 700px-width convention, native width
+  1319). Displayed height = 768 × 0.5307 = 407.58, so `position.y` moved from `30` → `156.21` to put the
+  bottom edge at y=360. Pure Y-offset, per the "no art issue" diagnosis above.
+- **L5:** native art is 1302×670 (shorter than L1/L4's 768-tall crop), so the old scale (`0.5376`, tuned
+  only for 700px width) left a visibly short wall with a gap above the ground. Increased scale to `0.65`
+  (still well under 1.0 against the native resolution, so no upscale pixelation) and moved `position.y`
+  from `0` → `142.25` so the taller result's bottom edge still lands at y=360.
+- Real windowed screenshots (`--scene res://scenes/LevelN.tscn --write-movie ... --quit-after 5`,
+  1280x720) of both levels confirm the art now reads edge-to-edge down to the ground tile with no gray
+  gap and no visible seam.

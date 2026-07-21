@@ -77,23 +77,23 @@ color = Color(0.75, 0.88, 0.95, 1)
 motion_scale = Vector2(0.4, 1)
 
 [node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(400, 0)
-scale = Vector2(0.5376, 0.5376)
+position = Vector2(400, 142.25)
+scale = Vector2(0.65, 0.65)
 texture = ExtResource("17_window_view")
 
 [node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(1100, 0)
-scale = Vector2(0.5376, 0.5376)
+position = Vector2(1100, 142.25)
+scale = Vector2(0.65, 0.65)
 texture = ExtResource("17_window_view")
 
 [node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(1800, 0)
-scale = Vector2(0.5376, 0.5376)
+position = Vector2(1800, 142.25)
+scale = Vector2(0.65, 0.65)
 texture = ExtResource("17_window_view")
 
 [node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(2500, 0)
-scale = Vector2(0.5376, 0.5376)
+position = Vector2(2500, 142.25)
+scale = Vector2(0.65, 0.65)
 texture = ExtResource("17_window_view")
 
 [node name="IcicleCluster1" type="Sprite2D" parent="."]

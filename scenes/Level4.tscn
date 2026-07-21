@@ -78,22 +78,22 @@ color = Color(0.95, 0.78, 0.55, 1)
 motion_scale = Vector2(0.4, 1)
 
 [node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(400, 30)
+position = Vector2(400, 156.21)
 scale = Vector2(0.5307, 0.5307)
 texture = ExtResource("17_window_view")
 
 [node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(1100, 30)
+position = Vector2(1100, 156.21)
 scale = Vector2(0.5307, 0.5307)
 texture = ExtResource("17_window_view")
 
 [node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(1800, 30)
+position = Vector2(1800, 156.21)
 scale = Vector2(0.5307, 0.5307)
 texture = ExtResource("17_window_view")
 
 [node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
-position = Vector2(2500, 30)
+position = Vector2(2500, 156.21)
 scale = Vector2(0.5307, 0.5307)
 texture = ExtResource("17_window_view")
 
