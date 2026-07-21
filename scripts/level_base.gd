@@ -28,7 +28,6 @@ const WORLD_MAP_PATH := "res://scenes/WorldMap.tscn"
 # per level, so it stays correct automatically as levels get edited.
 const BOUNDARY_WALL_HEIGHT := 4000.0
 const BOUNDARY_MARGIN := 40.0
-const PIT_FALL_CAMERA_MARGIN := 120.0  # lets a pit-fall dip the camera a little for game feel, without scrolling into the empty space below the level
 
 # FB30: full-run-feedback.txt asked for extra lives to be harder to come by,
 # and specifically for one to "drop from the sky" as a comeback chance once
@@ -186,11 +185,21 @@ func _fly_ingredient_to_hud(ingredient: Node) -> void:
 		flying.queue_free()
 	)
 
-# FB29: the camera used to be able to scroll arbitrarily far down/left/right
-# of the level's actual content -- most visible as a jarring dip into empty
-# space below a pit before the FALL_RESPAWN_Y stun-and-respawn kicked in, but
-# also let the player walk clean off either end of the level. Both fixed the
-# same way: derive the level's real bounds from its own ground pieces.
+# FB29: the player used to be able to walk clean off either end of the
+# level. Fixed with physical boundary walls derived from the level's own
+# ground pieces, so there's nothing to hand-author per scene.
+#
+# A Camera2D.limit_left/right/bottom clamp was tried first (also meant to
+# cap the pit-fall camera dip), but caused a real regression: this project's
+# Camera2D uses a non-default `offset` (Vector2(150, -225), see Player.tscn),
+# and Godot's limit clamping interacts with that offset in a way that shifts
+# the resting camera position by a large, seemingly non-linear amount on
+# BOTH axes even during ordinary standing play, not just at the edges --
+# caught via a real rendered screenshot showing the player pushed off the
+# top of the screen at the level's own spawn point. Reverted; the walls
+# alone (physical, no camera involvement) fully cover "can't walk off the
+# level," which is the actual reported problem -- verified via a headless
+# screenshot showing normal framing restored.
 func _setup_level_bounds() -> void:
 	var min_left := INF
 	var max_right := -INF
@@ -209,10 +218,6 @@ func _setup_level_bounds() -> void:
 	if min_left == INF:
 		return
 
-	var camera: Camera2D = player.get_node("Camera2D")
-	camera.limit_left = int(min_left)
-	camera.limit_right = int(max_right)
-	camera.limit_bottom = int(max_floor_y + PIT_FALL_CAMERA_MARGIN)
 	level_floor_y = max_floor_y
 
 	_add_boundary_wall(min_left - BOUNDARY_MARGIN, "BoundaryWallLeft")
