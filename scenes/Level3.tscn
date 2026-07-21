@@ -79,22 +79,22 @@ motion_scale = Vector2(0.4, 1)
 
 [node name="Window1" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(400, 40)
-scale = Vector2(0.927, 0.927)
+scale = Vector2(0.541, 0.541)
 texture = ExtResource("18_window_view")
 
 [node name="Window2" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1100, 40)
-scale = Vector2(0.927, 0.927)
+scale = Vector2(0.541, 0.541)
 texture = ExtResource("18_window_view")
 
 [node name="Window3" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(1800, 40)
-scale = Vector2(0.927, 0.927)
+scale = Vector2(0.541, 0.541)
 texture = ExtResource("18_window_view")
 
 [node name="Window4" type="Sprite2D" parent="WindowParallax/WindowLayer"]
 position = Vector2(2500, 40)
-scale = Vector2(0.927, 0.927)
+scale = Vector2(0.541, 0.541)
 texture = ExtResource("18_window_view")
 
 [node name="LimeBunch1" type="Sprite2D" parent="."]
