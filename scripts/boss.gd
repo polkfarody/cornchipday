@@ -31,6 +31,17 @@ extends CharacterBody2D
 @export var slide_charge_min_speed: float = 150.0
 @export var heat_zone_path: NodePath  # Iron Skillet: if set, stomping while this HeatZone is hot burns the player instead of hurting the boss -- only the cool phase is safe to land a hit
 
+# FB28: replaces the old deterministic "walk to the edge, flip, walk back"
+# metronome with organic wandering -- same overall leash (patrol_half_width)
+# and the same hard safety checks (never off a platform edge, never through a
+# wall), but direction changes and pauses land on a randomized timer instead
+# of only ever at the exact patrol boundary.
+const ROAM_MIN_INTERVAL := 1.5
+const ROAM_MAX_INTERVAL := 4.0
+const ROAM_PAUSE_CHANCE := 0.3
+const ROAM_PAUSE_MIN := 0.5
+const ROAM_PAUSE_MAX := 1.2
+
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var hurt_area: Area2D = $HurtArea
 @onready var fire_timer: Timer = $FireTimer
@@ -43,6 +54,8 @@ var is_defeated := false
 var action_lock := 0.0  # seconds remaining where patrol/animation pause for a one-off reaction
 var attack_vulnerable_remaining := 0.0
 var heat_zone: Node = null
+var roam_timer := 0.0
+var roam_pause_remaining := 0.0
 
 func _ready() -> void:
 	health = max_health
@@ -54,6 +67,8 @@ func _ready() -> void:
 	sprite.play("idle")
 	if heat_zone_path != NodePath():
 		heat_zone = get_node(heat_zone_path)
+	# Randomized per-instance so multiple enemies on screen don't all pause/turn in lockstep.
+	roam_timer = randf_range(ROAM_MIN_INTERVAL, ROAM_MAX_INTERVAL)
 
 func _physics_process(delta: float) -> void:
 	if is_defeated:
@@ -68,6 +83,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
+	roam_timer -= delta
 	var offset := global_position.x - start_x
 	if offset > patrol_half_width:
 		patrol_direction = -1.0
@@ -78,7 +94,14 @@ func _physics_process(delta: float) -> void:
 		# ever turning at a fixed distance from spawn (which breaks the
 		# moment an obstacle or a shorter platform sits inside that range).
 		patrol_direction = -patrol_direction
-	velocity.x = patrol_direction * move_speed
+	elif roam_pause_remaining <= 0.0 and roam_timer <= 0.0:
+		_pick_roam_behavior()
+
+	if roam_pause_remaining > 0.0:
+		roam_pause_remaining -= delta
+		velocity.x = 0.0
+	else:
+		velocity.x = patrol_direction * move_speed
 	velocity.y = 0.0
 	move_and_slide()
 	# Also turn around immediately on hitting something solid (e.g. a jump
@@ -95,13 +118,23 @@ func _physics_process(delta: float) -> void:
 			patrol_direction = -patrol_direction
 			break
 	sprite.flip_h = patrol_direction < 0.0
-	if sprite.animation != "move":
+	if roam_pause_remaining > 0.0:
+		if sprite.animation != "idle":
+			sprite.play("idle")
+	elif sprite.animation != "move":
 		sprite.play("move")
 
 	if wobble_radius > 0.0:
 		var player := get_tree().get_first_node_in_group("player")
 		if player and global_position.distance_to(player.global_position) <= wobble_radius:
 			player.apply_screen_wobble(0.2)
+
+func _pick_roam_behavior() -> void:
+	roam_timer = randf_range(ROAM_MIN_INTERVAL, ROAM_MAX_INTERVAL)
+	if randf() < ROAM_PAUSE_CHANCE:
+		roam_pause_remaining = randf_range(ROAM_PAUSE_MIN, ROAM_PAUSE_MAX)
+	elif randf() < 0.5:
+		patrol_direction = -patrol_direction
 
 func _is_floor_ahead(direction: float) -> bool:
 	var shape: RectangleShape2D = body_collision.shape
