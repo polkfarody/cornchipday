@@ -261,12 +261,12 @@ func _die() -> void:
 		var group_name := "split_%d" % get_instance_id()
 		for i in split_count:
 			var piece := split_into_scene.instantiate()
-			level.add_child(piece)
-			piece.global_position = global_position + Vector2((i - (split_count - 1) / 2.0) * split_offset_x, 0)
+			var piece_position := global_position + Vector2((i - (split_count - 1) / 2.0) * split_offset_x, 0)
 			piece.add_to_group(group_name)
 			piece.shared_defeat_group = group_name
 			piece.ingredient_scene = ingredient_scene
 			piece.ingredient_spawn_position = ingredient_spawn_position
+			_finish_spawn.call_deferred(piece, level, piece_position)
 		await get_tree().create_timer(1.0).timeout
 		queue_free()
 		return
@@ -287,9 +287,23 @@ func _die() -> void:
 	if ingredient_scene:
 		var ingredient := ingredient_scene.instantiate()
 		var level := get_tree().current_scene
-		level.add_child(ingredient)
-		ingredient.global_position = ingredient_spawn_position
-		if level.has_method("register_level_ingredient"):
-			level.register_level_ingredient(ingredient)
+		_finish_ingredient_spawn.call_deferred(ingredient, level)
 	await get_tree().create_timer(1.0).timeout
 	queue_free()
+
+# Real bug caught via live playtest (not headless): add_child()-ing a new
+# Area2D-based node directly from _die(), itself reached via the hurt area's
+# body_entered signal, can hit Godot's "Can't change this state while
+# flushing queries" -- the same class of bug FB30's sky-drop life pickup
+# already had to work around. Splitting add_child from position/registration
+# setup risked a timing mismatch, so the whole thing waits together via
+# call_deferred, same pattern as level_base.gd's _finish_sky_life_drop.
+func _finish_spawn(node: Node, level: Node, spawn_position: Vector2) -> void:
+	level.add_child(node)
+	node.global_position = spawn_position
+
+func _finish_ingredient_spawn(ingredient: Node, level: Node) -> void:
+	level.add_child(ingredient)
+	ingredient.global_position = ingredient_spawn_position
+	if level.has_method("register_level_ingredient"):
+		level.register_level_ingredient(ingredient)

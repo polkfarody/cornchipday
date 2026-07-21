@@ -16,5 +16,12 @@ func _on_body_entered(body: Node) -> void:
 		return
 	has_triggered = true
 	var obstacle := obstacle_scene.instantiate()
+	# Real bug caught via live playtest: add_child()-ing straight from this
+	# Area2D's own body_entered callback can hit Godot's "Can't change this
+	# state while flushing queries" -- same class of bug as boss.gd's
+	# ingredient/split spawns and level_base.gd's sky-drop pickup, same fix.
+	_finish_spawn.call_deferred(obstacle)
+
+func _finish_spawn(obstacle: Node) -> void:
 	get_tree().current_scene.add_child(obstacle)
 	obstacle.global_position = spawn_position
