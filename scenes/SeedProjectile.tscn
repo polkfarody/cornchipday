@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/seed_projectile.gd" id="1_seed"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_seed"]
+radius = 7
+
+[node name="SeedProjectile" type="Area2D"]
+script = ExtResource("1_seed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_seed")
+
+[node name="Seed" type="Polygon2D" parent="."]
+color = Color(0.9, 0.85, 0.3, 1)
+polygon = PackedVector2Array(0, -7, 3, -3, 3, 3, 0, 7, -3, 3, -3, -3)
+
+[node name="Highlight" type="Polygon2D" parent="Seed"]
+position = Vector2(-1, -2)
+color = Color(1, 1, 0.8, 0.7)
+polygon = PackedVector2Array(1.5, -2, 1.5, 2, -1.5, 2, -1.5, -2)

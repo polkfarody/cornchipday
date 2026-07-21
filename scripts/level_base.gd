@@ -249,6 +249,16 @@ func _on_player_hit() -> void:
 func _spawn_sky_life_drop() -> void:
 	var pickup: Area2D = SKY_LIFE_DROP_SCENE.instantiate()
 	pickup.collected.connect(_on_life_pickup_collected)
+	# Deferred as one unit (add_child + position + tween): this can run from
+	# inside an enemy's own Area2D body_entered callback (touch ->
+	# hit_by_obstacle -> _on_player_hit -> here), and Godot's physics server
+	# rejects adding a new collision shape while still flushing that query
+	# -- caught via headless test ("Can't change this state while flushing
+	# queries"). Splitting add_child from the position/tween setup risked a
+	# timing mismatch, so the whole thing waits together.
+	_finish_sky_life_drop.call_deferred(pickup)
+
+func _finish_sky_life_drop(pickup: Area2D) -> void:
 	add_child(pickup)
 	var target_y := level_floor_y - 20.0
 	pickup.position = Vector2(player.global_position.x, target_y - SKY_LIFE_DROP_HEIGHT_ABOVE)

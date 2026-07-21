@@ -19,6 +19,11 @@ const WOBBLE_AMPLITUDE := 6.0
 const WOBBLE_SPEED := 18.0
 const ICE_ACCEL := 300.0  # px/s^2 -- much softer than the instant velocity snap used off-ice, so input lags into a slide
 const CLIMB_SPEED := 140.0  # FB33: L2 climbing bonus section -- grabbed by pressing up/down while inside a ClimbZone, released by leaving the zone or jumping off
+const TOMATO_POWER_DURATION := 8.0  # FB11: Tomato power-up -- temporary ranged attack
+const TOMATO_TINT := Color(1.0, 0.6, 0.55)
+const SEED_COOLDOWN := 0.4
+const SEED_SPEED := 280.0
+const SEED_PROJECTILE_SCENE := preload("res://scenes/SeedProjectile.tscn")
 const CARRY_OFFSET := Vector2(0, -45)  # Wrap finale delivery ritual (Phase 4): held above Cornchip's head, clear of the sprite
 
 # Emitted on every hit (obstacle or enemy), whatever the source -- Level1
@@ -47,6 +52,14 @@ var has_spin_dash := false
 var is_spinning := false
 var spin_time_remaining := 0.0
 var spin_cooldown_remaining := 0.0
+
+# FB11: Tomato power-up -- timed (unlike spin-dash, which is permanent once
+# granted), so it wears off on its own. Firing reuses "ui_down" the same way
+# climbing reuses "ui_up"/"ui_down" -- gated so the two can't fight over the
+# same key (a ClimbZone always wins; you can't fire while grabbing a ladder).
+var has_tomato_power := false
+var tomato_power_remaining := 0.0
+var seed_cooldown_remaining := 0.0
 
 # Double jump (characters.txt Bestiary by Level, Level 6): granted permanently
 # starting Level 6 (level_base.gd's grants_double_jump), not a pickup -- Air
@@ -154,12 +167,39 @@ func _physics_process(delta: float) -> void:
 		if spin_time_remaining <= 0.0:
 			_end_spin()
 
+	if has_tomato_power:
+		tomato_power_remaining -= delta
+		if tomato_power_remaining <= 0.0:
+			has_tomato_power = false
+			sprite.modulate = Color.WHITE if not is_spinning else SPIN_TINT
+	if seed_cooldown_remaining > 0.0:
+		seed_cooldown_remaining -= delta
+	if has_tomato_power and not in_climb_zone and seed_cooldown_remaining <= 0.0 and Input.is_action_just_pressed("ui_down"):
+		_fire_seed()
+
 	move_and_slide()
 	_update_animation(delta)
 	_update_wobble(delta)
 
 func grant_spin_dash() -> void:
 	has_spin_dash = true
+
+func grant_tomato_power() -> void:
+	has_tomato_power = true
+	tomato_power_remaining = TOMATO_POWER_DURATION
+	sprite.modulate = TOMATO_TINT
+
+func _fire_seed() -> void:
+	seed_cooldown_remaining = SEED_COOLDOWN
+	var seed := SEED_PROJECTILE_SCENE.instantiate()
+	get_tree().current_scene.add_child(seed)
+	var dir := -1.0 if sprite.flip_h else 1.0
+	# Spawned ahead of the player, not at their exact center -- otherwise it
+	# immediately overlaps the firer's own collision and self-destructs via
+	# _on_body_entered before ever reaching a target (caught via headless
+	# test: the target enemy's health never dropped).
+	seed.global_position = global_position + Vector2(dir * 30.0, 0.0)
+	seed.set_direction(dir * SEED_SPEED)
 
 # FB33 (ClimbZone.tscn): entering re-arms the grab (engaged on the next
 # up/down press, not automatically -- so brushing past the zone's edge

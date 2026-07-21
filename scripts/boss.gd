@@ -222,6 +222,28 @@ func _take_stomp_hit(player: Node) -> void:
 	sprite.play("hit")
 	action_lock = 0.4
 
+# FB11: Tomato power-up's fired seeds call this directly (no player-bounce
+# needed, unlike a stomp). Respects the same per-boss vulnerability rules as
+# the stomp path above -- Queso Grande still only falls to spin-dash, Hot
+# Sauce/Avocado still only take a hit during their attack window, Iron
+# Skillet still only takes a hit during his cool phase -- rather than giving
+# ranged seeds a blanket "defeats anything" rule the stomp doesn't have.
+func take_ranged_hit() -> void:
+	if is_defeated:
+		return
+	if heat_zone and heat_zone.is_hot:
+		return
+	if spin_dash_only:
+		return
+	if vulnerable_only_during_attack and attack_vulnerable_remaining <= 0.0:
+		return
+	health -= 1
+	if health <= 0:
+		_die()
+		return
+	sprite.play("hit")
+	action_lock = 0.4
+
 func _die() -> void:
 	is_defeated = true
 	fire_timer.stop()

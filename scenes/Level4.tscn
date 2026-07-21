@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level4/l4_window_view.png" id="17_window_view"]
 [ext_resource type="Texture2D" path="res://Assets/generated/environment/level4/l4_maze_tier.png" id="18_maze_tier"]
 [ext_resource type="ShaderMaterial" path="res://Assets/materials/hazard_flow.tres" id="19_hazard_mat"]
+[ext_resource type="PackedScene" path="res://scenes/TomatoPowerup.tscn" id="20_tomato_powerup"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_groundA"]
 size = Vector2(1036, 80)
@@ -375,6 +376,9 @@ position = Vector2(1450, 330)
 
 [node name="BeanToken10" parent="." instance=ExtResource("8_bean")]
 position = Vector2(1485, 330)
+
+[node name="TomatoPowerup1" parent="." instance=ExtResource("20_tomato_powerup")]
+position = Vector2(1600, 330)
 
 [node name="BigRedBoss" parent="." instance=ExtResource("3_boss")]
 position = Vector2(2050, 330)
