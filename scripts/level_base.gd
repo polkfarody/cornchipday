@@ -45,6 +45,11 @@ const SKY_LIFE_DROP_FALL_TIME := 0.6
 # drift out of sync between levels.
 const BEAN_ICON_TEXTURE := preload("res://Assets/generated/items/bean_ingredient.png")
 
+# F44: mobile Web export touch controls -- instanced into $HUD here so every
+# level picks it up automatically instead of hand-editing all 7 level
+# scenes. Self-removes on non-web builds (see touch_controls.gd).
+const TOUCH_CONTROLS_SCENE := preload("res://scenes/TouchControls.tscn")
+
 @export var level_number: int = 0  # 1-7, used to unlock level_number+1 on completion (GameProgress)
 @export var grants_double_jump: bool = false  # Level 6+ (characters.txt Bestiary by Level) -- re-granted per level rather than persisted, see player.gd's has_double_jump comment
 
@@ -84,6 +89,7 @@ func _ready() -> void:
 	_setup_level_bounds()
 	_setup_bean_hud()
 	_setup_ingredient_checklist()
+	$HUD.add_child(TOUCH_CONTROLS_SCENE.instantiate())
 
 func _setup_bean_hud() -> void:
 	if bean_total <= 0:
