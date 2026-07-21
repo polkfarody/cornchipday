@@ -59,6 +59,7 @@ var bean_count_label: Label
 var level_complete := false
 var level_floor_y := 592.0  # overwritten by _setup_level_bounds() from the level's real ground pieces
 var ingredient_checklist_icons: Array = []
+var ability_hud_slot: TextureRect = null
 
 func _ready() -> void:
 	player.player_hit.connect(_on_player_hit)
@@ -99,6 +100,27 @@ func _setup_bean_hud() -> void:
 	bean_count_label.add_theme_constant_override("outline_size", 4)
 	bean_count_label.text = "0/%d" % bean_total
 	hud.add_child(bean_count_label)
+
+# FB26: "when you collect the airfryer it should fly up to the top right and
+# a logo for the ability will appear." Lazily created (not every level has
+# an ability pickup) and invisible until something actually flies into it --
+# any future pickup-granted ability (currently just the Air Fryer's spin
+# dash) can reuse this same slot via get_ability_hud_slot() rather than each
+# needing its own HUD wiring.
+func get_ability_hud_slot(texture: Texture2D) -> TextureRect:
+	if ability_hud_slot == null:
+		var hud: CanvasLayer = $HUD
+		ability_hud_slot = TextureRect.new()
+		ability_hud_slot.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ability_hud_slot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		ability_hud_slot.offset_left = 20.0
+		ability_hud_slot.offset_top = 108.0
+		ability_hud_slot.offset_right = 56.0
+		ability_hud_slot.offset_bottom = 144.0
+		ability_hud_slot.modulate = Color(1.0, 1.0, 1.0, 0.0)
+		hud.add_child(ability_hud_slot)
+	ability_hud_slot.texture = texture
+	return ability_hud_slot
 
 # FB25: "the ingredient should fly into a shopping basket... something that
 # can persist to show what ingredients you have and what you need" -- a row
