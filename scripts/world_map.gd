@@ -16,6 +16,7 @@ const LOCKED_TINT := Color(0.4, 0.4, 0.4, 1.0)
 @onready var avatar: AnimatedSprite2D = $Avatar
 @onready var node_markers: Array = [$Node1, $Node2, $Node3, $Node4, $Node5, $Node6, $Node7]
 @onready var path_line: Line2D = $PathLine
+@onready var bean_count_label: Label = $BeanCount/Label
 
 var node_positions: Array = []
 var current_index := 0
@@ -28,11 +29,46 @@ func _ready() -> void:
 	current_index = clampi(GameProgress.last_played_level - 1, 0, node_positions.size() - 1)
 	avatar.position = node_positions[current_index]
 	avatar.play("idle")
+	bean_count_label.text = str(GameProgress.total_beans_collected)
 	_refresh_node_visuals()
 
+# FB16: locked levels show a dimmed icon plus a small padlock built
+# procedurally (Polygon2D body + a Line2D arc for the shackle) rather than a
+# new generated asset -- cheap, and there's nothing level-specific about a
+# padlock shape that would benefit from per-level art anyway.
 func _refresh_node_visuals() -> void:
 	for i in node_markers.size():
-		node_markers[i].modulate = LOCKED_TINT if not GameProgress.is_unlocked(i + 1) else Color.WHITE
+		var node: Node2D = node_markers[i]
+		var locked := not GameProgress.is_unlocked(i + 1)
+		node.modulate = LOCKED_TINT if locked else Color.WHITE
+		var existing_lock := node.get_node_or_null("LockIcon")
+		if locked and existing_lock == null:
+			node.add_child(_build_lock_icon())
+		elif not locked and existing_lock != null:
+			existing_lock.queue_free()
+
+func _build_lock_icon() -> Node2D:
+	var lock := Node2D.new()
+	lock.name = "LockIcon"
+	lock.z_index = 1
+
+	var body := Polygon2D.new()
+	body.color = Color(0.15, 0.15, 0.15, 1.0)
+	body.polygon = PackedVector2Array([Vector2(-11, -2), Vector2(11, -2), Vector2(11, 14), Vector2(-11, 14)])
+	lock.add_child(body)
+
+	var shackle := Line2D.new()
+	shackle.width = 4.0
+	shackle.default_color = Color(0.15, 0.15, 0.15, 1.0)
+	var points := PackedVector2Array()
+	for j in range(9):
+		var t := float(j) / 8.0
+		var angle := PI + t * PI
+		points.append(Vector2(cos(angle) * 8.0, -2.0 + sin(angle) * 8.0))
+	shackle.points = points
+	lock.add_child(shackle)
+
+	return lock
 
 func _process(_delta: float) -> void:
 	if is_moving:

@@ -5,6 +5,15 @@
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame2.png" id="3_idle2"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame3.png" id="4_run1"]
 [ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame4.png" id="5_run2"]
+[ext_resource type="Texture2D" path="res://Assets/generated/ui/ui_world_map_bg.png" id="6_map_bg"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/lettuce_ingredient.png" id="7_lettuce"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/cheese_ingredient.png" id="8_cheese"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/guac_ingredient.png" id="9_guac"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/tomato_ingredient.png" id="10_tomato"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/sour_cream_ingredient.png" id="11_sourcream"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/crunchy_shell_ingredient.png" id="12_crunchyshell"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_frame1.png" id="13_wrap"]
+[ext_resource type="Texture2D" path="res://Assets/generated/items/bean_ingredient.png" id="14_bean"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_avatar"]
 animations = [{
@@ -34,12 +43,47 @@ animations = [{
 [node name="WorldMap" type="Node2D"]
 script = ExtResource("1_world_map")
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="Backdrop" type="TextureRect" parent="."]
 offset_left = -20.0
 offset_top = -20.0
 offset_right = 1300.0
 offset_bottom = 740.0
-color = Color(0.55, 0.75, 0.45, 1)
+texture = ExtResource("6_map_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="."]
+offset_left = 140.0
+offset_top = 10.0
+offset_right = 1140.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(0.55, 0.22, 0.16, 1)
+theme_override_colors/font_outline_color = Color(1, 0.95, 0.85, 1)
+theme_override_constants/outline_size = 6
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "Corn Chip Day"
+
+[node name="BeanCount" type="HBoxContainer" parent="."]
+offset_left = 1080.0
+offset_top = 20.0
+offset_right = 1260.0
+offset_bottom = 56.0
+
+[node name="Icon" type="TextureRect" parent="BeanCount"]
+custom_minimum_size = Vector2(36, 36)
+texture = ExtResource("14_bean")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="BeanCount"]
+theme_override_font_sizes/font_size = 26
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.3, 0.15, 0.05, 1)
+theme_override_constants/outline_size = 4
+vertical_alignment = 1
+text = "0"
 
 [node name="PathLine" type="Line2D" parent="."]
 width = 6.0
@@ -48,51 +92,86 @@ default_color = Color(0.6, 0.42, 0.2, 1)
 [node name="Node1" type="Node2D" parent="."]
 position = Vector2(150, 520)
 
-[node name="Marker" type="Polygon2D" parent="Node1"]
-color = Color(0.85, 0.68, 0.35, 1)
-polygon = PackedVector2Array(24, 0, 16.5, 16.5, 0, 24, -16.5, 16.5, -24, 0, -16.5, -16.5, 0, -24, 16.5, -16.5)
+[node name="Icon" type="TextureRect" parent="Node1"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+texture = ExtResource("7_lettuce")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Node2" type="Node2D" parent="."]
 position = Vector2(150, 320)
 
-[node name="Marker" type="Polygon2D" parent="Node2"]
-color = Color(0.85, 0.68, 0.35, 1)
-polygon = PackedVector2Array(24, 0, 16.5, 16.5, 0, 24, -16.5, 16.5, -24, 0, -16.5, -16.5, 0, -24, 16.5, -16.5)
+[node name="Icon" type="TextureRect" parent="Node2"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+texture = ExtResource("8_cheese")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Node3" type="Node2D" parent="."]
 position = Vector2(400, 320)
 
-[node name="Marker" type="Polygon2D" parent="Node3"]
-color = Color(0.85, 0.68, 0.35, 1)
-polygon = PackedVector2Array(24, 0, 16.5, 16.5, 0, 24, -16.5, 16.5, -24, 0, -16.5, -16.5, 0, -24, 16.5, -16.5)
+[node name="Icon" type="TextureRect" parent="Node3"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+texture = ExtResource("9_guac")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Node4" type="Node2D" parent="."]
 position = Vector2(400, 520)
 
-[node name="Marker" type="Polygon2D" parent="Node4"]
-color = Color(0.85, 0.68, 0.35, 1)
-polygon = PackedVector2Array(24, 0, 16.5, 16.5, 0, 24, -16.5, 16.5, -24, 0, -16.5, -16.5, 0, -24, 16.5, -16.5)
+[node name="Icon" type="TextureRect" parent="Node4"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+texture = ExtResource("10_tomato")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Node5" type="Node2D" parent="."]
 position = Vector2(650, 520)
 
-[node name="Marker" type="Polygon2D" parent="Node5"]
-color = Color(0.85, 0.68, 0.35, 1)
-polygon = PackedVector2Array(24, 0, 16.5, 16.5, 0, 24, -16.5, 16.5, -24, 0, -16.5, -16.5, 0, -24, 16.5, -16.5)
+[node name="Icon" type="TextureRect" parent="Node5"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+texture = ExtResource("11_sourcream")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Node6" type="Node2D" parent="."]
 position = Vector2(650, 320)
 
-[node name="Marker" type="Polygon2D" parent="Node6"]
-color = Color(0.85, 0.68, 0.35, 1)
-polygon = PackedVector2Array(24, 0, 16.5, 16.5, 0, 24, -16.5, 16.5, -24, 0, -16.5, -16.5, 0, -24, 16.5, -16.5)
+[node name="Icon" type="TextureRect" parent="Node6"]
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
+texture = ExtResource("12_crunchyshell")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Node7" type="Node2D" parent="."]
 position = Vector2(900, 320)
 
-[node name="Marker" type="Polygon2D" parent="Node7"]
-color = Color(0.75, 0.55, 0.25, 1)
-polygon = PackedVector2Array(30, 0, 20.6, 20.6, 0, 30, -20.6, 20.6, -30, 0, -20.6, -20.6, 0, -30, 20.6, -20.6)
+[node name="Icon" type="TextureRect" parent="Node7"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("13_wrap")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Avatar" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.22, 0.22)
