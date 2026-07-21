@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ending_screen.gd" id="1_ending_screen"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/cornchip/cornchip_frame8.png" id="2_cornchip_celebrate"]
+[ext_resource type="Texture2D" path="res://Assets/generated/characters/wrap/wrap_extras_frame3.png" id="3_wrap_celebrate"]
+
+[sub_resource type="Gradient" id="Gradient_confetti"]
+colors = PackedColorArray(0.9, 0.3, 0.2, 1, 0.95, 0.8, 0.1, 1, 0.3, 0.7, 0.4, 1, 0.3, 0.5, 0.85, 1)
+
+[node name="EndingScreen" type="Node2D"]
+script = ExtResource("1_ending_screen")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 1300.0
+offset_bottom = 740.0
+color = Color(0.95, 0.8, 0.55, 1)
+
+[node name="Title" type="Label" parent="."]
+offset_left = 140.0
+offset_top = 60.0
+offset_right = 1140.0
+offset_bottom = 180.0
+theme_override_font_sizes/font_size = 64
+theme_override_colors/font_color = Color(0.55, 0.22, 0.16, 1)
+theme_override_colors/font_outline_color = Color(1, 0.95, 0.85, 1)
+theme_override_constants/outline_size = 6
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "Corn Chip Day"
+
+[node name="Wrap" type="Sprite2D" parent="."]
+position = Vector2(560, 400)
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("3_wrap_celebrate")
+
+[node name="Cornchip" type="Sprite2D" parent="."]
+position = Vector2(750, 420)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_cornchip_celebrate")
+
+[node name="Confetti" type="CPUParticles2D" parent="."]
+position = Vector2(640, -40)
+emitting = false
+amount = 60
+lifetime = 3.5
+preprocess = 2.0
+speed_scale = 0.8
+emission_shape = 3
+emission_rect_extents = Vector2(660, 10)
+direction = Vector2(0, 1)
+spread = 15.0
+gravity = Vector2(0, 90)
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+color_ramp = SubResource("Gradient_confetti")
+
+[node name="PromptIcon" type="Polygon2D" parent="."]
+position = Vector2(640, 560)
+color = Color(0.6, 0.42, 0.2, 1)
+polygon = PackedVector2Array(-10, -14, -10, 14, 14, 0)

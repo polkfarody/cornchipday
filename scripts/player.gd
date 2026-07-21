@@ -183,6 +183,11 @@ func win_celebration() -> void:
 	sprite.position = SPRITE_BASE_POSITION
 	sprite.rotation_degrees = 0.0
 	sprite.play("celebrate")
+	# FB21: hold the in-place celebration briefly (same beat as a normal
+	# level-complete transition) before handing off to a real ending screen,
+	# rather than freezing here forever.
+	await get_tree().create_timer(1.5).timeout
+	get_tree().change_scene_to_file("res://scenes/EndingScreen.tscn")
 
 # Sour Cream Sam's arena (characters.txt Bestiary by Level, Level 5): the
 # challenge is the icy floor itself, not a separate attack -- toggled by
