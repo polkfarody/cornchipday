@@ -16,6 +16,12 @@ const BUTTON_MARGIN := 24.0
 const BUTTON_GAP := 12.0
 const BUTTON_ALPHA := 0.55
 
+# FB34: WorldMap reuses this same scene for its d-pad (move between nodes)
+# and accept button (enter the selected level), but "JUMP" doesn't make
+# sense outside gameplay -- relabel via this export instead of duplicating
+# the scene.
+@export var accept_label: String = "JUMP"
+
 func _ready() -> void:
 	if not OS.has_feature("web"):
 		queue_free()
@@ -31,7 +37,7 @@ func _ready() -> void:
 	_add_button("v", "ui_down", Vector2(dpad_x + BUTTON_SIZE.x + BUTTON_GAP, dpad_bottom_y - BUTTON_SIZE.y - BUTTON_GAP))
 
 	var jump_pos := Vector2(VIEWPORT_SIZE.x - BUTTON_MARGIN - BUTTON_SIZE.x, dpad_bottom_y)
-	_add_button("JUMP", "ui_accept", jump_pos)
+	_add_button(accept_label, "ui_accept", jump_pos)
 
 func _add_button(button_label: String, action: StringName, button_position: Vector2) -> void:
 	var button := Button.new()

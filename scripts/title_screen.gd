@@ -49,4 +49,13 @@ func _process(delta: float) -> void:
 			blink_timer = BLINK_DURATION
 
 	if Input.is_action_just_pressed("ui_accept"):
-		get_tree().change_scene_to_file("res://scenes/WorldMap.tscn")
+		_go_to_world_map()
+
+# FB34: phone browsers have no keyboard, so ui_accept never fires there --
+# a screen tap is the touch equivalent of "continue" on this screen.
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch and event.pressed:
+		_go_to_world_map()
+
+func _go_to_world_map() -> void:
+	get_tree().change_scene_to_file("res://scenes/WorldMap.tscn")

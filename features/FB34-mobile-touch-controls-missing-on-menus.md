@@ -1,6 +1,6 @@
 # FB34 — Touch Controls Missing on Title/Map/Ending Screens (Mobile Web)
 
-**Status:** Not started. Root cause identified, not yet fixed.
+**Status:** Implemented (option 2, d-pad for WorldMap navigation — both confirmed with user). Not yet verified on a real device.
 
 ## Background
 User tested the F44 mobile web build on an actual phone (via the GitHub Pages deploy). Report:
@@ -39,10 +39,13 @@ the user's report exactly ("can't get past the opening screen").
 Recommendation going in: option 2 — matches what each screen actually needs (tap-to-continue vs.
 d-pad navigation) instead of dropping a full gameplay d-pad onto a title card.
 
-## Open questions to confirm with user before building
-- Confirm option 1 vs. 2 vs. 3 above.
-- Should `WorldMap`'s touch cursor movement be a d-pad (matching in-level controls) or direct
-  tap-on-level-node selection (arguably more natural on a touchscreen, but a bigger UI change)?
+## Resolved
+- Confirmed with user: option 2 (tap-anywhere on Title/Ending, `TouchControls.tscn`'s d-pad on
+  WorldMap).
+- `WorldMap` touch navigation: d-pad, not tap-on-node. `TouchControls.tscn` is reused there in full
+  (not d-pad only) since entering the selected level still needs a touch equivalent for `ui_accept`
+  — its accept button is relabeled "GO" via a new `accept_label` export (`touch_controls.gd`) instead
+  of "JUMP".
 
 ## Files likely touched
 - `scripts/title_screen.gd`, `scenes/TitleScreen.tscn`

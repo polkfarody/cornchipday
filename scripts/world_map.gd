@@ -13,6 +13,12 @@ extends Node2D
 const MOVE_SPEED := 500.0
 const LOCKED_TINT := Color(0.4, 0.4, 0.4, 1.0)
 
+# FB34: mobile Web has no keyboard for ui_left/right/up/down/accept -- reuse
+# the same TouchControls scene levels use (d-pad to move between nodes,
+# accept button to enter the selected one), relabeled since "JUMP" doesn't
+# apply here. Self-removes on non-web builds (see touch_controls.gd).
+const TOUCH_CONTROLS_SCENE := preload("res://scenes/TouchControls.tscn")
+
 @onready var avatar: AnimatedSprite2D = $Avatar
 @onready var node_markers: Array = [$Node1, $Node2, $Node3, $Node4, $Node5, $Node6, $Node7]
 @onready var path_line: Line2D = $PathLine
@@ -31,6 +37,9 @@ func _ready() -> void:
 	avatar.play("idle")
 	bean_count_label.text = str(GameProgress.total_beans_collected)
 	_refresh_node_visuals()
+	var touch_controls: Node = TOUCH_CONTROLS_SCENE.instantiate()
+	touch_controls.set("accept_label", "GO")
+	add_child(touch_controls)
 
 # FB16: locked levels show a dimmed icon plus a small padlock built
 # procedurally (Polygon2D body + a Line2D arc for the shackle) rather than a
