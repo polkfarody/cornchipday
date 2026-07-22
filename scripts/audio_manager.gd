@@ -18,8 +18,16 @@ const SFX := {
 const POOL_SIZE := 6
 const AMBIENT_VOLUME_DB := -16.0  # quiet by design -- sits under the game, never competes with SFX
 
+# Playlist replacing the old single ambient_loop.tres: song2 repeats
+# continuously -- one continuous player persisting across every scene change
+# (title, map, all 7 levels), same as before.
+const MUSIC_PLAYLIST := [
+	preload("res://Assets/music/song2.mp3"),
+]
+
 var _players: Array = []
 var _ambient_player: AudioStreamPlayer
+var _playlist_index := 0
 
 func _ready() -> void:
 	for i in POOL_SIZE:
@@ -30,11 +38,16 @@ func _ready() -> void:
 	# AudioManager is an autoload -- persists as-is across every scene change
 	# (title, map, all 7 levels) rather than needing per-scene wiring.
 	_ambient_player = AudioStreamPlayer.new()
-	_ambient_player.stream = preload("res://Assets/generated/audio/ambient_loop.tres")
 	_ambient_player.volume_db = AMBIENT_VOLUME_DB
 	_ambient_player.bus = "Master"
+	_ambient_player.finished.connect(_play_next_music_track)
 	add_child(_ambient_player)
+	_play_next_music_track()
+
+func _play_next_music_track() -> void:
+	_ambient_player.stream = MUSIC_PLAYLIST[_playlist_index]
 	_ambient_player.play()
+	_playlist_index = (_playlist_index + 1) % MUSIC_PLAYLIST.size()
 
 func play(sfx_name: String) -> void:
 	if not SFX.has(sfx_name):
